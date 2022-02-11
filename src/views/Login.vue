@@ -75,7 +75,7 @@ form.register {
 	background-image: linear-gradient(
 		to bottom right,
 		rgb(66, 245, 206) 0%,
-		rgb(61, 7, 122) 100%
+		rgb(6, 100, 22) 100%
 	);
 }
 h2 {
