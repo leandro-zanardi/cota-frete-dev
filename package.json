@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "node ./configs/scripts/build_firebase_hosting.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@fawmi/vue-google-maps": "^0.9.4",
     "core-js": "^3.6.5",
     "firebase": "^9.6.6",
     "vue": "^3.0.0",
