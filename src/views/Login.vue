@@ -123,6 +123,7 @@ form.login input[type="submit"] {
 	cursor: pointer;
 	text-transform: uppercase;
 }
+
 form.register input[type="submit"] {
 	background-color: #FFF;
 	color: rgb(100, 66, 101);
