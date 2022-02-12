@@ -30,6 +30,8 @@
 				<input 
 					type="submit" 
 					value="Login" />
+
+				<img src="../assets/login.png" alt="mapa login">
 			</form>
 
 		</section>
@@ -61,6 +63,7 @@ export default {
 </script>
 
 <style>
+
 .forms {
 	display: flex;
 	min-height: 100vh;
@@ -134,6 +137,11 @@ form.register input[type="submit"]:hover {
 	transition: .6s ease;
 	color: white;
 	background-color:  rgb(6, 0, 43);
+}
+
+img {
+	height: 350px;
+	margin-top: -80px;
 }
          
 </style>
