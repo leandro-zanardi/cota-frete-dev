@@ -10,7 +10,7 @@ createApp(App)
     .use(router)
     .use(VueGoogleMaps, {
         load: {
-            key: 'chave',
+            key: 'AIzaSyAR9I6Frmuh5iyJo7xQXGmQT21Jc_B3DcE',
             libraries: "places"
             // language: 'de',
         },
