@@ -3,33 +3,35 @@
 		<section class="forms">
 
 			<form class="register" @submit.prevent="register">
-				<h2>Register</h2>
+				<h2>Crie sua conta aqui</h2>
 				<input 
 					type="email" 
-					placeholder="Email address"
+					placeholder="Crie seu Email"
 					v-model="register_form.email" />
 				<input 
 					type="password" 
-					placeholder="Password" 
+					placeholder="Crie sua senha" 
 					v-model="register_form.password" />
 				<input 
 					type="submit" 
-					value="Register" />
+					value="Cadastrar" />
 			</form>
 
 			<form class="login" @submit.prevent="login">
-				<h2>Login</h2>
+				<h2>Acesse sua conta</h2>
 				<input 
 					type="email" 
-					placeholder="Email address"
+					placeholder="Digite seu email"
 					v-model="login_form.email" />
 				<input 
 					type="password" 
-					placeholder="Password" 
+					placeholder="Digite sua senha" 
 					v-model="login_form.password" />
 				<input 
 					type="submit" 
 					value="Login" />
+
+				<img src="../assets/login.png" alt="mapa login">
 			</form>
 
 		</section>
@@ -61,6 +63,7 @@ export default {
 </script>
 
 <style>
+
 .forms {
 	display: flex;
 	min-height: 100vh;
@@ -72,15 +75,12 @@ form {
 form.register {
 	color: #FFF;
 	background-color: rgb(167, 50, 202);
-	background-image: linear-gradient(
-		to bottom right,
-		rgb(66, 245, 206) 0%,
-		rgb(6, 100, 22) 100%
-	);
+	background-image: linear-gradient(135deg, #6b6b6b 0%, #a0b5b4 100%);
+
 }
 h2 {
 	font-size: 2rem;
-	text-transform: uppercase;
+	text-transform: initial;
 	margin-bottom: 2rem;
 }
 input {
@@ -123,6 +123,7 @@ form.login input[type="submit"] {
 	cursor: pointer;
 	text-transform: uppercase;
 }
+
 form.register input[type="submit"] {
 	background-color: #FFF;
 	color: rgb(100, 66, 101);
@@ -132,4 +133,16 @@ form.register input[type="submit"] {
 	cursor: pointer;
 	text-transform: uppercase;
 }
+
+form.register input[type="submit"]:hover {
+	transition: .6s ease;
+	color: white;
+	background-color:  rgb(6, 0, 43);
+}
+
+img {
+	height: 350px;
+	margin-top: -80px;
+}
+         
 </style>
