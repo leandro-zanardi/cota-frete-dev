@@ -142,7 +142,7 @@ form.register input[type="submit"]:hover {
 
 img {
 	height: 350px;
-	margin-top: -80px;
+	/* margin-top: -80px; */
 }
          
 </style>
