@@ -30,8 +30,6 @@
 				<input 
 					type="submit" 
 					value="Login" />
-
-				<img src="../assets/login.png" alt="mapa login">
 			</form>
 
 		</section>
@@ -140,9 +138,13 @@ form.register input[type="submit"]:hover {
 	background-color:  rgb(6, 0, 43);
 }
 
-img {
-	height: 350px;
-	/* margin-top: -80px; */
+form.login {
+	height: 100vh;
+	width: 50%;
+	background: url('../assets/login.png') no-repeat;
+	background-position: bottom;
+	background-clip: content-box;
+	background-size: 25rem;
 }
          
 </style>
