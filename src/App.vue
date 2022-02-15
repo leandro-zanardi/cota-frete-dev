@@ -30,17 +30,34 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  text-align: right;
   color: #2c3e50;
 }
 #nav {
   padding: 30px;
 }
 #nav a {
+  font-size: 1.1rem;
   font-weight: bold;
   color: #2c3e50;
+  margin: 0 10px;
+  text-decoration: none;
 }
 #nav a.router-link-exact-active {
-  color: #b942a9;
+  color: #2100b6;
+}
+
+button {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #2c3e50;
+  padding: 10px;
+  margin-left: 15px;
+  border-radius: 4px;
+  border: none;
+}
+
+button:hover {
+  transition: .6s ease;
 }
 </style>

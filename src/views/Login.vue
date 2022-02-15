@@ -78,6 +78,7 @@ form.register {
 }
 h2 {
 	font-size: 2rem;
+	text-align: center;
 	text-transform: initial;
 	margin-bottom: 2rem;
 }

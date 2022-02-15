@@ -76,6 +76,10 @@
 </script>
 
 <style scoped>
+* {
+  text-align: center;
+}
+
 .home {
   height: 600px;
 }
@@ -87,6 +91,14 @@
 .botao_cotar {
   width:200px;
   height:50px;
+  color: #fff;
+  background-color: rgb(93, 66, 245);
+}
+
+.botao_cotar:hover {
+  transition: .6s ease;
+	color: white;
+	background-color:  rgb(54, 30, 192);;
 }
 
 .autocomplete {
