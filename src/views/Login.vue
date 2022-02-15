@@ -3,29 +3,29 @@
 		<section class="forms">
 
 			<form class="register" @submit.prevent="register">
-				<h2>Register</h2>
+				<h2>Crie sua conta</h2>
 				<input 
 					type="email" 
-					placeholder="Email address"
+					placeholder="Insira seu email"
 					v-model="register_form.email" />
 				<input 
 					type="password" 
-					placeholder="Password" 
+					placeholder="Crie uma senha" 
 					v-model="register_form.password" />
 				<input 
 					type="submit" 
-					value="Register" />
+					value="Cadastrar" />
 			</form>
 
 			<form class="login" @submit.prevent="login">
-				<h2>Login</h2>
+				<h2>Acesse sua conta</h2>
 				<input 
 					type="email" 
-					placeholder="Email address"
+					placeholder="Digite seu email"
 					v-model="login_form.email" />
 				<input 
 					type="password" 
-					placeholder="Password" 
+					placeholder="Digite sua senha" 
 					v-model="login_form.password" />
 				<input 
 					type="submit" 
@@ -61,6 +61,7 @@ export default {
 </script>
 
 <style>
+
 .forms {
 	display: flex;
 	min-height: 100vh;
@@ -72,15 +73,13 @@ form {
 form.register {
 	color: #FFF;
 	background-color: rgb(167, 50, 202);
-	background-image: linear-gradient(
-		to bottom right,
-		rgb(197, 245, 66) 0%,
-		rgb(61, 7, 122) 100%
-	);
+	background-image: linear-gradient(135deg, #6b6b6b 0%, #a0b5b4 100%);
+
 }
 h2 {
 	font-size: 2rem;
-	text-transform: uppercase;
+	text-align: center;
+	text-transform: initial;
 	margin-bottom: 2rem;
 }
 input {
@@ -123,13 +122,35 @@ form.login input[type="submit"] {
 	cursor: pointer;
 	text-transform: uppercase;
 }
+
+form.login input[type="submit"]:hover {
+	background-color: rgb(54, 30, 192);
+	transition: .7s ease;
+}
+
 form.register input[type="submit"] {
 	background-color: #FFF;
-	color: rgb(100, 66, 101);
+	color: rgb(93, 66, 245);
 	font-weight: 700;
 	padding: 1rem 2rem;
 	border-radius: 0.5rem;
 	cursor: pointer;
 	text-transform: uppercase;
 }
+
+form.register input[type="submit"]:hover {
+	transition: .6s ease;
+	color: white;
+	background-color:  rgb(93, 66, 245);
+}
+
+form.login {
+	height: 100vh;
+	width: 50%;
+	background: url('../assets/login.png') no-repeat;
+	background-position: bottom;
+	background-clip: content-box;
+	background-size: 25rem;
+}
+         
 </style>

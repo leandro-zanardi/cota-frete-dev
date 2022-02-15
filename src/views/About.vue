@@ -3,3 +3,9 @@
     <h1>About</h1>
   </main>
 </template>
+
+<style scoped>
+  * {
+    text-align: center;
+  }
+</style>
