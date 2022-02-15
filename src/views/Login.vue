@@ -3,14 +3,14 @@
 		<section class="forms">
 
 			<form class="register" @submit.prevent="register">
-				<h2>Crie sua conta aqui</h2>
+				<h2>Crie sua conta</h2>
 				<input 
 					type="email" 
-					placeholder="Crie seu Email"
+					placeholder="Insira seu email"
 					v-model="register_form.email" />
 				<input 
 					type="password" 
-					placeholder="Crie sua senha" 
+					placeholder="Crie uma senha" 
 					v-model="register_form.password" />
 				<input 
 					type="submit" 
@@ -122,9 +122,14 @@ form.login input[type="submit"] {
 	text-transform: uppercase;
 }
 
+form.login input[type="submit"]:hover {
+	background-color: rgb(54, 30, 192);
+	transition: .7s ease;
+}
+
 form.register input[type="submit"] {
 	background-color: #FFF;
-	color: rgb(100, 66, 101);
+	color: rgb(93, 66, 245);
 	font-weight: 700;
 	padding: 1rem 2rem;
 	border-radius: 0.5rem;
@@ -135,7 +140,7 @@ form.register input[type="submit"] {
 form.register input[type="submit"]:hover {
 	transition: .6s ease;
 	color: white;
-	background-color:  rgb(6, 0, 43);
+	background-color:  rgb(93, 66, 245);
 }
 
 form.login {
