@@ -75,47 +75,6 @@
 
 </script>
 
-<style scoped>
-* {
-  text-align: center;
-}
+<style>
 
-.home {
-  height: 600px;
-}
-
-.vue-map-container {
-  height:600px;
-}
-
-.botao_cotar {
-  width:200px;
-  height:50px;
-  color: #fff;
-  background-color: rgb(93, 66, 245);
-}
-
-.botao_cotar:hover {
-  transition: .6s ease;
-	color: white;
-	background-color:  rgb(54, 30, 192);;
-}
-
-.autocomplete {
-  border:1px solid;
-}
-
-.left{
-  width:50%;
-  height:calc(100%);
-  float:left;
-  background-color: beige;
-}
-
-.right {
-  background-color: aquamarine;
-  width:50%;
-  height:600px;
-  float:right;
-}
 </style>
