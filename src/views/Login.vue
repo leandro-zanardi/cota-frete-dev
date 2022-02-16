@@ -1,7 +1,6 @@
 <template>
-	<main class="login">
-		<section class="forms">
-
+	<MDBRow>
+		<MDBCol sm="12" lg="6">
 			<form class="register" @submit.prevent="register">
 				<h2>Crie sua conta</h2>
 				<input 
@@ -16,7 +15,8 @@
 					type="submit" 
 					value="Cadastrar" />
 			</form>
-
+		</MDBCol>
+		<MDBCol sm="12" lg="6">
 			<form class="login" @submit.prevent="login">
 				<h2>Acesse sua conta</h2>
 				<input 
@@ -31,10 +31,11 @@
 					type="submit" 
 					value="Login" />
 			</form>
+		</MDBCol>
+	</MDBRow>
 
-		</section>
-	</main>
 </template>
+
 
 <script>
 import { ref } from 'vue'
