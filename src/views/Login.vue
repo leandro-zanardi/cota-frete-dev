@@ -1,19 +1,27 @@
 <template>
 	<MDBRow>
 		<MDBCol sm="12" lg="6">
-			<form class="register" @submit.prevent="register">
+			<form @submit.prevent="register">
 				<h2>Crie sua conta</h2>
-				<input 
+				<MDBInput
+					size="lg"
 					type="email" 
-					placeholder="Insira seu email"
-					v-model="register_form.email" />
-				<input 
+					label="Insira seu email" 
+					v-model="register_form.email" 
+				/>
+				
+				<MDBInput
+					size="lg"
 					type="password" 
-					placeholder="Crie uma senha" 
+					label="Crie uma senha" 
 					v-model="register_form.password" />
-				<input 
-					type="submit" 
-					value="Cadastrar" />
+				<MDBBtn
+					color="primary"
+					type="submit"
+					size="lg"
+				>
+					Cadastrar
+				</MDBBtn>
 			</form>
 		</MDBCol>
 		<MDBCol sm="12" lg="6">
@@ -27,9 +35,9 @@
 					type="password" 
 					placeholder="Digite sua senha" 
 					v-model="login_form.password" />
-				<input 
-					type="submit" 
-					value="Login" />
+				<MDBBtn color="primary" type="submit">
+					Entrar
+				</MDBBtn>
 			</form>
 		</MDBCol>
 	</MDBRow>
@@ -37,117 +45,31 @@
 </template>
 
 
-<script>
-import { ref } from 'vue'
-import { useStore } from 'vuex'
-export default {
-	setup () {
-		const login_form = ref({});
-		const register_form = ref({});
-		const store = useStore();
-		const login = () => {
-			store.dispatch('login', login_form.value);
-		}
-		const register = () => {
-			store.dispatch('register', register_form.value);
-		}
-		return {
-			login_form,
-			register_form,
-			login,
-			register
-		}
+<script setup>
+	import { ref } from 'vue'
+	import { useStore } from 'vuex'
+	import { MDBRow } from "mdb-vue-ui-kit";
+	import { MDBCol } from "mdb-vue-ui-kit";
+	import { MDBBtn } from "mdb-vue-ui-kit";
+	import { MDBInput } from "mdb-vue-ui-kit";
+
+	const login_form = ref({});
+	const register_form = ref({});
+	const store = useStore();
+
+	function login () {
+		store.dispatch('login', login_form.value);
 	}
-}
+
+	function register () {
+		store.dispatch('register', register_form.value);
+	}
+
 </script>
 
 <style>
 
-.forms {
-	display: flex;
-	min-height: 100vh;
-}
-form {
-	flex: 1 1 0%;
-	padding: 8rem 1rem 1rem;
-}
-form.register {
-	color: #FFF;
-	background-color: rgb(167, 50, 202);
-	background-image: linear-gradient(135deg, #6b6b6b 0%, #a0b5b4 100%);
-
-}
-h2 {
-	font-size: 2rem;
-	text-align: center;
-	text-transform: initial;
-	margin-bottom: 2rem;
-}
-input {
-	appearance: none;
-	border: none;
-	outline: none;
-	background: none;
-	display: block;
-	width: 100%;
-	max-width: 400px;
-	margin: 0 auto;
-	font-size: 1.5rem;
-	margin-bottom: 2rem;
-	padding: 0.5rem 0rem;
-}
-input:not([type="submit"]) {
-	opacity: 0.8;
-	transition: 0.4s;
-}
-input:focus:not([type="submit"]) {
-	opacity: 1;
-}
-input::placeholder {
-	color: inherit;
-}
-form.register input:not([type="submit"]) {
-	color: #FFF;
-	border-bottom: 2px solid #FFF;
-}
-form.login input:not([type="submit"]) {
-	color: #2c3e50;
-	border-bottom: 2px solid #2c3e50;
-}
-form.login input[type="submit"] {
-	background-color: rgb(93, 66, 245);
-	color: #FFF;
-	font-weight: 700;
-	padding: 1rem 2rem;
-	border-radius: 0.5rem;
-	cursor: pointer;
-	text-transform: uppercase;
-}
-
-form.login input[type="submit"]:hover {
-	background-color: rgb(54, 30, 192);
-	transition: .7s ease;
-}
-
-form.register input[type="submit"] {
-	background-color: #FFF;
-	color: rgb(93, 66, 245);
-	font-weight: 700;
-	padding: 1rem 2rem;
-	border-radius: 0.5rem;
-	cursor: pointer;
-	text-transform: uppercase;
-}
-
-form.register input[type="submit"]:hover {
-	transition: .6s ease;
-	color: white;
-	background-color:  rgb(93, 66, 245);
-}
-
 form.login {
-	height: 100vh;
-	width: 50%;
 	background: url('../assets/login.png') no-repeat;
 	background-position: bottom;
 	background-clip: content-box;
