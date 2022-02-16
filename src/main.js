@@ -1,3 +1,4 @@
+import 'mdb-vue-ui-kit/css/mdb.min.css'
 import { createApp } from 'vue'
 import VueGoogleMaps from '@fawmi/vue-google-maps'
 
