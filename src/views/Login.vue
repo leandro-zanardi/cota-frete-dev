@@ -1,7 +1,7 @@
 <template>
-	<div class="h-100 d-flex justify-content-around align-items-center">
-			<form @submit.prevent="register" class="register flex-fill p-3">
-				<h2>Crie sua conta</h2>
+	<div class="login-container h-100 p-2 d-flex justify-content-sm-around align-items-sm-center">
+			<form @submit.prevent="register" class="register form-outline form-white flex-fill p-3">
+				<h2 class="mt-2 mb-3">Crie sua conta</h2>
 				<MDBInput
 					size="lg"
 					type="email" 
@@ -27,18 +27,18 @@
 			</form>
 	
 			<form class="login flex-fill  p-3" @submit.prevent="login">
-				<h2>Acesse sua conta</h2>
+				<h2  class="mt-2 mb-3">Acesse sua conta</h2>
 				<MDBInput
 					size="lg"
 					wrapperClass="mb-3"
 					type="email" 
-					placeholder="Digite seu email"
+					label="Insira seu email" 
 					v-model="login_form.email" />
 				<MDBInput
 					size="lg"
 					wrapperClass="mb-3"
 					type="password" 
-					placeholder="Digite sua senha" 
+					label="Digite sua senha" 
 					v-model="login_form.password" />
 				<MDBBtn color="primary" type="submit" size="lg">
 					Entrar
@@ -70,7 +70,9 @@
 
 <style>
 
+
 form.login {
+	border-radius: 8px;
 	background: url('../assets/login.png') no-repeat;
 	background-position: bottom;
 	background-clip: content-box;
@@ -80,8 +82,21 @@ form.login {
 }
 
 form.register {
+	border-radius: 8px;
+	color: #ffffff;
 	max-height:450px;
 	min-height: 400px;
+	background-image: linear-gradient(135deg, #6b6b6b 0%, #a0b5b4 100%);
+}
+
+@media (max-width: 575px) {
+	.login-container {
+		flex-direction: column !important;
+	}
+	form.register {
+		max-height:350px;
+		min-height: 250px;
+	}
 }
          
 </style>
