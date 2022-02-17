@@ -4,7 +4,7 @@
     <router-link to="/about">About</router-link>
     <button @click="$store.dispatch('logout')">Logout</button>
   </div>
-  <MDBContainer>
+  <MDBContainer class="h-100">
     <router-view/>
   </MDBContainer>
 </template>
@@ -29,7 +29,13 @@ export default {
 }
 </script>
 <style>
+
+html, body {
+  height: calc(100%);
+}
+
 #app {
+  height: calc(100%);
   font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 </style>
