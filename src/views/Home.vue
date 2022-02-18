@@ -1,18 +1,18 @@
 <template>
-  <main class="home h-100 p-2 d-flex justify-content-sm-around align-items-sm-center">
+  <main class="home h-100 p-2 d-flex flex-row justify-content-center align-items-stretch">
 
-    <div class="left form-outline form-white flex-fill p-3">
+    <div class="left p-3 d-flex flex-column">
       <GMapAutocomplete
         placeholder="Digite o ponto de origem"
         @place_changed="setPlace"
-        class="autocomplete"
+        class="autocomplete mb-4"
       >
       </GMapAutocomplete>
 
       <GMapAutocomplete
         placeholder="Digite o ponto de destino"
         @place_changed="setPlace"
-        class="autocomplete"
+        class="autocomplete  mb-4"
       >
       </GMapAutocomplete>
 
@@ -25,19 +25,23 @@
       </MDBBtn>
     </div>
 
-    <div class="right flex-fill  p-3">
-      <GMapMap
-        :center="mapCenter"
-        :zoom="16" style="height:600px;"
-      >
-        <GMapMarker
-          :key="index"
-          v-for="(m, index) in markers"
-          :position="m.position"
-          :clickable="true"
-          :draggable="true"
-        />
-      </GMapMap>
+    <div class="flex-fill p-3 h-100">
+      <div style="background-color:#00ff00; height: calc(100%);">
+        <GMapMap
+          :center="mapCenter"
+          :zoom="16"
+          class="h-100"
+        >
+          <GMapMarker
+            :key="index"
+            v-for="(m, index) in markers"
+            :position="m.position"
+            :clickable="false"
+            :draggable="false"
+            :controls="false"
+          />
+        </GMapMap>
+      </div>
     </div>
 
     
@@ -82,5 +86,7 @@
 </script>
 
 <style>
-
+  .left{
+    min-width: 350px;
+  }
 </style>
