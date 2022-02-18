@@ -1,32 +1,24 @@
 <template>
-  <div id="nav" v-if="$store.state.user">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-    <button @click="$store.dispatch('logout')">Logout</button>
-  </div>
-  <MDBContainer class="h-100">
+  
+  <div class="h-100 d-flex flex-column">
+    <div id="nav" v-if="$store.state.user">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+      <button @click="$store.dispatch('logout')">Logout</button>
+    </div>
     <router-view/>
-  </MDBContainer>
+  </div>
 </template>
 
-<script>
+<script setup>
 import { onBeforeMount } from 'vue'
 import { useStore } from 'vuex'
-import { MDBContainer } from "mdb-vue-ui-kit";
 
-export default {
+  const store = useStore()
+  onBeforeMount(() => {
+    store.dispatch('fetchUser')
+  })
 
-  components: {
-    MDBContainer
-  },
-
-  setup() {
-    const store = useStore()
-    onBeforeMount(() => {
-      store.dispatch('fetchUser')
-    })
-  }
-}
 </script>
 <style>
 
