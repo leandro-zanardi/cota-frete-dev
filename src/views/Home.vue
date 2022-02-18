@@ -1,14 +1,13 @@
 <template>
-  <main class="home" >
+  <main class="home h-100 p-2 d-flex justify-content-sm-around align-items-sm-center">
 
-    <div class="left">
+    <div class="left form-outline form-white flex-fill p-3">
       <GMapAutocomplete
         placeholder="Digite o ponto de origem"
         @place_changed="setPlace"
         class="autocomplete"
       >
       </GMapAutocomplete>
-
 
       <GMapAutocomplete
         placeholder="Digite o ponto de destino"
@@ -17,10 +16,16 @@
       >
       </GMapAutocomplete>
 
-      <button class="botao_cotar"> Cotar </button>
+      <MDBBtn
+        class="botao_cotar"
+        color="primary"
+        type="submit"
+        size="lg">
+          Cotar
+      </MDBBtn>
     </div>
 
-    <div class="right">
+    <div class="right flex-fill  p-3">
       <GMapMap
         :center="mapCenter"
         :zoom="16" style="height:600px;"
@@ -43,6 +48,7 @@
 <script setup>
   
   import { ref } from 'vue';
+  import { MDBBtn } from 'mdb-vue-ui-kit';
 
   const mapCenter = ref({});
   mapCenter.value = {lat: -23.6815302, lng: -46.8761758};
