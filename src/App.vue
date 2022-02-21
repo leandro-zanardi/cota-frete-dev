@@ -1,10 +1,10 @@
 <template>
   
   <div class="h-100 d-flex flex-column">
-    <div id="nav" v-if="$store.state.user">
+    <div id="nav" v-if="$store.state.userStore.user">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
-      <button @click="$store.dispatch('logout')">Logout</button>
+      <button @click="$store.dispatch('userStore/logout')">Logout</button>
     </div>
     <router-view/>
   </div>
@@ -14,9 +14,10 @@
 import { onBeforeMount } from 'vue'
 import { useStore } from 'vuex'
 
-  const store = useStore()
+  const store = useStore();
+
   onBeforeMount(() => {
-    store.dispatch('fetchUser')
+    store.dispatch('userStore/fetchUser')
   })
 
 </script>
