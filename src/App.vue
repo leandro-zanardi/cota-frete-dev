@@ -1,5 +1,4 @@
 <template>
- 
 
   <div class="h-100 d-flex flex-column">
     <div id="nav" v-if="$store.state.user">
