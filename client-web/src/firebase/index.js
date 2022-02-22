@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getDatabase, ref, set, onValue } from "firebase/database";
+import { getAuth, connectAuthEmulator } from "firebase/auth";
+import { getDatabase, ref, set, onValue, connectDatabaseEmulator } from "firebase/database";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,8 +23,21 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const firebaseDB = getDatabase(app)
 
-const auth = getAuth(app);
+var firebaseDB;
+if (location.hostname === "localhost") {
+  firebaseDB = getDatabase()
+  connectDatabaseEmulator(firebaseDB, "localhost", 9000);
+} else {
+  firebaseDB = getDatabase(app)
+}
+
+var auth;
+if (location.hostname === "localhost") {
+  auth = getAuth();
+  connectAuthEmulator(auth, "http://localhost:9099");
+} else {
+  auth = getAuth(app);
+}
 
 export { auth, firebaseDB, ref, set, onValue };
