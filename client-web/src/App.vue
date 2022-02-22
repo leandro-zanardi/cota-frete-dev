@@ -1,6 +1,7 @@
 <template>
 
   <div class="h-100 d-flex flex-column">
+<<<<<<< HEAD:src/App.vue
     <div id="nav" v-if="$store.state.user">
 
     <MDBNavbar light bg="light" expand="lg" container>
@@ -11,6 +12,12 @@
         </MDBNavbarNav>
       </MDBNavbar>
 
+=======
+    <div id="nav" v-if="$store.state.userStore.user">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+      <button @click="$store.dispatch('userStore/logout')">Logout</button>
+>>>>>>> d715218326cf9a65b43b7e6716fe6a428d876cfb:client-web/src/App.vue
     </div>
     <router-view/>
   </div>
@@ -26,9 +33,10 @@ import { useStore } from 'vuex'
     MDBBtn
   } from 'mdb-vue-ui-kit';
 
-  const store = useStore()
+  const store = useStore();
+
   onBeforeMount(() => {
-    store.dispatch('fetchUser')
+    store.dispatch('userStore/fetchUser')
   })
 
 </script>

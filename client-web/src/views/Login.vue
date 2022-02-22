@@ -59,11 +59,11 @@
 	const store = useStore();
 
 	function login () {
-		store.dispatch('login', login_form.value);
+		store.dispatch('userStore/login', login_form.value);
 	}
 
 	function register () {
-		store.dispatch('register', register_form.value);
+		store.dispatch('userStore/register', register_form.value);
 	}
 
 </script>

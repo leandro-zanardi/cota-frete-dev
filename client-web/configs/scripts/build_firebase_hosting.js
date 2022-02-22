@@ -26,7 +26,11 @@ fs.renameSync(appRoot + '/../firebase_hosting/.firebaserc', appRoot +'/../../dis
 })
 
 //deploy to firebase
-output = execSync('firebase deploy', {cwd: 'dist/', econding: 'utf-8'});
+output = execSync('firebase use cota-frete-estudo', {cwd: './dist/', econding: 'utf-8'});
+console.log('Config Firebase\n', String(output));
+
+
+output = execSync('firebase deploy', {cwd: './dist/', econding: 'utf-8'});
 console.log('Deploy Firebase\n', String(output));
 
 //move firebase config back

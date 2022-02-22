@@ -1,0 +1,11 @@
+{
+  "rules": {
+    "cotacao": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+  	}
+  }
+  
+}
