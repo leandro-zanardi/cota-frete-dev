@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "cota-frete-estudo"
-  }
+    "default": "cota-frete-estudo",
+    "cota-frete-estudo": "cota-frete-estudo"
+  },
+  "targets": {}
 }

@@ -18,9 +18,9 @@ fs.renameSync(appRoot + '/../firebase_hosting/firebase.json', appRoot +'/../../d
 fs.renameSync(appRoot + '/../firebase_hosting/.gitignore', appRoot +'/../../dist/.gitignore', (err) => {
     console.log(err);
 })
-fs.renameSync(appRoot + '/../firebase_hosting/.firebase', appRoot +'/../../dist/.firebase', (err) => {
-    console.log(err);
-})
+// fs.renameSync(appRoot + '/../firebase_hosting/.firebase', appRoot +'/../../dist/.firebase', (err) => {
+//     console.log(err);
+// })
 fs.renameSync(appRoot + '/../firebase_hosting/.firebaserc', appRoot +'/../../dist/.firebaserc', (err) => {
     console.log(err);
 })
@@ -37,9 +37,9 @@ fs.renameSync(appRoot +'/../../dist/firebase.json', appRoot + '/../firebase_host
 fs.renameSync(appRoot +'/../../dist/.gitignore', appRoot + '/../firebase_hosting/.gitignore', (err) => {
     console.log(err);
 })
-fs.renameSync(appRoot +'/../../dist/.firebase', appRoot + '/../firebase_hosting/.firebase', (err) => {
-    console.log(err);
-})
+// fs.renameSync(appRoot +'/../../dist/.firebase', appRoot + '/../firebase_hosting/.firebase', (err) => {
+//     console.log(err);
+// })
 fs.renameSync(appRoot +'/../../dist/.firebaserc', appRoot + '/../firebase_hosting/.firebaserc', (err) => {
     console.log(err);
 })
