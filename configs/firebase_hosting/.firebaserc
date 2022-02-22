@@ -3,5 +3,13 @@
     "default": "cota-frete-estudo",
     "cota-frete-estudo": "cota-frete-estudo"
   },
-  "targets": {}
+  "targets": {
+    "cota-frete-estudo": {
+      "hosting": {
+        "cota-frete-estudo": [
+          "cota-frete-estudo"
+        ]
+      }
+    }
+  }
 }

@@ -18,14 +18,18 @@ fs.renameSync(appRoot + '/../firebase_hosting/firebase.json', appRoot +'/../../d
 fs.renameSync(appRoot + '/../firebase_hosting/.gitignore', appRoot +'/../../dist/.gitignore', (err) => {
     console.log(err);
 })
-// fs.renameSync(appRoot + '/../firebase_hosting/.firebase', appRoot +'/../../dist/.firebase', (err) => {
-//     console.log(err);
-// })
+fs.renameSync(appRoot + '/../firebase_hosting/.firebase', appRoot +'/../../dist/.firebase', (err) => {
+    console.log(err);
+})
 fs.renameSync(appRoot + '/../firebase_hosting/.firebaserc', appRoot +'/../../dist/.firebaserc', (err) => {
     console.log(err);
 })
 
 //deploy to firebase
+output = execSync('firebase use cota-frete-estudo', {cwd: 'dist/', econding: 'utf-8'});
+console.log('Config Firebase\n', String(output));
+
+
 output = execSync('firebase deploy', {cwd: 'dist/', econding: 'utf-8'});
 console.log('Deploy Firebase\n', String(output));
 
@@ -37,9 +41,9 @@ fs.renameSync(appRoot +'/../../dist/firebase.json', appRoot + '/../firebase_host
 fs.renameSync(appRoot +'/../../dist/.gitignore', appRoot + '/../firebase_hosting/.gitignore', (err) => {
     console.log(err);
 })
-// fs.renameSync(appRoot +'/../../dist/.firebase', appRoot + '/../firebase_hosting/.firebase', (err) => {
-//     console.log(err);
-// })
+fs.renameSync(appRoot +'/../../dist/.firebase', appRoot + '/../firebase_hosting/.firebase', (err) => {
+    console.log(err);
+})
 fs.renameSync(appRoot +'/../../dist/.firebaserc', appRoot + '/../firebase_hosting/.firebaserc', (err) => {
     console.log(err);
 })
