@@ -6,6 +6,11 @@
         placeholder="Digite o ponto de origem"
         @place_changed="(par) => setPlace(par, 'A')"
         class="autocomplete mb-4"
+        :options="{
+          componentRestrictions: { country: ['br'] },
+          fields: ['address_components', 'geometry'],
+          types: ['address'],
+        }"
       >
       </GMapAutocomplete>
 
@@ -13,6 +18,11 @@
         placeholder="Digite o ponto de destino"
         @place_changed="(par) => setPlace(par, 'B')"
         class="autocomplete  mb-4"
+        :options="{
+          componentRestrictions: { country: ['br'] },
+          fields: ['address_components', 'geometry'],
+          types: ['address'],
+        }"
       >
       </GMapAutocomplete>
 
