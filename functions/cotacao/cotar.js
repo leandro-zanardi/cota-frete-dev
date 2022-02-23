@@ -10,13 +10,14 @@ exports.cotar = functions.database
 
       console.log("call");
 
-      console.log(uid);
+      //console.log(uid);
 
       const register = event.after.val()
       console.log(register);
 
       const root = event.after.ref.parent.child("valor")
 
-     return  root.set(11.0)
+     return  root.set(20.0)
+
 
 });
