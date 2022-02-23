@@ -1,0 +1,1 @@
+exports.cotacao = require('./cotacao');

@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "cota-frete-estudo",
+    "cota-frete-estudo": "cota-frete-estudo"
+  },
+  "targets": {
+    "cota-frete-estudo": {
+      "hosting": {
+        "cota-frete-estudo": [
+          "cota-frete-estudo"
+        ]
+      }
+    }
+  }
+}
