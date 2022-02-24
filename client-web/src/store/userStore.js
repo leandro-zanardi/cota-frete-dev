@@ -11,7 +11,8 @@ const userStore = {
   namespaced: true,
 
   state: {
-    user: null
+    user: null,
+    isAdmin: false
   },
   mutations: {
 
@@ -21,11 +22,16 @@ const userStore = {
 
     CLEAR_USER(state) {
       state.user = null
+    },
+
+    SET_ADMIN(state, admin) {
+      console.log('commit admin', admin)
+      state.isAdmin = admin
     }
 
   },
   actions: {
-    async login({ commit }, details) {
+    async login({ commit, dispatch }, details) {
       const { email, password } = details
 
       try {
@@ -46,11 +52,13 @@ const userStore = {
       }
 
       commit('SET_USER', auth.currentUser)
+      
+      dispatch('isAdmin');
 
       router.push('/')
     },
 
-    async register({ commit }, details) {
+    async register({ commit, dispatch }, details) {
       const { email, password } = details
 
       try {
@@ -78,6 +86,8 @@ const userStore = {
 
       commit('SET_USER', auth.currentUser)
 
+      dispatch('isAdmin');
+
       router.push('/')
     },
 
@@ -89,12 +99,33 @@ const userStore = {
       router.push('/login')
     },
 
-    fetchUser({ commit }) {
+    async isAdmin({commit}) {
+
+      console.log("IS ADMIN")
+
+      try {
+        let idTokenResult = await auth.currentUser.getIdTokenResult();
+        console.log(idTokenResult);
+        if (idTokenResult.claims.admin) {
+          commit('SET_ADMIN', true);
+        } else {
+          commit('SET_ADMIN', false);
+        }
+      } catch(e) {
+        console.log(e);
+        commit('SET_ADMIN', false);
+      }
+    },
+
+    fetchUser({ commit, dispatch }) {
       auth.onAuthStateChanged(async user => {
         if (user === null) {
           commit('CLEAR_USER')
         } else {
           commit('SET_USER', user)
+
+          dispatch('isAdmin');
+          
 
           if (router.isReady() && router.currentRoute.value.path === '/login') {
             router.push('/')

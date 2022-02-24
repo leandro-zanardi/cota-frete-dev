@@ -24,7 +24,15 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
-  }
+  },
+  {
+    path: '/fornecedores',
+    name: 'Fornecedores',
+    component: () => import('../views/Fornecedores.vue'),
+    meta: {
+      requiresAdmin: true
+    }
+  },
 ]
 
 const router = createRouter({
@@ -32,18 +40,39 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.path === '/login' && auth.currentUser) {
+router.beforeEach(async (to, from, next) => {
+  try {
+    let idTokenResult = null;
+    if (auth.currentUser) {
+      idTokenResult = await auth.currentUser.getIdTokenResult();
+    }
+
+
+    if (to.path === '/login' && auth.currentUser) {
+      next('/')
+      return;
+    }
+
+    if (to.matched.some(record => record.meta.requiresAuth) && !auth.currentUser) {
+      next('/login')
+      return;
+    }
+
+    if (to.matched.some(record => record.meta.requiresAdmin) && !!idTokenResult.claims.admin) {
+      next('/login')
+      // TODO pagina de permissao negada
+      return;
+    }
+
+    next();
+
+  } catch(e) {
+    console.log(e);
     next('/')
     return;
   }
 
-  if (to.matched.some(record => record.meta.requiresAuth) && !auth.currentUser) {
-    next('/login')
-    return;
-  }
-
-  next();
+  
 })
 
 export default router
