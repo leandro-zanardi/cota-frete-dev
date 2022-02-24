@@ -87,7 +87,22 @@
     console.log(param1.geometry.location.lat())
     console.log(param1.geometry.location.lng())
 
-    let point = { lat: param1.geometry.location.lat(), lng: param1.geometry.location.lng() };
+    let city = null
+    for ( let x=0; x<param1.address_components.length; x++) {
+      let component = param1.address_components[x];
+      for ( let y=0; y<component.types.length; y++) {
+        if (component.types[y] === 'administrative_area_level_2') {
+          city = component.long_name;
+          break;
+        }
+      }
+    }
+
+    let point = { 
+      lat: param1.geometry.location.lat(),
+      lng: param1.geometry.location.lng(),
+      city: city
+    };
 
     mapCenter.value = point;
 
