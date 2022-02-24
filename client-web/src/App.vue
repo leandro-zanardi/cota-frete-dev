@@ -2,9 +2,15 @@
 
   <div class="h-100 d-flex flex-column">
     <div id="nav" v-if="$store.state.userStore.user">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-      <button @click="$store.dispatch('userStore/logout')">Logout</button>
+
+    <MDBNavbar light bg="light" expand="lg" container>
+        <MDBNavbarNav center> 
+          <MDBNavbarItem  active><router-link class="p-2" to ="/">Home</router-link> | </MDBNavbarItem>
+          <MDBNavbarItem ><router-link class="p-2" to ="/about">About</router-link></MDBNavbarItem>
+          <MDBBtn size="sm" outline="primary" @click="$store.dispatch('userStore/logout')">Logout</MDBBtn>
+        </MDBNavbarNav>
+      </MDBNavbar>
+
     </div>
     <router-view/>
   </div>

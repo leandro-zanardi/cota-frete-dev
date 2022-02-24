@@ -2,7 +2,8 @@
 client-web/node_modules
 functions/node_modules
 client-web/dist
-
+node_modules
+dist
 
 # local env files
 .env.local
