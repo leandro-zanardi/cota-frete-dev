@@ -40,7 +40,7 @@
     </div>
 
     <div class="flex-fill p-3 h-100">
-      <div style="background-color:#00ff00; height: calc(100%);">
+      <div style="height: calc(100%);">
         <GMapMap
           :center="mapCenter"
           :zoom="16"
