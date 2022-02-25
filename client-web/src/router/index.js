@@ -43,8 +43,12 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   try {
     let idTokenResult = null;
+    console.log("current user");
+    console.log(auth.currentUser);
     if (auth.currentUser) {
       idTokenResult = await auth.currentUser.getIdTokenResult();
+      console.log("idToken");
+      console.log(idTokenResult);
     }
 
 
@@ -58,7 +62,12 @@ router.beforeEach(async (to, from, next) => {
       return;
     }
 
-    if (to.matched.some(record => record.meta.requiresAdmin) && !!idTokenResult.claims.admin) {
+    if (to.matched.some(record => record.meta.requiresAdmin) && idTokenResult && !idTokenResult.claims.admin) {
+
+      
+      console.log(idTokenResult.claims.admin);
+
+      console.log('Nao eh admin')
       next('/login')
       // TODO pagina de permissao negada
       return;

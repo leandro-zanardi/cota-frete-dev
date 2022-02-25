@@ -9,7 +9,6 @@ exports.setCustomClaims = functions.https.onRequest( async (req, res) => {
     const uid = req.body.idToken;
     console.log('setCustomClaims');
     console.log(uid);
-    const claims = await firebaseAdmin.auth();
 
     await firebaseAdmin.auth().setCustomUserClaims(uid, {
         admin: true

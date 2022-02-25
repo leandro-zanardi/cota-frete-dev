@@ -95,6 +95,7 @@ const userStore = {
       await signOut(auth)
 
       commit('CLEAR_USER')
+      commit('SET_ADMIN', false);
 
       router.push('/login')
     },
