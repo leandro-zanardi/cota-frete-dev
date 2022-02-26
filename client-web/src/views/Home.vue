@@ -34,9 +34,20 @@
           Cotar
       </MDBBtn>
 
-      <div>
-        {{$store.state.cotacaoStore.cotacao}}
-      </div>
+        <MDBTable striped>
+          <tr>
+            <th>Fornecedor</th>
+            <th>Valor</th>
+          </tr>
+          <tr>
+            <td>Fornecedor 1</td>
+            <td>{{$store.state.cotacaoStore.cotacao.valor
+                  .toLocaleString('pt-br',
+                  {style: 'currency', currency: 'BRL'})}}
+            </td>
+          </tr>
+        </MDBTable>
+
     </div>
 
     <div class="flex-fill p-3 h-100">
@@ -66,6 +77,7 @@
 <script setup>
   import { onBeforeMount, ref } from 'vue';
   import { MDBBtn } from 'mdb-vue-ui-kit';
+  import { MDBTable } from 'mdb-vue-ui-kit';
   import { useStore } from 'vuex'
 
   const store = useStore();
