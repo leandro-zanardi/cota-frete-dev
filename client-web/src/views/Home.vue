@@ -34,19 +34,19 @@
           Cotar
       </MDBBtn>
 
-        <MDBTable striped>
-          <tr>
-            <th>Fornecedor</th>
-            <th>Valor</th>
-          </tr>
-          <tr>
-            <td>Fornecedor 1</td>
-            <td>{{$store.state.cotacaoStore.cotacao.valor
-                  .toLocaleString('pt-br',
-                  {style: 'currency', currency: 'BRL'})}}
-            </td>
-          </tr>
-        </MDBTable>
+      <MDBTable striped>
+        <tr>
+          <th>Fornecedor</th>
+          <th>Valor</th>
+        </tr>
+        <tr>
+          <td>Fornecedor 1</td>
+          <td>{{$store.state.cotacaoStore.cotacao.valor
+                .toLocaleString('pt-br',
+                {style: 'currency', currency: 'BRL'})}}
+          </td>
+        </tr>
+      </MDBTable>
 
     </div>
 
