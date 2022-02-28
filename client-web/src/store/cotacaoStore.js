@@ -1,4 +1,4 @@
-import { firebaseDB, ref, set, onValue } from "../firebase";
+import { firebaseDB, ref, set, onValue, get } from "../firebase";
 
 const cotacaoStore = {
   namespaced: true,
@@ -34,6 +34,13 @@ const cotacaoStore = {
     async create({ commit }, cotacao) {
       const db = ref(firebaseDB, `cotacao/${cotacao.userUid}`);
       await set(db, cotacao);
+    },
+
+    async get({ commit }, userUid) {
+      const db = ref(firebaseDB, `cotacao/${userUid}`);
+      await onValue(db, (snapshot) => {
+        commit('SET_COTACAO',snapshot.val());
+      });
     }
   }
 

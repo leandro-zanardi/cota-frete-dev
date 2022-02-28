@@ -6,6 +6,7 @@
         placeholder="Digite o ponto de origem"
         @place_changed="(par) => setPlace(par, 'A')"
         class="autocomplete mb-4"
+        id="campo1"
         :options="{
           componentRestrictions: { country: ['br'] },
           fields: ['address_components', 'geometry'],
@@ -13,11 +14,16 @@
         }"
       >
       </GMapAutocomplete>
-
+      
+      <MDBBtn outline="primary" floating class="fa-rotate-90" v-on:click="swapValues">
+        <MDBIcon icon="exchange-alt"></MDBIcon>
+      </MDBBtn>
+  
       <GMapAutocomplete
         placeholder="Digite o ponto de destino"
         @place_changed="(par) => setPlace(par, 'B')"
         class="autocomplete  mb-4"
+        id="campo2"
         :options="{
           componentRestrictions: { country: ['br'] },
           fields: ['address_components', 'geometry'],
@@ -33,6 +39,13 @@
         size="lg">
           Cotar
       </MDBBtn>
+      
+      <MDBTable striped>
+        <tr>
+          <th>Distância</th>
+          <td>{{distancia}}</td>
+        </tr>
+      </MDBTable>
 
       <MDBTable striped>
         <tr>
@@ -41,10 +54,15 @@
         </tr>
         <tr>
           <td>Fornecedor 1</td>
-          <td>{{$store.state.cotacaoStore.cotacao.valor
-                .toLocaleString('pt-br',
-                {style: 'currency', currency: 'BRL'})}}
-          </td>
+          <td>{{valor}}</td>
+        </tr>
+        <tr>
+          <td>Fornecedor 2</td>
+          <td>{{valor}}</td>
+        </tr>
+        <tr>
+          <td>Fornecedor 3</td>
+          <td>{{valor}}</td>
         </tr>
       </MDBTable>
 
@@ -69,16 +87,16 @@
       </div>
     </div>
 
-    
     <br/>
   </main>
 </template>
 
 <script setup>
   import { onBeforeMount, ref } from 'vue';
-  import { MDBBtn } from 'mdb-vue-ui-kit';
+  import { MDBBtn, MDBIcon } from 'mdb-vue-ui-kit';
   import { MDBTable } from 'mdb-vue-ui-kit';
   import { useStore } from 'vuex'
+  import { computeDistanceBetween } from 'spherical-geometry-js'
 
   const store = useStore();
 
@@ -89,6 +107,8 @@
   markers.value = [];
 
   const points = ref({});
+  let distancia = 0;
+  let valor = 0;
 
   onBeforeMount(() => {
     store.dispatch('cotacaoStore/init', store.state.userStore.user.uid);
@@ -127,7 +147,7 @@
     })
 
     getCotacao();
-    
+
   }
 
   function getCotacao() {
@@ -138,9 +158,23 @@
       value: null
     }
     store.dispatch('cotacaoStore/create', userPoint);
+    store.dispatch('cotacaoStore/get', userPoint.userUid)
+    const cotacao = store.state.cotacaoStore.cotacao
+    if(cotacao.points.A && cotacao.points.B){
+      distancia = computeDistanceBetween({ lat: cotacao.points.A.lat, lng: cotacao.points.A.lng},
+      { lat: cotacao.points.B.lat, lng: cotacao.points.B.lng})
+      valor = store.state.cotacaoStore.cotacao.valor.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})
+    }
   }
 
-
+  function swapValues(){
+    const field1 = document.getElementById('campo1');
+    const field2 = document.getElementById('campo2');
+    let field1Value = field1.value;
+    let field2Value = field2.value;
+    field1.value = field2Value;
+    field2.value = field1Value;
+  }
 </script>
 
 <style>
