@@ -15,9 +15,11 @@
       >
       </GMapAutocomplete>
       
-      <MDBBtn outline="primary" floating class="fa-rotate-90" v-on:click="swapValues">
-        <MDBIcon icon="exchange-alt"></MDBIcon>
-      </MDBBtn>
+      <div class="text-center pb-3"> 
+        <MDBBtn  outline="primary" floating class="fa-rotate-90" v-on:click="swapValues">
+          <MDBIcon icon="exchange-alt"></MDBIcon>
+        </MDBBtn> 
+      </div>
   
       <GMapAutocomplete
         placeholder="Digite o ponto de destino"
