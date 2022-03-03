@@ -174,6 +174,16 @@
     if(cotacao.points.A && cotacao.points.B){
       distancia.value = computeDistanceBetween({ lat: cotacao.points.A.lat, lng: cotacao.points.A.lng},
       { lat: cotacao.points.B.lat, lng: cotacao.points.B.lng})
+      if (distancia.value >= 0 && distancia.value < 1000){
+        distancia.value = distancia.value.toFixed()+" m"
+      }
+      else if (distancia.value >= 1000){
+        distancia.value = (distancia.value/1000).toFixed(1).replace('.', ',')+" km"
+      }
+      else {
+        console.log("Erro ao tratar distancia")
+      }
+      console.log(distancia.value.toFixed(), distancia.value.toFixed(2))
     }
   }
 
