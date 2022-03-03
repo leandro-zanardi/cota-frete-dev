@@ -183,7 +183,6 @@
       else {
         console.log("Erro ao tratar distancia")
       }
-      console.log(distancia.value.toFixed(), distancia.value.toFixed(2))
     }
   }
 
