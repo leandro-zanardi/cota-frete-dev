@@ -38,7 +38,8 @@
         class="botao_cotar"
         color="primary"
         type="submit"
-        size="lg">
+        size="lg"
+        @click="getCotacao">
           Cotar
       </MDBBtn>
       
@@ -56,15 +57,16 @@
         </tr>
         <tr>
           <td>Fornecedor 1</td>
-          <td>{{valor}}</td>
+          <td>{{updateValue(1)}}
+          </td>
         </tr>
         <tr>
           <td>Fornecedor 2</td>
-          <td>{{valor}}</td>
+          <td>{{updateValue(2)}}</td>
         </tr>
         <tr>
           <td>Fornecedor 3</td>
-          <td>{{valor}}</td>
+          <td>{{updateValue(3)}}</td>
         </tr>
       </MDBTable>
 
@@ -109,8 +111,10 @@
   markers.value = [];
 
   const points = ref({});
-  let distancia = 0;
-  let valor = 0;
+  const  distancia = ref({});
+  distancia.value = 0;
+  const valor = ref({});
+  valor.value = [];
 
   onBeforeMount(() => {
     store.dispatch('cotacaoStore/init', store.state.userStore.user.uid);
@@ -148,11 +152,13 @@
       position: point
     })
 
-    getCotacao();
+    //getCotacao();
 
   }
 
   function getCotacao() {
+
+    console.log("get cotacao");
 
     let userPoint = {
       userUid: store.state.userStore.user.uid,
@@ -160,12 +166,14 @@
       value: null
     }
     store.dispatch('cotacaoStore/create', userPoint);
-    store.dispatch('cotacaoStore/get', userPoint.userUid)
+    
+    //store.dispatch('cotacaoStore/get', userPoint.userUid)
+
     const cotacao = store.state.cotacaoStore.cotacao
+    //console.log(cotacao)
     if(cotacao.points.A && cotacao.points.B){
-      distancia = computeDistanceBetween({ lat: cotacao.points.A.lat, lng: cotacao.points.A.lng},
+      distancia.value = computeDistanceBetween({ lat: cotacao.points.A.lat, lng: cotacao.points.A.lng},
       { lat: cotacao.points.B.lat, lng: cotacao.points.B.lng})
-      valor = store.state.cotacaoStore.cotacao.valor.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})
     }
   }
 
@@ -177,6 +185,18 @@
     field1.value = field2Value;
     field2.value = field1Value;
   }
+
+  function updateValue() {
+    if (store.state.cotacaoStore.cotacao && store.state.cotacaoStore.cotacao.valor && store.state.cotacaoStore.cotacao.valor.length ) {
+      store.state.cotacaoStore.cotacao.valor.forEach(fornecedor => {
+        fornecedor.preco = fornecedor.preco.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})
+        return fornecedor.preco
+      });
+    }
+
+  }
+
+
 </script>
 
 <style>

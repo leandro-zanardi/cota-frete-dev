@@ -39,6 +39,7 @@ const cotacaoStore = {
     async get({ commit }, userUid) {
       const db = ref(firebaseDB, `cotacao/${userUid}`);
       await onValue(db, (snapshot) => {
+        console.log(snapshot.val());
         commit('SET_COTACAO',snapshot.val());
       });
     }

@@ -17,7 +17,24 @@ exports.cotar = functions.database
 
       const root = event.after.ref.parent.child("valor")
 
-     return  root.set(20.0)
+     return  root.set(
+       [
+         {
+           "nome": "fornecedor 1",
+           "preco": 20.0
+         },
+         {
+          "nome": "fornecedor 2",
+          "preco": 21.0
+          },
+          {
+            "nome": "fornecedor 3",
+            "preco": 22.0
+          },
+       
+        ]
+       
+      )
 
 
 });
