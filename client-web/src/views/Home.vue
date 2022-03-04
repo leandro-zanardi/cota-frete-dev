@@ -50,23 +50,17 @@
         </tr>
       </MDBTable>
 
-      <MDBTable striped>
+      <MDBTable striped v-if="$store.state.cotacaoStore.cotacao &&
+         $store.state.cotacaoStore.cotacao.valores &&
+         $store.state.cotacaoStore.cotacao.valores.length">
         <tr>
           <th>Fornecedor</th>
           <th>Valor</th>
         </tr>
-        <tr>
-          <td>Fornecedor 1</td>
-          <td>{{updateValue(1)}}
+        <tr v-for="fornecedor in $store.state.cotacaoStore.cotacao.valores" v-bind:key="fornecedor.fid">
+          <td>{{fornecedor.nome}}</td>
+          <td>{{fornecedor.preco.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}}
           </td>
-        </tr>
-        <tr>
-          <td>Fornecedor 2</td>
-          <td>{{updateValue(2)}}</td>
-        </tr>
-        <tr>
-          <td>Fornecedor 3</td>
-          <td>{{updateValue(3)}}</td>
         </tr>
       </MDBTable>
 
@@ -113,8 +107,7 @@
   const points = ref({});
   const  distancia = ref({});
   distancia.value = 0;
-  const valor = ref({});
-  valor.value = [];
+
 
   onBeforeMount(() => {
     store.dispatch('cotacaoStore/init', store.state.userStore.user.uid);
@@ -152,7 +145,6 @@
       position: point
     })
 
-    //getCotacao();
 
   }
 
@@ -163,14 +155,12 @@
     let userPoint = {
       userUid: store.state.userStore.user.uid,
       points: points.value,
-      value: null
+      cotacaoTime: new Date().getTime()
     }
     store.dispatch('cotacaoStore/create', userPoint);
     
-    //store.dispatch('cotacaoStore/get', userPoint.userUid)
 
     const cotacao = store.state.cotacaoStore.cotacao
-    //console.log(cotacao)
     if(cotacao.points.A && cotacao.points.B){
       distancia.value = computeDistanceBetween({ lat: cotacao.points.A.lat, lng: cotacao.points.A.lng},
       { lat: cotacao.points.B.lat, lng: cotacao.points.B.lng})
@@ -193,16 +183,6 @@
     let field2Value = field2.value;
     field1.value = field2Value;
     field2.value = field1Value;
-  }
-
-  function updateValue() {
-    if (store.state.cotacaoStore.cotacao && store.state.cotacaoStore.cotacao.valor && store.state.cotacaoStore.cotacao.valor.length ) {
-      store.state.cotacaoStore.cotacao.valor.forEach(fornecedor => {
-        fornecedor.preco = fornecedor.preco.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})
-        return fornecedor.preco
-      });
-    }
-
   }
 
 
