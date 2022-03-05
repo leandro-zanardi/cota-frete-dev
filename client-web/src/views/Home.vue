@@ -43,7 +43,7 @@
           Cotar
       </MDBBtn>
       
-      <MDBTable striped>
+      <MDBTable striped v-if="distancia && Number(distancia.charAt(0))">
         <tr>
           <th>Distância</th>
           <td>{{distancia}}</td>
@@ -107,7 +107,6 @@
   const points = ref({});
   const  distancia = ref({});
   distancia.value = 0;
-
 
   onBeforeMount(() => {
     store.dispatch('cotacaoStore/init', store.state.userStore.user.uid);
@@ -173,7 +172,7 @@
       else {
         console.log("Erro ao tratar distancia")
       }
-    }
+    }   
   }
 
   function swapValues(){
