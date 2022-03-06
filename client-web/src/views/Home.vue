@@ -77,6 +77,10 @@
             :key="index"
             v-for="(m, index) in markers"
             :position="m.position"
+            :icon='{
+              url: "https://cdn-icons-png.flaticon.com/512/75/75782.png",
+              scaledSize: {width: 60, height: 60},
+            }'
             :clickable="false"
             :draggable="false"
             :controls="false"
