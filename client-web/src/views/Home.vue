@@ -77,6 +77,10 @@
             :key="index"
             v-for="(m, index) in markers"
             :position="m.position"
+            :icon='{
+              url: "https://cdn-icons-png.flaticon.com/512/75/75782.png",
+              scaledSize: {width: 60, height: 60},
+            }'
             :clickable="false"
             :draggable="false"
             :controls="false"
@@ -95,7 +99,7 @@
   import { MDBTable } from 'mdb-vue-ui-kit';
   import { useStore } from 'vuex'
   import { computeDistanceBetween } from 'spherical-geometry-js'
-
+  
   const store = useStore();
 
   const mapCenter = ref({});
@@ -160,27 +164,34 @@
     
 
     const cotacao = store.state.cotacaoStore.cotacao
-    if(cotacao.points.A && cotacao.points.B){
-      distancia.value = computeDistanceBetween({ lat: cotacao.points.A.lat, lng: cotacao.points.A.lng},
-      { lat: cotacao.points.B.lat, lng: cotacao.points.B.lng})
-      if (distancia.value >= 0 && distancia.value < 1000){
-        distancia.value = distancia.value.toFixed()+" m"
+    try {
+      if(cotacao.points.A && cotacao.points.B){
+        distancia.value = computeDistanceBetween({ lat: cotacao.points.A.lat, lng: cotacao.points.A.lng},
+        { lat: cotacao.points.B.lat, lng: cotacao.points.B.lng})
+        if (distancia.value >= 0 && distancia.value < 1000){
+          distancia.value = distancia.value.toFixed()+" m"
+        }
+        else if (distancia.value >= 1000){
+          distancia.value = (distancia.value/1000).toFixed(1).replace('.', ',')+" km"
+        }
       }
-      else if (distancia.value >= 1000){
-        distancia.value = (distancia.value/1000).toFixed(1).replace('.', ',')+" km"
-      }
-      else {
-        console.log("Erro ao tratar distancia")
-      }
-    }   
+    } catch (e) {
+      console.log("Erro ao tratar distancia",e)
+    }
   }
 
   function swapValues(){
     const field1 = document.getElementById('campo1');
     const field2 = document.getElementById('campo2');
-    let field1Value = field1.value;
-    let field2Value = field2.value;
-    field1.value = field2Value;
+    try {
+      const point1 = points.value.A;
+      points.value.A = points.value.B;
+      points.value.B = point1;
+    } catch (e) {
+      console.log(e)
+    }
+    const field1Value = field1.value;
+    field1.value = field2.value;
     field2.value = field1Value;
   }
 
