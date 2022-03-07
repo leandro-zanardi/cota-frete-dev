@@ -19,7 +19,10 @@ const cotacaoStore = {
 
   actions: {
 
-    init({commit}, userUid) {
+    init({commit, dispatch}, userUid) {
+
+      dispatch('clear', userUid);
+
       console.log('INIT');
       console.log(`cotacao/${userUid}`)
       const db = ref(firebaseDB, `cotacao/${userUid}`);
@@ -34,6 +37,11 @@ const cotacaoStore = {
     async create({ commit }, cotacao) {
       const db = ref(firebaseDB, `cotacao/${cotacao.userUid}`);
       await set(db, cotacao);
+    },
+
+    async clear({ commit }, userUid) {
+      const db = ref(firebaseDB, `cotacao/${userUid}`);
+      await set(db, null);
     },
 
     async get({ commit }, userUid) {

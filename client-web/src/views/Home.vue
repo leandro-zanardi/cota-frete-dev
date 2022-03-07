@@ -117,6 +117,10 @@
   })
 
   function setPlace(param1, pointPosition) {
+
+    store.dispatch('cotacaoStore/clear', store.state.userStore.user.uid);
+
+
     console.log(param1)
     console.log(param1.geometry.location.lat())
     console.log(param1.geometry.location.lng())
