@@ -69,9 +69,11 @@
     <div class="flex-fill p-3 h-100">
       <div style="height: calc(100%);">
         <GMapMap
+          ref="mapRef"
           :center="mapCenter"
           :zoom="16"
           class="h-100"
+          :disableDefaultUI="true"
         >
           <GMapMarker
             :key="index"
@@ -84,6 +86,17 @@
             :clickable="false"
             :draggable="false"
             :controls="false"
+          />
+
+          <GMapPolygon
+            :options='{
+              geodesic: true,
+              strokeColor: "#FF0000",
+              strokeOpacity: 1.0,
+              strokeWeight: 4, 
+            }'
+            :clickable="false"
+            :paths="paths"
           />
         </GMapMap>
       </div>
@@ -103,7 +116,7 @@
   const store = useStore();
 
   const mapCenter = ref({});
-  mapCenter.value = {lat: -23.6815302, lng: -46.8761758};
+  //mapCenter.value = {lat: 18.466, lng: -66.118};
 
   const markers = ref({});
   markers.value = [];
@@ -111,6 +124,13 @@
   const points = ref({});
   const  distancia = ref({});
   distancia.value = 0;
+
+  const paths = ref([]);
+
+  var mapRef = ref();
+
+  
+  
 
   onBeforeMount(() => {
     store.dispatch('cotacaoStore/init', store.state.userStore.user.uid);
@@ -142,15 +162,34 @@
       city: city
     };
 
-    mapCenter.value = point;
+    //mapCenter.value = point;
 
     points.value[pointPosition] = point;
+    
+    let pointKeys = Object.keys(points.value);
+
+    console.log(pointKeys);
+
+    // desenhar linha
+    paths.value = [];
+    pointKeys.forEach(key => {
+      let currentPoint = points.value[key];
+      paths.value.push({lat: currentPoint.lat, lng: currentPoint.lng})
+    })
 
     console.log(pointPosition)
 
     markers.value.push({
       position: point
     })
+
+
+    var bounds = new window.google.maps.LatLngBounds();
+    bounds.extend(paths.value[0]);
+    if (paths.value.length > 1) {
+      bounds.extend(paths.value[1]);
+    }
+    mapRef.value.fitBounds(bounds);
 
 
   }
