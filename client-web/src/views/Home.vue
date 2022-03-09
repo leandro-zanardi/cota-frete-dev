@@ -2,18 +2,38 @@
   <main class="home h-100 p-2 d-flex flex-row justify-content-center align-items-stretch">
 
     <div class="left p-3 d-flex flex-column">
-      <GMapAutocomplete
-        placeholder="Digite o ponto de origem"
-        @place_changed="(par) => setPlace(par, 'A')"
-        class="autocomplete mb-4"
-        id="campo1"
-        :options="{
-          componentRestrictions: { country: ['br'] },
-          fields: ['address_components', 'geometry'],
-          types: ['address'],
-        }"
-      >
-      </GMapAutocomplete>
+
+      <div v-for="x in 3" v-bind:key="x" class="d-flex flex-column mb-4 p-2" style="border: 1px solid;">
+        <GMapAutocomplete
+          placeholder="Digite o ponto de origem"
+          @place_changed="(par) => setPlace(par, 'PONTO_'+x)"
+          class="autocomplete mb-2"
+          :id="'campo' + x" 
+          :options="{
+            componentRestrictions: { country: ['br'] },
+            fields: ['address_components', 'geometry'],
+            types: ['address'],
+          }"
+        >
+        </GMapAutocomplete>
+
+        <div class="d-flex flex-column mb-1 mt-1">
+          <label> Descreva o que fazer: </label>
+          <input type = "text" />
+        </div>
+
+        <div class="d-flex flex-column  mb-1 mt-1">
+          <label> Tipo de Veículo</label>
+          <select>
+            <option>Moto</option>
+            <option>Carro</option>
+            <option>Van</option>
+          </select>
+          
+        </div>
+        
+
+      </div>
       
       <div class="text-center pb-3"> 
         <MDBBtn  outline="primary" floating class="fa-rotate-90" v-on:click="swapValues">
@@ -21,7 +41,7 @@
         </MDBBtn> 
       </div>
   
-      <GMapAutocomplete
+      <!-- <GMapAutocomplete
         placeholder="Digite o ponto de destino"
         @place_changed="(par) => setPlace(par, 'B')"
         class="autocomplete  mb-4"
@@ -32,7 +52,7 @@
           types: ['address'],
         }"
       >
-      </GMapAutocomplete>
+      </GMapAutocomplete> -->
 
       <MDBBtn
         class="botao_cotar"
@@ -70,8 +90,8 @@
       <div style="height: calc(100%);">
         <GMapMap
           ref="mapRef"
-          :center="mapCenter"
           :zoom="16"
+          :center="mapCenter"
           class="h-100"
           :disableDefaultUI="true"
         >
@@ -90,10 +110,10 @@
 
           <GMapPolygon
             :options='{
-              geodesic: true,
+              //geodesic: true,
               strokeColor: "#FF0000",
               strokeOpacity: 1.0,
-              strokeWeight: 4, 
+              //strokeWeight: 4, 
             }'
             :clickable="false"
             :paths="paths"
@@ -115,9 +135,6 @@
   
   const store = useStore();
 
-  const mapCenter = ref({});
-  //mapCenter.value = {lat: 18.466, lng: -66.118};
-
   const markers = ref({});
   markers.value = [];
 
@@ -129,7 +146,8 @@
 
   var mapRef = ref();
 
-  
+  const mapCenter = ref({});
+  mapCenter.value = {lat: 18.466, lng: -66.118};
   
 
   onBeforeMount(() => {
@@ -138,14 +156,16 @@
 
   function setPlace(param1, pointPosition) {
 
+    // limpa o banco com pontos
     store.dispatch('cotacaoStore/clear', store.state.userStore.user.uid);
+    // limpa o calculo de distancia
+    distancia.value = 0;
 
+    // imprime o endereco do auto complete
+    console.log(param1);
 
-    console.log(param1)
-    console.log(param1.geometry.location.lat())
-    console.log(param1.geometry.location.lng())
-
-    let city = null
+    // formatar o endereco
+    let city = null;
     for ( let x=0; x<param1.address_components.length; x++) {
       let component = param1.address_components[x];
       for ( let y=0; y<component.types.length; y++) {
@@ -156,40 +176,39 @@
       }
     }
 
+    // adiciona um ponto na lista de pontos global
     let point = { 
       lat: param1.geometry.location.lat(),
       lng: param1.geometry.location.lng(),
       city: city
     };
-
-    //mapCenter.value = point;
-
     points.value[pointPosition] = point;
     
+
+    // insere path e bounds
     let pointKeys = Object.keys(points.value);
-
-    console.log(pointKeys);
-
-    // desenhar linha
+    // desenhar linha e definir bounds
     paths.value = [];
+    // inicializa o objeto LatLngBounds
+    const bounds = new window.google.maps.LatLngBounds();
+    // limpa os marcadores
+     markers.value = [];
+
     pointKeys.forEach(key => {
       let currentPoint = points.value[key];
-      paths.value.push({lat: currentPoint.lat, lng: currentPoint.lng})
+      let pointI = {lat: currentPoint.lat, lng: currentPoint.lng};
+      // insere na lista de paths um ponto para o desenho das linhas
+      paths.value.push(pointI);
+      // insere um novo ponto na instancia de LatLngBounds
+      bounds.extend(pointI);
+      // redefine os marcadores
+      markers.value.push({
+        position: pointI
+      });
     })
-
-    console.log(pointPosition)
-
-    markers.value.push({
-      position: point
-    })
-
-
-    var bounds = new window.google.maps.LatLngBounds();
-    bounds.extend(paths.value[0]);
-    if (paths.value.length > 1) {
-      bounds.extend(paths.value[1]);
-    }
+    // redefine os bounds do mapa
     mapRef.value.fitBounds(bounds);
+    
 
 
   }
