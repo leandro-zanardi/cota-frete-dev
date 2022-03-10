@@ -1,39 +1,18 @@
 <template>
   <main class="home h-100 p-2 d-flex flex-row justify-content-center align-items-stretch">
 
-    <div class="left p-3 d-flex flex-column">
+    <div class="left p-3 pb-5 " style="overflow:auto" >
 
-      <div v-for="x in 3" v-bind:key="x" class="d-flex flex-column mb-4 p-2" style="border: 1px solid;">
-        <GMapAutocomplete
-          placeholder="Digite o ponto de origem"
-          @place_changed="(par) => setPlace(par, 'PONTO_'+x)"
-          class="autocomplete mb-2"
-          :id="'campo' + x" 
-          :options="{
-            componentRestrictions: { country: ['br'] },
-            fields: ['address_components', 'geometry'],
-            types: ['address'],
-          }"
-        >
-        </GMapAutocomplete>
+      <div class="d-flex flex-column">
+      <AutoComplete 
+        v-for="x in 2" 
+        v-bind:key="x"
+        @place_changed="(par) => setPlace(par, 'PONTO_'+x)"
 
-        <div class="d-flex flex-column mb-1 mt-1">
-          <label> Descreva o que fazer: </label>
-          <input type = "text" />
-        </div>
+        :teste="'Ola componente'">
+      </AutoComplete>
 
-        <div class="d-flex flex-column  mb-1 mt-1">
-          <label> Tipo de Veículo</label>
-          <select>
-            <option>Moto</option>
-            <option>Carro</option>
-            <option>Van</option>
-          </select>
-          
-        </div>
-        
-
-      </div>
+      
       
       <div class="text-center pb-3"> 
         <MDBBtn  outline="primary" floating class="fa-rotate-90" v-on:click="swapValues">
@@ -41,18 +20,7 @@
         </MDBBtn> 
       </div>
   
-      <!-- <GMapAutocomplete
-        placeholder="Digite o ponto de destino"
-        @place_changed="(par) => setPlace(par, 'B')"
-        class="autocomplete  mb-4"
-        id="campo2"
-        :options="{
-          componentRestrictions: { country: ['br'] },
-          fields: ['address_components', 'geometry'],
-          types: ['address'],
-        }"
-      >
-      </GMapAutocomplete> -->
+     
 
       <MDBBtn
         class="botao_cotar"
@@ -83,7 +51,7 @@
           </td>
         </tr>
       </MDBTable>
-
+      </div>
     </div>
 
     <div class="flex-fill p-3 h-100">
@@ -127,6 +95,7 @@
 </template>
 
 <script setup>
+  import AutoComplete from '@/components/AutoComplete';
   import { onBeforeMount, ref } from 'vue';
   import { MDBBtn, MDBIcon } from 'mdb-vue-ui-kit';
   import { MDBTable } from 'mdb-vue-ui-kit';
@@ -154,15 +123,18 @@
     store.dispatch('cotacaoStore/init', store.state.userStore.user.uid);
   })
 
-  function setPlace(param1, pointPosition) {
+  function setPlace(par, pointPosition) {
+
+    let param1 = par.gmaps;
+
+    console.log('SET PLACE')
+    console.log(par);
 
     // limpa o banco com pontos
     store.dispatch('cotacaoStore/clear', store.state.userStore.user.uid);
     // limpa o calculo de distancia
     distancia.value = 0;
 
-    // imprime o endereco do auto complete
-    console.log(param1);
 
     // formatar o endereco
     let city = null;
