@@ -1,6 +1,6 @@
 <template>
   <div class="component-main">
-      <div  class="d-flex flex-column mb-4 p-2" style="border: 1px solid;">
+      <div  class="d-flex flex-column mb-4 p-2 box-main">
         <GMapAutocomplete
           placeholder="Digite o ponto de origem"
           @place_changed="placeChanged"
@@ -64,7 +64,8 @@
 </script>
 
 <style>
-.component-main {
+.box-main {
     background-color: #c0c0c0;
+    border: 1px solid;
 }
 </style>

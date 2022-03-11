@@ -5,19 +5,26 @@
 
       <div class="d-flex flex-column">
       <AutoComplete 
-        v-for="x in 2" 
-        v-bind:key="x"
-        @place_changed="(par) => setPlace(par, 'PONTO_'+x)"
+        v-for="ponto in pontosColetaEntrega" 
+        v-bind:key="ponto.id"
+        @place_changed="(par) => setPlace(par, ponto.id)"
 
-        :teste="'Ola componente'">
-      </AutoComplete>
-
+      />
       
       
       <div class="text-center pb-3"> 
         <MDBBtn  outline="primary" floating class="fa-rotate-90" v-on:click="swapValues">
           <MDBIcon icon="exchange-alt"></MDBIcon>
         </MDBBtn> 
+
+        <MDBBtn  outline="primary" floating class="fab" v-on:click="adicionaNovoPonto">
+          <MDBIcon icon="plus"></MDBIcon>
+        </MDBBtn> 
+
+        <MDBBtn  outline="primary" floating class="fas" v-on:click="removeUltimoPonto">
+          <MDBIcon icon="ban"></MDBIcon>
+        </MDBBtn> 
+
       </div>
   
      
@@ -101,6 +108,7 @@
   import { MDBTable } from 'mdb-vue-ui-kit';
   import { useStore } from 'vuex'
   import { computeDistanceBetween } from 'spherical-geometry-js'
+  import {PontoColetaEntrega} from '@/models/PontoColetaEntrega';
   
   const store = useStore();
 
@@ -117,7 +125,13 @@
 
   const mapCenter = ref({});
   mapCenter.value = {lat: 18.466, lng: -66.118};
-  
+
+  const pontosIds = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+  var pontosIdsLast = 1;
+  const pontosColetaEntrega = ref([
+    new PontoColetaEntrega('A'),
+    new PontoColetaEntrega('B')
+  ]);
 
   onBeforeMount(() => {
     store.dispatch('cotacaoStore/init', store.state.userStore.user.uid);
@@ -227,6 +241,19 @@
     const field1Value = field1.value;
     field1.value = field2.value;
     field2.value = field1Value;
+  }
+
+  function adicionaNovoPonto() {
+    if (pontosIdsLast < pontosIds.length) {
+      pontosColetaEntrega.value.push(new PontoColetaEntrega(pontosIds[++pontosIdsLast]))
+    }
+  }
+
+  function removeUltimoPonto() {
+    if (pontosIdsLast >= 2) {
+      pontosIdsLast--;
+      pontosColetaEntrega.value.pop();
+    }
   }
 
 
