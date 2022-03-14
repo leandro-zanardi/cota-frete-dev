@@ -5,10 +5,10 @@
 
     <MDBNavbar light bg="light" expand="lg" container>
         <MDBNavbarNav center> 
-          <MDBNavbarItem  active><router-link class="p-2" to ="/">Home</router-link> | </MDBNavbarItem>
-          <MDBNavbarItem ><router-link class="p-2" to ="/about">About</router-link></MDBNavbarItem>
+          <MDBNavbarItem active><router-link class="p-2" to ="/">Home</router-link> | </MDBNavbarItem>
+          <MDBNavbarItem active><router-link class="p-2" to ="/">About</router-link></MDBNavbarItem>
           <MDBNavbarItem v-show="$store.state.userStore.isAdmin"><router-link class="p-2" to ="/fornecedores">Fornecedores</router-link></MDBNavbarItem>
-          <MDBBtn size="sm" outline="primary" @click="$store.dispatch('userStore/logout')">Logout</MDBBtn>
+          <MDBBtn size="xs-2" outline="primary" @click="$store.dispatch('userStore/logout')">Logout</MDBBtn>
         </MDBNavbarNav>
       </MDBNavbar>
 

@@ -1,99 +1,101 @@
 <template>
   <main class="home h-100 p-2 d-flex flex-row justify-content-center align-items-stretch">
-
-    <div class="left p-3 pb-5 " style="overflow:auto" >
-
-      <div class="d-flex flex-column">
-      <AutoComplete 
-        v-for="ponto in pontosColetaEntrega" 
-        v-bind:key="ponto.id"
-        @place_changed="(par) => setPlace(par, ponto.id)"
-
-      />
+    <div class="row w-100 "> 
       
+      <div class="left p-3 pb-5 col-4" style="overflow:auto" > 
+
+        <div class="d-flex flex-column">
+        <AutoComplete 
+          v-for="ponto in pontosColetaEntrega" 
+          v-bind:key="ponto.id"
+          @place_changed="(par) => setPlace(par, ponto.id)"
+
+        />
+        
+        
+        <div class="text-center pb-3"> 
+          <MDBBtn  outline="primary" floating class="fa-rotate-90" v-on:click="swapValues">
+            <MDBIcon icon="exchange-alt"></MDBIcon>
+          </MDBBtn> 
+
+          <MDBBtn  outline="primary" floating class="fab" v-on:click="adicionaNovoPonto">
+            <MDBIcon icon="plus"></MDBIcon>
+          </MDBBtn> 
+
+          <MDBBtn  outline="primary" floating class="fas" v-on:click="removeUltimoPonto">
+            <MDBIcon icon="ban"></MDBIcon>
+          </MDBBtn> 
+
+        </div>
+    
       
-      <div class="text-center pb-3"> 
-        <MDBBtn  outline="primary" floating class="fa-rotate-90" v-on:click="swapValues">
-          <MDBIcon icon="exchange-alt"></MDBIcon>
-        </MDBBtn> 
 
-        <MDBBtn  outline="primary" floating class="fab" v-on:click="adicionaNovoPonto">
-          <MDBIcon icon="plus"></MDBIcon>
-        </MDBBtn> 
+        <MDBBtn
+          class="botao_cotar"
+          color="primary"
+          type="submit"
+          size="lg"
+          @click="getCotacao">
+            Cotar
+        </MDBBtn>
+        
+        <MDBTable striped v-if="distancia && Number(distancia.charAt(0))">
+          <tr>
+            <th>Distância</th>
+            <td>{{distancia}}</td>
+          </tr>
+        </MDBTable>
 
-        <MDBBtn  outline="primary" floating class="fas" v-on:click="removeUltimoPonto">
-          <MDBIcon icon="ban"></MDBIcon>
-        </MDBBtn> 
-
+        <MDBTable striped v-if="$store.state.cotacaoStore.cotacao &&
+          $store.state.cotacaoStore.cotacao.valores &&
+          $store.state.cotacaoStore.cotacao.valores.length">
+          <tr>
+            <th>Fornecedor</th>
+            <th>Valor</th>
+          </tr>
+          <tr v-for="fornecedor in $store.state.cotacaoStore.cotacao.valores" v-bind:key="fornecedor.fid">
+            <td>{{fornecedor.nome}}</td>
+            <td>{{fornecedor.preco.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}}
+            </td>
+          </tr>
+        </MDBTable>
+        </div>
       </div>
-  
-     
 
-      <MDBBtn
-        class="botao_cotar"
-        color="primary"
-        type="submit"
-        size="lg"
-        @click="getCotacao">
-          Cotar
-      </MDBBtn>
-      
-      <MDBTable striped v-if="distancia && Number(distancia.charAt(0))">
-        <tr>
-          <th>Distância</th>
-          <td>{{distancia}}</td>
-        </tr>
-      </MDBTable>
+      <div class="flex-fill p-3 h-100 col-8">
+        <div style="height: calc(100%);">
+          <GMapMap
+            ref="mapRef"
+            :zoom="16"
+            :center="mapCenter"
+            class="h-100"
+            :disableDefaultUI="true"
+          >
+            <GMapMarker
+              :key="index"
+              v-for="(m, index) in markers"
+              :position="m.position"
+              :icon='{
+                url: "https://cdn-icons-png.flaticon.com/512/75/75782.png",
+                scaledSize: {width: 60, height: 60},
+              }'
+              :clickable="false"
+              :draggable="false"
+              :controls="false"
+            />
 
-      <MDBTable striped v-if="$store.state.cotacaoStore.cotacao &&
-         $store.state.cotacaoStore.cotacao.valores &&
-         $store.state.cotacaoStore.cotacao.valores.length">
-        <tr>
-          <th>Fornecedor</th>
-          <th>Valor</th>
-        </tr>
-        <tr v-for="fornecedor in $store.state.cotacaoStore.cotacao.valores" v-bind:key="fornecedor.fid">
-          <td>{{fornecedor.nome}}</td>
-          <td>{{fornecedor.preco.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}}
-          </td>
-        </tr>
-      </MDBTable>
-      </div>
-    </div>
-
-    <div class="flex-fill p-3 h-100">
-      <div style="height: calc(100%);">
-        <GMapMap
-          ref="mapRef"
-          :zoom="16"
-          :center="mapCenter"
-          class="h-100"
-          :disableDefaultUI="true"
-        >
-          <GMapMarker
-            :key="index"
-            v-for="(m, index) in markers"
-            :position="m.position"
-            :icon='{
-              url: "https://cdn-icons-png.flaticon.com/512/75/75782.png",
-              scaledSize: {width: 60, height: 60},
-            }'
-            :clickable="false"
-            :draggable="false"
-            :controls="false"
-          />
-
-          <GMapPolygon
-            :options='{
-              //geodesic: true,
-              strokeColor: "#FF0000",
-              strokeOpacity: 1.0,
-              //strokeWeight: 4, 
-            }'
-            :clickable="false"
-            :paths="paths"
-          />
-        </GMapMap>
+            <GMapPolygon
+              :options='{
+                //geodesic: true,
+                strokeColor: "#FF0000",
+                strokeOpacity: 1.0,
+                //strokeWeight: 4, 
+              }'
+              :clickable="false"
+              :paths="paths"
+            />
+          </GMapMap>
+        </div>
       </div>
     </div>
 
@@ -261,6 +263,6 @@
 
 <style>
   .left{
-    min-width: 350px;
+    min-width: 250px;
   }
 </style>
