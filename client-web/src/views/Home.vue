@@ -66,7 +66,7 @@
         <div style="height: calc(100%);">
           <GMapMap
             ref="mapRef"
-            :zoom="16"
+            :zoom="4"
             :center="mapCenter"
             class="h-100"
             :disableDefaultUI="true"
@@ -126,7 +126,7 @@
   var mapRef = ref();
 
   const mapCenter = ref({});
-  mapCenter.value = {lat: 18.466, lng: -66.118};
+  mapCenter.value = {lat: -12.2884381, lng: -57.3592675};
 
   const pontosIds = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
   var pontosIdsLast = 1;
