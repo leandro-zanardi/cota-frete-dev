@@ -84,15 +84,14 @@
               :controls="false"
             />
 
-            <GMapPolygon
+            <GMapPolyline
               :options='{
-                //geodesic: true,
+                geodesic: true,
                 strokeColor: "#FF0000",
-                strokeOpacity: 1.0,
-                //strokeWeight: 4, 
+                strokeOpacity: 1.0, 
               }'
-              :clickable="false"
-              :paths="paths"
+              :ref="polyline"
+              :path="paths"
             />
           </GMapMap>
         </div>
