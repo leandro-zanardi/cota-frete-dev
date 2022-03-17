@@ -2,7 +2,7 @@
   <div class="component-main">
       <div  class="d-flex flex-column mb-4 p-2 box-main">
         <GMapAutocomplete
-          placeholder="Digite o ponto de origem"
+          placeholder="Ponto de origem"
           @place_changed="placeChanged"
           class="autocomplete mb-2"
           :id="'campo' + x" 
@@ -13,14 +13,13 @@
           }"
         >
         </GMapAutocomplete>
-
         <div class="d-flex flex-column mb-1 mt-1">
-          <label> Descreva o que fazer: </label>
-          <input type = "text" v-model="detalhes" />
+          <label for= "text">  </label>
+          <input type = "text" placeholder="Observações" />
         </div>
 
         <div class="d-flex flex-column  mb-1 mt-1">
-          <label> Tipo de Veículo</label>
+          <label> Categoria</label>
           <select v-model="escolhaVeiculo">
             <option :value="1">Moto</option>
             <option :value="2">Carro</option>

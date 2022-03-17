@@ -3,7 +3,7 @@
   <div class="h-100 d-flex flex-column">
     <div id="nav" v-if="$store.state.userStore.user">
 
-    <MDBNavbar light bg="light" expand="lg" container>
+    <MDBNavbar light bg="light" expand="md" container>
         <MDBNavbarNav center> 
           <MDBNavbarItem active><router-link class="p-2" to ="/">Home</router-link> | </MDBNavbarItem>
           <MDBNavbarItem active><router-link class="p-2" to ="/">About</router-link></MDBNavbarItem>
