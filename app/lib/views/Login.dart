@@ -9,17 +9,73 @@ class Login extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: Center(
-        child: ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.red),
-          ),
-          // Within the `FirstScreen` widget
-          onPressed: () {
-            // Navigate to the second screen using a named route.
-            Navigator.pushNamed(context, '/home');
-          },
-          child: const Text('Para Home'),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.blueGrey,
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+              ),
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.all(8),
+              margin: const EdgeInsets.all(8),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text("Crie sua conta"),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color:Colors.white)
+                        ),
+                        labelText: 'E-Mail'
+                      ),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color:Colors.white)
+                        ),
+                        labelText: 'Senha'
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Navigate to the second screen using a named route.
+                      Navigator.pushNamed(context, '/home');
+                    },
+                    child: const Text('Cadastrar'),
+                  ),
+                ],
+              ),
+            ),
+
+            Container(
+              padding: const EdgeInsets.all(8),
+              margin: const EdgeInsets.all(8),
+              child: Column(
+                children: const [
+                  
+                  ElevatedButton(
+                    onPressed: null,
+                    child: Text("Entrar"),
+                  )
+                ],
+              ),
+            )
+          
+          ],
         ),
       ),
     );
