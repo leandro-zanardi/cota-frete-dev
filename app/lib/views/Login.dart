@@ -1,4 +1,10 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:app/store/user.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+
+final UserStore userStore = UserStore();
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
@@ -13,11 +19,10 @@ class Login extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            
             Container(
-              decoration: BoxDecoration(
-                color: Colors.blueGrey,
-                borderRadius: BorderRadius.all(Radius.circular(8)),
+              decoration: const BoxDecoration(
+                color: const Color.fromARGB(255, 178, 208, 213),
+                borderRadius: const BorderRadius.all(const Radius.circular(8)),
               ),
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(8),
@@ -26,16 +31,22 @@ class Login extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Text("Crie sua conta"),
-                  const Padding(
+                  const Text("Crie sua conta"),
+                  Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color:Colors.white)
-                        ),
-                        labelText: 'E-Mail'
-                      ),
+                    child: Observer(
+                      builder: (context) {
+                        return TextField(
+                          onChanged: (value) => userStore.validateEmail(value),
+                          
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white)),
+                            labelText: 'E-Mail',
+                            errorText: userStore.emailRegisterError
+                          ),
+                        );
+                      }
                     ),
                   ),
                   const Padding(
@@ -43,30 +54,23 @@ class Login extends StatelessWidget {
                     child: TextField(
                       obscureText: true,
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color:Colors.white)
-                        ),
-                        labelText: 'Senha'
-                      ),
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white)),
+                          labelText: 'Senha'),
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      // Navigate to the second screen using a named route.
-                      Navigator.pushNamed(context, '/home');
-                    },
+                    onPressed: userStore.register,
                     child: const Text('Cadastrar'),
                   ),
                 ],
               ),
             ),
-
             Container(
               padding: const EdgeInsets.all(8),
               margin: const EdgeInsets.all(8),
               child: Column(
                 children: const [
-                  
                   ElevatedButton(
                     onPressed: null,
                     child: Text("Entrar"),
@@ -74,7 +78,6 @@ class Login extends StatelessWidget {
                 ],
               ),
             )
-          
           ],
         ),
       ),
