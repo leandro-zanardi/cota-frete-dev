@@ -35,7 +35,7 @@ class Home extends StatelessWidget {
               // Within the `FirstScreen` widget
               onPressed: () {
                 // Navigate to the second screen using a named route.
-                Navigator.pushNamed(context, '/');
+                Navigator.pushReplacementNamed(context, '/');
               },
               child: const Text('Para Login'),
             ),
@@ -47,7 +47,7 @@ class Home extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: counter.increment,
         tooltip: 'Increment',
-        child: Icon(Icons.add),
+        child: Icon(Icons.airplanemode_off),
       ),
     );
   }
