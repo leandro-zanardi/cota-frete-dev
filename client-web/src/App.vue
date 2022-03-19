@@ -4,11 +4,11 @@
     <div id="nav" v-if="$store.state.userStore.user">
 
     <MDBNavbar light bg="light" expand="md" container>
-        <MDBNavbarNav center> 
+        <MDBNavbarNav class="d-flex flex-row" center> 
           <MDBNavbarItem active><router-link class="p-2" to ="/">Home</router-link> | </MDBNavbarItem>
           <MDBNavbarItem active><router-link class="p-2" to ="/">About</router-link></MDBNavbarItem>
           <MDBNavbarItem v-show="$store.state.userStore.isAdmin"><router-link class="p-2" to ="/fornecedores">Fornecedores</router-link></MDBNavbarItem>
-          <MDBBtn size="xs-2" outline="primary" @click="$store.dispatch('userStore/logout')">Logout</MDBBtn>
+          <MDBNavbarItem active><MDBBtn size="sm" outline="primary" @click="$store.dispatch('userStore/logout')">Logout</MDBBtn></MDBNavbarItem>
         </MDBNavbarNav>
       </MDBNavbar>
 
