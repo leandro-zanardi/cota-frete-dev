@@ -24,4 +24,10 @@ abstract class _UserStore with Store {
     emailRegister = value;
     emailRegisterError = null;
   }
+
+  @action
+  login() {
+    print(" Entrando com Usuario $emailRegister");
+    
+  }
 }

@@ -21,8 +21,8 @@ class Login extends StatelessWidget {
           children: <Widget>[
             Container(
               decoration: const BoxDecoration(
-                color: const Color.fromARGB(255, 178, 208, 213),
-                borderRadius: const BorderRadius.all(const Radius.circular(8)),
+                color: Color.fromARGB(255, 178, 208, 213),
+                borderRadius: BorderRadius.all(Radius.circular(8)),
               ),
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(8),
@@ -34,20 +34,16 @@ class Login extends StatelessWidget {
                   const Text("Crie sua conta"),
                   Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: Observer(
-                      builder: (context) {
-                        return TextField(
-                          onChanged: (value) => userStore.validateEmail(value),
-                          
-                          decoration: InputDecoration(
+                    child: Observer(builder: (context) {
+                      return TextField(
+                        onChanged: (value) => userStore.validateEmail(value),
+                        decoration: InputDecoration(
                             border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                            labelText: 'E-Mail',
-                            errorText: userStore.emailRegisterError
-                          ),
-                        );
-                      }
-                    ),
+                                borderSide: BorderSide(color: Colors.white)),
+                            labelText: 'E-mail',
+                            errorText: userStore.emailRegisterError),
+                      );
+                    }),
                   ),
                   const Padding(
                     padding: EdgeInsets.all(8.0),
@@ -67,12 +63,46 @@ class Login extends StatelessWidget {
               ),
             ),
             Container(
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 230, 230, 230),
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+              ),
+              width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(8),
               margin: const EdgeInsets.all(8),
               child: Column(
-                children: const [
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  const Text("Entre"),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Observer(builder: (context) {
+                      return TextField(
+                        onChanged: (value) => userStore.validateEmail(value),
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            labelText: 'E-mail',
+                            errorText: userStore.emailRegisterError),
+                      );
+                    }),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: TextField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white)),
+                          labelText: 'Senha'),
+                    ),
+                  ),
                   ElevatedButton(
-                    onPressed: null,
+                    onPressed: () {
+                      userStore.login();
+                      Navigator.pushReplacementNamed(context, '/home');
+                    },
                     child: Text("Entrar"),
                   )
                 ],
