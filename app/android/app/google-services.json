@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "649445319498",
+    "firebase_url": "https://cota-frete-dev-default-rtdb.firebaseio.com",
+    "project_id": "cota-frete-dev",
+    "storage_bucket": "cota-frete-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:649445319498:android:1e7ce2120d0ce03c9b57b3",
+        "android_client_info": {
+          "package_name": "br.com.cotafrete.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "649445319498-4s8afr1ghohvt56eslu1u8voa61kjqvr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXiKJX8jPItwxEUXfY8wufbS4Pzz80NVA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "649445319498-4s8afr1ghohvt56eslu1u8voa61kjqvr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
