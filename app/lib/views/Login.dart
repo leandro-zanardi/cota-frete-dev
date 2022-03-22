@@ -49,14 +49,21 @@ class Login extends StatelessWidget {
                       }
                     ),
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          labelText: 'Senha'),
+                    child: Observer(
+                      builder: (context) {
+                        return TextField(
+                          onChanged: (value) => userStore.validatePassword(value),
+                          obscureText: true,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white)),
+                              labelText: 'Senha',
+                              errorText: userStore.passwordRegisterError
+                              ),
+                        );
+                      }
                     ),
                   ),
                   ElevatedButton(

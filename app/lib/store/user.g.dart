@@ -54,14 +54,38 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
+  final _$passwordRegisterErrorAtom =
+      Atom(name: '_UserStore.passwordRegisterError');
+
+  @override
+  String? get passwordRegisterError {
+    _$passwordRegisterErrorAtom.reportRead();
+    return super.passwordRegisterError;
+  }
+
+  @override
+  set passwordRegisterError(String? value) {
+    _$passwordRegisterErrorAtom.reportWrite(value, super.passwordRegisterError,
+        () {
+      super.passwordRegisterError = value;
+    });
+  }
+
+  final _$registerAsyncAction = AsyncAction('_UserStore.register');
+
+  @override
+  Future<void> register() {
+    return _$registerAsyncAction.run(() => super.register());
+  }
+
   final _$_UserStoreActionController = ActionController(name: '_UserStore');
 
   @override
-  void register() {
+  void login() {
     final _$actionInfo =
-        _$_UserStoreActionController.startAction(name: '_UserStore.register');
+        _$_UserStoreActionController.startAction(name: '_UserStore.login');
     try {
-      return super.register();
+      return super.login();
     } finally {
       _$_UserStoreActionController.endAction(_$actionInfo);
     }
@@ -79,11 +103,23 @@ mixin _$UserStore on _UserStore, Store {
   }
 
   @override
+  void validatePassword(String password) {
+    final _$actionInfo = _$_UserStoreActionController.startAction(
+        name: '_UserStore.validatePassword');
+    try {
+      return super.validatePassword(password);
+    } finally {
+      _$_UserStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 emailRegister: ${emailRegister},
 emailRegisterError: ${emailRegisterError},
-passwordRegister: ${passwordRegister}
+passwordRegister: ${passwordRegister},
+passwordRegisterError: ${passwordRegisterError}
     ''';
   }
 }
