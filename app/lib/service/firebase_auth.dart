@@ -26,4 +26,16 @@ class FirebaseAuthService {
       print(e);
     }
   }
+
+  Future<UserCredential> login(String email, String password) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      return userCredential;
+    } on FirebaseAuthException catch (e) {
+      rethrow;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

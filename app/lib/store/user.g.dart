@@ -71,6 +71,66 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
+  final _$emailLoginAtom = Atom(name: '_UserStore.emailLogin');
+
+  @override
+  String? get emailLogin {
+    _$emailLoginAtom.reportRead();
+    return super.emailLogin;
+  }
+
+  @override
+  set emailLogin(String? value) {
+    _$emailLoginAtom.reportWrite(value, super.emailLogin, () {
+      super.emailLogin = value;
+    });
+  }
+
+  final _$emailLoginErrorAtom = Atom(name: '_UserStore.emailLoginError');
+
+  @override
+  String? get emailLoginError {
+    _$emailLoginErrorAtom.reportRead();
+    return super.emailLoginError;
+  }
+
+  @override
+  set emailLoginError(String? value) {
+    _$emailLoginErrorAtom.reportWrite(value, super.emailLoginError, () {
+      super.emailLoginError = value;
+    });
+  }
+
+  final _$passwordLoginAtom = Atom(name: '_UserStore.passwordLogin');
+
+  @override
+  String? get passwordLogin {
+    _$passwordLoginAtom.reportRead();
+    return super.passwordLogin;
+  }
+
+  @override
+  set passwordLogin(String? value) {
+    _$passwordLoginAtom.reportWrite(value, super.passwordLogin, () {
+      super.passwordLogin = value;
+    });
+  }
+
+  final _$passwordLoginErrorAtom = Atom(name: '_UserStore.passwordLoginError');
+
+  @override
+  String? get passwordLoginError {
+    _$passwordLoginErrorAtom.reportRead();
+    return super.passwordLoginError;
+  }
+
+  @override
+  set passwordLoginError(String? value) {
+    _$passwordLoginErrorAtom.reportWrite(value, super.passwordLoginError, () {
+      super.passwordLoginError = value;
+    });
+  }
+
   final _$registerAsyncAction = AsyncAction('_UserStore.register');
 
   @override
@@ -78,18 +138,14 @@ mixin _$UserStore on _UserStore, Store {
     return _$registerAsyncAction.run(() => super.register());
   }
 
-  final _$_UserStoreActionController = ActionController(name: '_UserStore');
+  final _$loginAsyncAction = AsyncAction('_UserStore.login');
 
   @override
-  void login() {
-    final _$actionInfo =
-        _$_UserStoreActionController.startAction(name: '_UserStore.login');
-    try {
-      return super.login();
-    } finally {
-      _$_UserStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> login() {
+    return _$loginAsyncAction.run(() => super.login());
   }
+
+  final _$_UserStoreActionController = ActionController(name: '_UserStore');
 
   @override
   void validateEmail(String value) {
@@ -114,12 +170,38 @@ mixin _$UserStore on _UserStore, Store {
   }
 
   @override
+  void validateEmailLogin(String value) {
+    final _$actionInfo = _$_UserStoreActionController.startAction(
+        name: '_UserStore.validateEmailLogin');
+    try {
+      return super.validateEmailLogin(value);
+    } finally {
+      _$_UserStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void validatePasswordLogin(String password) {
+    final _$actionInfo = _$_UserStoreActionController.startAction(
+        name: '_UserStore.validatePasswordLogin');
+    try {
+      return super.validatePasswordLogin(password);
+    } finally {
+      _$_UserStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 emailRegister: ${emailRegister},
 emailRegisterError: ${emailRegisterError},
 passwordRegister: ${passwordRegister},
-passwordRegisterError: ${passwordRegisterError}
+passwordRegisterError: ${passwordRegisterError},
+emailLogin: ${emailLogin},
+emailLoginError: ${emailLoginError},
+passwordLogin: ${passwordLogin},
+passwordLoginError: ${passwordLoginError}
     ''';
   }
 }

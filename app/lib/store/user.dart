@@ -19,6 +19,18 @@ abstract class _UserStore with Store {
   @observable
   String? passwordRegisterError;
 
+  @observable
+  String? emailLogin;
+
+  @observable
+  String? emailLoginError;
+
+  @observable
+  String? passwordLogin;
+
+  @observable
+  String? passwordLoginError;
+
   @action
   Future<void> register() async {
     print(" Registrando Usuario $emailRegister");
@@ -38,7 +50,7 @@ abstract class _UserStore with Store {
           //Senha fraca.
           passwordRegisterError = _.message;
         } else if (_.code == 'email-already-in-use') {
-         //E-Mail já está em uso
+          //E-Mail já está em uso
           emailRegisterError = _.message;
         } else {
           emailRegisterError = _.message;
@@ -52,7 +64,28 @@ abstract class _UserStore with Store {
   }
 
   @action
-  void login() {}
+  Future<void> login() async {
+
+    FirebaseAuthService service = FirebaseAuthService();
+
+    try {
+      UserCredential userCredential = await service.login(
+              emailLogin!, passwordLogin!);
+    } on Exception catch (_, e) {
+      if (_ is FirebaseAuthException) {
+        if (_.code == 'user-not-found') {
+          //print('No user found for that email.');
+          emailLoginError = _.message;
+        } else if (_.code == 'wrong-password') {
+          //print('Wrong password provided for that user.');
+          passwordLoginError = _.message;
+        }
+      } else {
+        emailLoginError = 'Erro generico';
+        passwordLoginError = 'Erro generico';
+      }
+    }
+  }
 
   @action
   void validateEmail(String value) {
@@ -64,5 +97,17 @@ abstract class _UserStore with Store {
   void validatePassword(String password) {
     passwordRegister = password;
     passwordRegisterError = null;
+  }
+
+  @action
+  void validateEmailLogin(String value) {
+    emailLogin = value;
+    emailLoginError = null;
+  }
+
+  @action
+  void validatePasswordLogin(String password) {
+    passwordLogin = password;
+    passwordLoginError = null;
   }
 }
