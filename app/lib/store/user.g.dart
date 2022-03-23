@@ -79,6 +79,17 @@ mixin _$UserStore on _UserStore, Store {
   }
 
   @override
+  dynamic login() {
+    final _$actionInfo =
+        _$_UserStoreActionController.startAction(name: '_UserStore.login');
+    try {
+      return super.login();
+    } finally {
+      _$_UserStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 emailRegister: ${emailRegister},
