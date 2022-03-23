@@ -86,23 +86,30 @@ class Login extends StatelessWidget {
                     padding: EdgeInsets.all(8.0),
                     child: Observer(builder: (context) {
                       return TextField(
-                        onChanged: (value) => userStore.validateEmail(value),
+                        onChanged: (value) => userStore.validateEmailLogin(value),
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white)),
                             labelText: 'E-mail',
-                            errorText: userStore.emailRegisterError),
+                            errorText: userStore.emailLoginError),
                       );
                     }),
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          labelText: 'Senha'),
+                    child: Observer(
+                      builder: (context) {
+                        return TextField(
+                          onChanged: (value) => userStore.validatePasswordLogin(value),
+                          obscureText: true,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white)),
+                              labelText: 'Senha',
+                              errorText: userStore.passwordLoginError
+                              ),
+                        );
+                      }
                     ),
                   ),
                   ElevatedButton(
