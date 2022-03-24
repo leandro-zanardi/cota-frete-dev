@@ -47,20 +47,17 @@ class Login extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: Observer(
-                      builder: (context) {
-                        return TextField(
-                          onChanged: (value) => userStore.validatePassword(value),
-                          obscureText: true,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white)),
-                              labelText: 'Senha',
-                              errorText: userStore.passwordRegisterError
-                              ),
-                        );
-                      }
-                    ),
+                    child: Observer(builder: (context) {
+                      return TextField(
+                        onChanged: (value) => userStore.validatePassword(value),
+                        obscureText: true,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            labelText: 'Senha',
+                            errorText: userStore.passwordRegisterError),
+                      );
+                    }),
                   ),
                   ElevatedButton(
                     onPressed: userStore.register,
@@ -86,7 +83,8 @@ class Login extends StatelessWidget {
                     padding: EdgeInsets.all(8.0),
                     child: Observer(builder: (context) {
                       return TextField(
-                        onChanged: (value) => userStore.validateEmailLogin(value),
+                        onChanged: (value) =>
+                            userStore.validateEmailLogin(value),
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white)),
@@ -97,30 +95,38 @@ class Login extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: Observer(
-                      builder: (context) {
-                        return TextField(
-                          onChanged: (value) => userStore.validatePasswordLogin(value),
-                          obscureText: true,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white)),
-                              labelText: 'Senha',
-                              errorText: userStore.passwordLoginError
-                              ),
-                        );
-                      }
-                    ),
+                    child: Observer(builder: (context) {
+                      return TextField(
+                        onChanged: (value) =>
+                            userStore.validatePasswordLogin(value),
+                        obscureText: true,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            labelText: 'Senha',
+                            errorText: userStore.passwordLoginError),
+                      );
+                    }),
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      userStore.login();
-                      Navigator.pushReplacementNamed(context, '/home');
+                    onPressed: () async {
+                      await userStore.login();
+                      if (userStore.isLoggedin) {
+                        Navigator.pushReplacementNamed(context, '/home');
+                      }
                     },
                     child: Text("Entrar"),
                   )
                 ],
               ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                print("esta logado");
+                print(userStore.isLoggedin);
+                print(userStore.userCredential!.user ?? "usuario nulo");
+              },
+              child: Text("Esta Logado"),
             )
           ],
         ),

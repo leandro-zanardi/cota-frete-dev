@@ -1,3 +1,4 @@
+import 'package:app/store/user.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -5,7 +6,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:app/store/counter.dart'; // Import the Counter
 
 final counter = Counter(); // Instantiate the store
-
+final userStore = UserStore();
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -39,7 +40,16 @@ class Home extends StatelessWidget {
               },
               child: const Text('Para Login'),
             ),
+            
 
+            ElevatedButton(
+              onPressed: () {
+                print("esta logado");
+                print(userStore.isLoggedin);
+                print(userStore.userCredential!.user ?? "usuario nulo");
+              },
+              child: Text("Esta Logado"),
+            )
 
           ],
         ),

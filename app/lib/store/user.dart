@@ -8,6 +8,9 @@ class UserStore = _UserStore with _$UserStore;
 
 abstract class _UserStore with Store {
   @observable
+  UserCredential? userCredential;
+
+  @observable
   String? emailRegister;
 
   @observable
@@ -37,7 +40,7 @@ abstract class _UserStore with Store {
 
     FirebaseAuthService service = FirebaseAuthService();
     try {
-      UserCredential userCredential =
+      userCredential =
           await service.register(emailRegister!, passwordRegister!);
 
       print(userCredential);
@@ -65,12 +68,10 @@ abstract class _UserStore with Store {
 
   @action
   Future<void> login() async {
-
     FirebaseAuthService service = FirebaseAuthService();
 
     try {
-      UserCredential userCredential = await service.login(
-              emailLogin!, passwordLogin!);
+      userCredential = await service.login(emailLogin!, passwordLogin!);
     } on Exception catch (_, e) {
       if (_ is FirebaseAuthException) {
         if (_.code == 'user-not-found') {
@@ -84,6 +85,15 @@ abstract class _UserStore with Store {
         emailLoginError = 'Erro generico';
         passwordLoginError = 'Erro generico';
       }
+    }
+  }
+
+  @action
+  bool get isLoggedin {
+    if (userCredential != null && userCredential!.user != null) {
+      return true;
+    } else {
+      return false;
     }
   }
 
