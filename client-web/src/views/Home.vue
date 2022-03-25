@@ -5,7 +5,10 @@
       <div class="left p-3 pb-5 col-4" style="overflow:auto" > 
 
         <div class="d-flex flex-column">
-        <AutoComplete 
+        <AutoComplete
+          :ativaModalEntrega = "ponto.ativaModalEntrega"
+          :retornaParaOrigem = "ponto.retornaParaOrigem"
+          :ehPrimeiroPonto = "ponto.ehPrimeiroPonto"
           v-for="ponto in pontosColetaEntrega" 
           v-bind:key="ponto.id"
           @place_changed="(par) => setPlace(par, ponto.id)"
@@ -130,7 +133,7 @@
   const pontosIds = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
   var pontosIdsLast = 1;
   const pontosColetaEntrega = ref([
-    new PontoColetaEntrega('A'),
+    new PontoColetaEntrega('A', true, true),
     new PontoColetaEntrega('B')
   ]);
 
@@ -140,8 +143,6 @@
 
   function setPlace(par, pointPosition) {
 
-    let param1 = par.gmaps;
-
     console.log('SET PLACE')
     console.log(par);
 
@@ -150,26 +151,8 @@
     // limpa o calculo de distancia
     distancia.value = 0;
 
-
-    // formatar o endereco
-    let city = null;
-    for ( let x=0; x<param1.address_components.length; x++) {
-      let component = param1.address_components[x];
-      for ( let y=0; y<component.types.length; y++) {
-        if (component.types[y] === 'administrative_area_level_2') {
-          city = component.long_name;
-          break;
-        }
-      }
-    }
-
-    // adiciona um ponto na lista de pontos global
-    let point = { 
-      lat: param1.geometry.location.lat(),
-      lng: param1.geometry.location.lng(),
-      city: city
-    };
-    points.value[pointPosition] = point;
+    
+    points.value[pointPosition] = par.point;
     
 
     // insere path e bounds
@@ -196,8 +179,6 @@
     // redefine os bounds do mapa
     mapRef.value.fitBounds(bounds);
     
-
-
   }
 
   function getCotacao() {

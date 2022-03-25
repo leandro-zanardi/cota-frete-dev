@@ -18,14 +18,20 @@
           <input type = "text" placeholder="Observações" />
         </div>
 
-        <div class="d-flex flex-column  mb-1 mt-1">
+        <div v-if="ativaModalEntrega" class="d-flex flex-column  mb-1 mt-1">
           <label> Categoria</label>
           <select v-model="escolhaVeiculo">
             <option :value="1">Moto</option>
             <option :value="2">Carro</option>
             <option :value="3">Van</option>
           </select>
-          
+        </div>
+
+        <div v-if="ehPrimeiroPonto"  class="d-flex flex-row  mb-1 mt-1">
+          <label> Retorna Para Origem</label>
+          <div >
+            <input type="checkbox" v-model="retorna" style="margin-left:8px"/>
+          </div>
         </div>
         
 
@@ -38,9 +44,12 @@
 
     const escolhaVeiculo = ref();
     const detalhes = ref();
+    const retorna = ref();
 
     defineProps({
-        teste: String
+      ativaModalEntrega: Boolean,
+      retornaParaOrigem: Boolean,
+      ehPrimeiroPonto: Boolean
     });
 
     const emit = defineEmits({
@@ -49,15 +58,35 @@
         }
     })
 
-    function placeChanged(par) {
+    function placeChanged(gmapPar) {
 
-        let place = { 
-            gmaps: par,
-            veiculo: escolhaVeiculo.value,
-            detalhes: detalhes.value
+        // formatar o endereco
+      let city = null;
+      for ( let x=0; x<gmapPar.address_components.length; x++) {
+        let component = gmapPar.address_components[x];
+        for ( let y=0; y<component.types.length; y++) {
+          if (component.types[y] === 'administrative_area_level_2') {
+            city = component.long_name;
+            break;
+          }
         }
+      }
 
-        emit('place_changed', place)
+      // adiciona um ponto na lista de pontos global
+      let point = { 
+        lat: gmapPar.geometry.location.lat(),
+        lng: gmapPar.geometry.location.lng(),
+        city: city
+      };
+
+
+      let place = { 
+        point: point,
+        veiculo: escolhaVeiculo.value,
+        detalhes: detalhes.value
+      }
+
+      emit('place_changed', place)
     }
 
 </script>
