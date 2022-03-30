@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:app/store/user.dart';
 import 'package:flutter/material.dart';
 
@@ -7,11 +9,14 @@ import 'package:app/store/counter.dart'; // Import the Counter
 
 final counter = Counter(); // Instantiate the store
 final userStore = UserStore();
+
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
@@ -36,9 +41,9 @@ class Home extends StatelessWidget {
               // Within the `FirstScreen` widget
               onPressed: () {
                 // Navigate to the second screen using a named route.
-                Navigator.pushReplacementNamed(context, '/');
+                Navigator.pushReplacementNamed(context, '/autocomplete');
               },
-              child: const Text('Para Login'),
+              child: const Text('Para Autocomplete'),
             ),
             
 
@@ -62,3 +67,4 @@ class Home extends StatelessWidget {
     );
   }
 }
+
