@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:http/http.dart';
@@ -7,13 +8,23 @@ class Place {
   String? streetNumber;
   String? street;
   String? city;
+  String? state;
   String? zipCode;
+  String? vicinity;
+  String? country;
+  double? lat;
+  double? lng;
 
   Place({
     this.streetNumber,
     this.street,
     this.city,
+    this.state,
     this.zipCode,
+    this.vicinity,
+    this.country,
+    this.lat,
+    this.lng,
   });
 
   @override
@@ -47,11 +58,9 @@ class PlaceApiProvider {
   final apiKey = Platform.isAndroid ? androidKey : iosKey;
 
   Future<List<Suggestion>> fetchSuggestions(String input) async {
-
-    final Map<String, dynamic> parameters = <String,dynamic>{
+    final Map<String, dynamic> parameters = <String, dynamic>{
       'input': input,
       'types': 'address',
-      'fields': 'address_component,geometry',
       'language': 'br',
       'components': 'country:br',
       'key': apiKey,
@@ -59,11 +68,10 @@ class PlaceApiProvider {
     };
 
     final Uri request = Uri(
-      scheme: 'https',
-      host: 'maps.googleapis.com',
-      path:'/maps/api/place/autocomplete/json',
-      queryParameters: parameters
-    );
+        scheme: 'https',
+        host: 'maps.googleapis.com',
+        path: '/maps/api/place/autocomplete/json',
+        queryParameters: parameters);
 
     final response = await client.get(request);
 
@@ -72,8 +80,7 @@ class PlaceApiProvider {
       if (result['status'] == 'OK') {
         // compose suggestions in a list
         return result['predictions']
-            .map<Suggestion>(
-                (p) => Suggestion(p['place_id'], p['description']))
+            .map<Suggestion>((p) => Suggestion(p['place_id'], p['description']))
             .toList();
       }
       if (result['status'] == 'ZERO_RESULTS') {
@@ -83,12 +90,11 @@ class PlaceApiProvider {
     } else {
       throw Exception('Failed to fetch suggestion');
     }
-    
   }
 
   Future<Place> getPlaceDetailFromId(String placeId) async {
     // if you want to get the details of the selected place by place_id
-    final Map<String, dynamic> parameters = <String,dynamic>{
+    final Map<String, dynamic> parameters = <String, dynamic>{
       'place_id': placeId,
       'fields': 'address_component,geometry',
       'key': apiKey,
@@ -97,9 +103,11 @@ class PlaceApiProvider {
     final Uri request = Uri(
         scheme: 'https',
         host: 'maps.googleapis.com',
-        path:'/maps/api/place/details/json',
-        queryParameters: parameters
-        );
+        path: '/maps/api/place/details/json',
+        queryParameters: parameters);
+
+    print(request.toString());
+
     final response = await client.get(request);
 
     if (response.statusCode == 200) {
@@ -109,6 +117,11 @@ class PlaceApiProvider {
             result['result']['address_components'] as List<dynamic>;
         // build result
         final place = Place();
+
+        place.lat = result['result']['geometry']['location']['lat'] as double;
+        place.lng = result['result']['geometry']['location']['lng'] as double;
+
+
         components.forEach((c) {
           final List type = c['types'];
           if (type.contains('street_number')) {
@@ -117,8 +130,17 @@ class PlaceApiProvider {
           if (type.contains('route')) {
             place.street = c['long_name'];
           }
-          if (type.contains('locality')) {
+          if (type.contains('sublocality_level_1')) {
+            place.vicinity = c['long_name'];
+          }
+          if (type.contains('administrative_area_level_2')) {
             place.city = c['long_name'];
+          }
+          if (type.contains('administrative_area_level_1')) {
+            place.state = c['long_name'];
+          }
+          if (type.contains('country')) {
+            place.country = c['long_name'];
           }
           if (type.contains('postal_code')) {
             place.zipCode = c['long_name'];
