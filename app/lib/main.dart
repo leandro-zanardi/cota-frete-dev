@@ -1,4 +1,3 @@
-import 'package:app/views/auto_complete.dart';
 import 'package:app/views/Home.dart';
 import 'package:app/views/Login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -40,7 +39,6 @@ class MyApp extends StatelessWidget {
         '/': (context) => const Login(),
         // When navigating to the "/second" route, build the SecondScreen widget.
         '/home': (context) => const Home(),
-        '/autocomplete': (context) => const AutoComplete(title: 'Places Autocomplete Demo'),
       },
     );
   }

@@ -37,14 +37,7 @@ class Home extends StatelessWidget {
                   ),
             ),
 
-            ElevatedButton(
-              // Within the `FirstScreen` widget
-              onPressed: () {
-                // Navigate to the second screen using a named route.
-                Navigator.pushReplacementNamed(context, '/autocomplete');
-              },
-              child: const Text('Para Autocomplete'),
-            ),
+            
             
 
             ElevatedButton(
