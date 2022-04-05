@@ -88,7 +88,6 @@ abstract class _UserStore with Store {
     }
   }
 
-  @action
   bool get isLoggedin {
     if (userCredential != null && userCredential!.user != null) {
       return true;

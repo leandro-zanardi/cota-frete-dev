@@ -9,6 +9,21 @@ part of 'user.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$UserStore on _UserStore, Store {
+  final _$userCredentialAtom = Atom(name: '_UserStore.userCredential');
+
+  @override
+  UserCredential? get userCredential {
+    _$userCredentialAtom.reportRead();
+    return super.userCredential;
+  }
+
+  @override
+  set userCredential(UserCredential? value) {
+    _$userCredentialAtom.reportWrite(value, super.userCredential, () {
+      super.userCredential = value;
+    });
+  }
+
   final _$emailRegisterAtom = Atom(name: '_UserStore.emailRegister');
 
   @override
@@ -194,6 +209,7 @@ mixin _$UserStore on _UserStore, Store {
   @override
   String toString() {
     return '''
+userCredential: ${userCredential},
 emailRegister: ${emailRegister},
 emailRegisterError: ${emailRegisterError},
 passwordRegister: ${passwordRegister},
