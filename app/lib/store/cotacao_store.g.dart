@@ -9,6 +9,22 @@ part of 'cotacao_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$CotacaoStore on _CotacaoStore, Store {
+  final _$pontosColetaEntregaAtom =
+      Atom(name: '_CotacaoStore.pontosColetaEntrega');
+
+  @override
+  ObservableList<PontoColetaEntrega> get pontosColetaEntrega {
+    _$pontosColetaEntregaAtom.reportRead();
+    return super.pontosColetaEntrega;
+  }
+
+  @override
+  set pontosColetaEntrega(ObservableList<PontoColetaEntrega> value) {
+    _$pontosColetaEntregaAtom.reportWrite(value, super.pontosColetaEntrega, () {
+      super.pontosColetaEntrega = value;
+    });
+  }
+
   final _$streetNumberAtom = Atom(name: '_CotacaoStore.streetNumber');
 
   @override
@@ -73,11 +89,22 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
       ActionController(name: '_CotacaoStore');
 
   @override
-  void onSuggestionClick(Place placeDetails) {
+  void init() {
+    final _$actionInfo =
+        _$_CotacaoStoreActionController.startAction(name: '_CotacaoStore.init');
+    try {
+      return super.init();
+    } finally {
+      _$_CotacaoStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void onSuggestionClick(Place placeDetails, String id) {
     final _$actionInfo = _$_CotacaoStoreActionController.startAction(
         name: '_CotacaoStore.onSuggestionClick');
     try {
-      return super.onSuggestionClick(placeDetails);
+      return super.onSuggestionClick(placeDetails, id);
     } finally {
       _$_CotacaoStoreActionController.endAction(_$actionInfo);
     }
@@ -86,6 +113,7 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
   @override
   String toString() {
     return '''
+pontosColetaEntrega: ${pontosColetaEntrega},
 streetNumber: ${streetNumber},
 street: ${street},
 city: ${city},
