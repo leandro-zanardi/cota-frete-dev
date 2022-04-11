@@ -72,7 +72,7 @@
 					v-model="login_form.password" />
 				<MDBCheckbox label="Lembre de mim" v-model="checkbox1" />
 				<h6>
-					<a @click="setRegister" href="#" class="stretched-link" style="position: relative">Esqueceu sua senha?</a>
+					<a @click="esqueceuSenha" href="#" class="stretched-link" style="position: relative">Esqueceu sua senha?</a>
 				</h6>
 				<MDBBtn color="primary" type="submit" size="lg">
 					Entrar
@@ -120,6 +120,10 @@
 		showRegister
 		};
 	}
+
+	function esqueceuSenha() {
+		
+	}
   
 </script>
 
@@ -158,14 +162,14 @@ form.register {
 	position: absolute;
 	top: 50%;
 	transform: translate(0, -50%);
-	padding-right: 200px;
+	padding-right: 12.5%;
 }
 
 .background{
 	background: url('../assets/bg2.png');
 	background-repeat: no-repeat;
 	background-position: center left 80px;
-	background-size: 40rem;
+	background-size: 40%;
 }
 
 .logo{
