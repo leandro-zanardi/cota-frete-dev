@@ -16,7 +16,7 @@ final cotacaoStore = CotacaoStore();
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
-  List<AutocompleteWidget> buildAutocompletes(
+  Widget buildAutocompletes(
       List<PontoColetaEntrega> pontosColetaEntrega) {
     List<AutocompleteWidget> autoCompletes = [];
 
@@ -27,10 +27,13 @@ class Home extends StatelessWidget {
         retornaParaOrigem:  pontosColetaEntrega[x].retornaParaOrigem,
         onSuggestionClick: (Place place) =>
             cotacaoStore.onSuggestionClick(place, pontosColetaEntrega[x].id),
+        ativaRetornaParaOrigem: (x == pontosColetaEntrega.length -1),
       ));
     }
 
-    return autoCompletes;
+    return Column(children: [
+      ...autoCompletes
+    ],);
   }
 
   @override
@@ -48,7 +51,37 @@ class Home extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ...buildAutocompletes(cotacaoStore.pontosColetaEntrega),
+                Observer(
+                  builder:  (_) {
+                    return buildAutocompletes(cotacaoStore.pontosColetaEntrega);
+                  }
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                  Observer(
+                    builder: (_) => Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: ElevatedButton(
+                        onPressed: () => cotacaoStore.addPoint('id', false, false, false), 
+                        child: const Text("Adicionar Ponto"),
+                      ),
+                    )
+                  ),
+
+                  Observer(
+                    builder: (_) => Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: ElevatedButton(
+                        onPressed: () => cotacaoStore.removeLastPoint(), 
+                        child: const Text("Remover Ponto"),
+                      ),
+                    )
+                  ),
+                ],),
+                
+                
                 Observer(
                   builder: (_) => Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -61,15 +94,15 @@ class Home extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(height: 100),
-                ElevatedButton(
-                  onPressed: () {
-                    print("esta logado");
-                    print(userStore.isLoggedin);
-                    print(userStore.userCredential!.user ?? "usuario nulo");
-                  },
-                  child: Text("Esta Logado"),
-                )
+                // Container(height: 100),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     print("esta logado");
+                //     print(userStore.isLoggedin);
+                //     print(userStore.userCredential!.user ?? "usuario nulo");
+                //   },
+                //   child: Text("Esta Logado"),
+                // )
               ],
             ),
           ),

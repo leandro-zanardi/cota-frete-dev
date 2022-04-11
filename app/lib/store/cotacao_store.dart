@@ -7,9 +7,9 @@ part 'cotacao_store.g.dart';
 class CotacaoStore = _CotacaoStore with _$CotacaoStore;
 
 abstract class _CotacaoStore with Store {
-
   @observable
-  ObservableList<PontoColetaEntrega> pontosColetaEntrega = ObservableList<PontoColetaEntrega>();
+  ObservableList<PontoColetaEntrega> pontosColetaEntrega =
+      ObservableList<PontoColetaEntrega>();
 
   @observable
   String? streetNumber;
@@ -23,8 +23,27 @@ abstract class _CotacaoStore with Store {
   @action
   void init() {
     pontosColetaEntrega = ObservableList<PontoColetaEntrega>();
-    pontosColetaEntrega.add( PontoColetaEntrega(id:'A', ativaModalEntrega: true, ehPrimeiroPonto: true, retornaParaOrigem: false));
-    pontosColetaEntrega.add( PontoColetaEntrega(id:'B'));
+    pontosColetaEntrega.add(PontoColetaEntrega(
+        id: 'A',
+        ativaModalEntrega: true,
+        ehPrimeiroPonto: true,
+        retornaParaOrigem: false));
+    pontosColetaEntrega.add(PontoColetaEntrega(id: 'B'));
+  }
+
+  @action
+  void addPoint(String id, bool ativaModalEntrega, bool ehPrimeiroPonto,
+      bool retornaParaOrigem) {
+    pontosColetaEntrega.add(PontoColetaEntrega(
+        id: id,
+        ativaModalEntrega: ativaModalEntrega,
+        ehPrimeiroPonto: ehPrimeiroPonto,
+        retornaParaOrigem: retornaParaOrigem));
+  }
+
+  @action
+  void removeLastPoint() {
+    pontosColetaEntrega.removeLast();
   }
 
   @action

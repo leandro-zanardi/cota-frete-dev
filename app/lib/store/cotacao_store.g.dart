@@ -100,6 +100,30 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
   }
 
   @override
+  void addPoint(String id, bool ativaModalEntrega, bool ehPrimeiroPonto,
+      bool retornaParaOrigem) {
+    final _$actionInfo = _$_CotacaoStoreActionController.startAction(
+        name: '_CotacaoStore.addPoint');
+    try {
+      return super
+          .addPoint(id, ativaModalEntrega, ehPrimeiroPonto, retornaParaOrigem);
+    } finally {
+      _$_CotacaoStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void removeLastPoint() {
+    final _$actionInfo = _$_CotacaoStoreActionController.startAction(
+        name: '_CotacaoStore.removeLastPoint');
+    try {
+      return super.removeLastPoint();
+    } finally {
+      _$_CotacaoStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void onSuggestionClick(Place placeDetails, String id) {
     final _$actionInfo = _$_CotacaoStoreActionController.startAction(
         name: '_CotacaoStore.onSuggestionClick');

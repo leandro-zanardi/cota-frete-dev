@@ -43,7 +43,7 @@ dependencies:
 
 
   #autocomplete
-  maps_places_autocomplete: ^0.0.1
+  maps_places_autocomplete: ^0.0.2
 
 dev_dependencies:
   flutter_test:
