@@ -12,13 +12,13 @@ mixin _$UserStore on _UserStore, Store {
   final _$userCredentialAtom = Atom(name: '_UserStore.userCredential');
 
   @override
-  UserCredential? get userCredential {
+  User? get userCredential {
     _$userCredentialAtom.reportRead();
     return super.userCredential;
   }
 
   @override
-  set userCredential(UserCredential? value) {
+  set userCredential(User? value) {
     _$userCredentialAtom.reportWrite(value, super.userCredential, () {
       super.userCredential = value;
     });
@@ -161,6 +161,17 @@ mixin _$UserStore on _UserStore, Store {
   }
 
   final _$_UserStoreActionController = ActionController(name: '_UserStore');
+
+  @override
+  void setUser(User? user) {
+    final _$actionInfo =
+        _$_UserStoreActionController.startAction(name: '_UserStore.setUser');
+    try {
+      return super.setUser(user);
+    } finally {
+      _$_UserStoreActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void validateEmail(String value) {

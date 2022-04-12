@@ -8,7 +8,7 @@ class UserStore = _UserStore with _$UserStore;
 
 abstract class _UserStore with Store {
   @observable
-  UserCredential? userCredential;
+  User? userCredential;
 
   @observable
   String? emailRegister;
@@ -40,8 +40,7 @@ abstract class _UserStore with Store {
 
     FirebaseAuthService service = FirebaseAuthService();
     try {
-      userCredential =
-          await service.register(emailRegister!, passwordRegister!);
+      await service.register(emailRegister!, passwordRegister!);
 
       print(userCredential);
 
@@ -71,7 +70,7 @@ abstract class _UserStore with Store {
     FirebaseAuthService service = FirebaseAuthService();
 
     try {
-      userCredential = await service.login(emailLogin!, passwordLogin!);
+      await service.login(emailLogin!, passwordLogin!);
     } on Exception catch (_, e) {
       if (_ is FirebaseAuthException) {
         if (_.code == 'user-not-found') {
@@ -88,8 +87,13 @@ abstract class _UserStore with Store {
     }
   }
 
+  @action
+  void setUser(User? user) {
+    userCredential = user;
+  }
+
   bool get isLoggedin {
-    if (userCredential != null && userCredential!.user != null) {
+    if (userCredential != null) {
       return true;
     } else {
       return false;

@@ -1,16 +1,21 @@
+import 'package:app/store/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get_it/get_it.dart';
 
 class FirebaseAuthService {
-  User? isLoggedIn() {
-    // FirebaseAuth.instance.authStateChanges().listen((User? user) {
-    //   if (user == null) {
-    //     print('User is currently signed out!');
-    //   } else {
-    //     print('User is signed in!');
-    //   }
+  FirebaseAuthService() {
+    // auth listener
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      UserStore userStore = GetIt.I.get<UserStore>();
 
-    //   return User;
-    // });
+      if (user == null) {
+        userStore.setUser(null);
+        print('User is currently signed out!');
+      } else {
+        userStore.setUser(user);
+        print('User is signed in!');
+      }
+    });
   }
 
   Future<UserCredential> register(String email, String password) async {

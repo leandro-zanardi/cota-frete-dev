@@ -4,14 +4,15 @@ import 'package:app/store/user.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 // auto complete
 import 'package:maps_places_autocomplete/model/place.dart';
 
 import '../model/ponto_coleta_entrega.dart';
 
-final userStore = UserStore();
-final cotacaoStore = CotacaoStore();
+final userStore = GetIt.I.get<UserStore>();
+final cotacaoStore = GetIt.I.get<CotacaoStore>();
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);

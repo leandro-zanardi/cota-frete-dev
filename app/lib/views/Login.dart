@@ -3,8 +3,9 @@
 import 'package:app/store/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
-final UserStore userStore = UserStore();
+final UserStore userStore = GetIt.I.get<UserStore>();
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
@@ -124,7 +125,7 @@ class Login extends StatelessWidget {
               onPressed: () {
                 print("esta logado");
                 print(userStore.isLoggedin);
-                print(userStore.userCredential!.user ?? "usuario nulo");
+                print(userStore.userCredential ?? "usuario nulo");
               },
               child: Text("Esta Logado"),
             )

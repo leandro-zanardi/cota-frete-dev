@@ -1,4 +1,6 @@
 import 'package:app/model/ponto_coleta_entrega.dart';
+import 'package:app/service/firebase_realtime_database.dart';
+import 'package:get_it/get_it.dart';
 import 'package:maps_places_autocomplete/model/place.dart';
 import 'package:mobx/mobx.dart';
 
@@ -29,6 +31,13 @@ abstract class _CotacaoStore with Store {
         ehPrimeiroPonto: true,
         retornaParaOrigem: false));
     pontosColetaEntrega.add(PontoColetaEntrega(id: 'B'));
+
+    test();
+  }
+
+  void test() async {
+    final service = GetIt.I.get<FirebaseRealtimeDatabaseService>();
+    await service.test();
   }
 
   @action

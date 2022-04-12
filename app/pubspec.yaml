@@ -37,10 +37,15 @@ dependencies:
 
   # dependencias do mobx
   mobx: ^2.0.6+1
+
+  #firebase
   flutter_mobx: ^2.0.4
   firebase_core: 1.13.1
   firebase_auth: ^3.3.11
+  firebase_database: ^9.0.10
 
+  #get_it
+  get_it: ^7.2.0
 
   #autocomplete
   maps_places_autocomplete: ^0.0.2
