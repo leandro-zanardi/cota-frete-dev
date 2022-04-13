@@ -37,6 +37,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+    UserStore userStore = GetIt.I.get<UserStore>();
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -44,9 +47,8 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => const Login(),
-        // When navigating to the "/second" route, build the SecondScreen widget.
+        '/': (context) => userStore.isLoggedin ? const Home() : const Login(),
+        '/login': (context) => const Login(),
         '/home': (context) => const Home(),
       },
     );

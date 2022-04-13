@@ -8,11 +8,13 @@ class FirebaseAuthService {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       UserStore userStore = GetIt.I.get<UserStore>();
 
+      //TODO SET USER DB
+
+      userStore.setUser(user);
+
       if (user == null) {
-        userStore.setUser(null);
         print('User is currently signed out!');
       } else {
-        userStore.setUser(user);
         print('User is signed in!');
       }
     });

@@ -1,5 +1,6 @@
 import 'package:app/service/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 part 'user.g.dart';
@@ -38,7 +39,7 @@ abstract class _UserStore with Store {
   Future<void> register() async {
     print(" Registrando Usuario $emailRegister");
 
-    FirebaseAuthService service = FirebaseAuthService();
+    FirebaseAuthService service = GetIt.I.get<FirebaseAuthService>();
     try {
       await service.register(emailRegister!, passwordRegister!);
 
@@ -67,7 +68,8 @@ abstract class _UserStore with Store {
 
   @action
   Future<void> login() async {
-    FirebaseAuthService service = FirebaseAuthService();
+    
+    FirebaseAuthService service = GetIt.I.get<FirebaseAuthService>();
 
     try {
       await service.login(emailLogin!, passwordLogin!);

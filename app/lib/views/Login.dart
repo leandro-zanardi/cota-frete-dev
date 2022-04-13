@@ -12,6 +12,7 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
@@ -120,14 +121,6 @@ class Login extends StatelessWidget {
                   )
                 ],
               ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                print("esta logado");
-                print(userStore.isLoggedin);
-                print(userStore.userCredential ?? "usuario nulo");
-              },
-              child: Text("Esta Logado"),
             )
           ],
         ),
