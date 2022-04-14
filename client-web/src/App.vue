@@ -4,7 +4,7 @@
     <div id="nav" v-if="$store.state.userStore.user">
 
     <MDBNavbar light style="background-color: #00BCD4" expand="md" container>
-        <MDBNavbarNav class="d-flex flex-row" center> 
+        <MDBNavbarNav class="d-flex flex-row text-white" center> 
           <MDBNavbarItem active><router-link class="p-2" to ="/">Home</router-link> | </MDBNavbarItem>
           <MDBNavbarItem active><router-link class="p-2" to ="/">About</router-link></MDBNavbarItem>
           <MDBNavbarItem v-show="$store.state.userStore.isAdmin"><router-link class="p-2" to ="/fornecedores">Fornecedores</router-link></MDBNavbarItem>
@@ -47,7 +47,7 @@ html, body {
 }
 
 a:link {
-  color: green;
+  color: white;
   background-color: transparent;
   text-decoration: none;
 }
@@ -65,7 +65,7 @@ a:hover {
 }
 
 a:active {
-  color: yellow;
+  color: darkred;
   background-color: transparent;
   text-decoration: underline;
 }

@@ -1,9 +1,7 @@
 <template>
-  <main class="home h-100 p-2 d-flex flex-row justify-content-center align-items-stretch">
-    <div class="row w-100 "> 
-      
-      <div class="left p-3 pb-5 col-4" style="overflow:auto" > 
-
+  <main class="home h-100 p-2 d-flex flex-row justify-content-center align-items-stretch background">
+    <div class="row w-100">      
+      <div class="left p-3 pr-5 pb-5 col-3" style="overflow:auto">
         <div class="d-flex flex-column">
         <AutoComplete
           :ativaModalEntrega = "ponto.ativaModalEntrega"
@@ -12,32 +10,27 @@
           v-for="ponto in pontosColetaEntrega" 
           v-bind:key="ponto.id"
           @place_changed="(par) => setPlace(par, ponto.id)"
-
-        />
-        
+        />        
         
         <div class="text-center pb-3"> 
-          <MDBBtn  outline="primary" floating class="fa-rotate-90" v-on:click="swapValues">
+          <MDBBtn  outline="#26C6DA" floating class="fa-rotate-90 icon" v-on:click="swapValues">
             <MDBIcon icon="exchange-alt"></MDBIcon>
           </MDBBtn> 
 
-          <MDBBtn  outline="primary" floating class="fab" v-on:click="adicionaNovoPonto">
+          <MDBBtn  outline="Cyan 400" floating class="fab icon" v-on:click="adicionaNovoPonto">
             <MDBIcon icon="plus"></MDBIcon>
           </MDBBtn> 
 
-          <MDBBtn  outline="primary" floating class="fas" v-on:click="removeUltimoPonto">
+          <MDBBtn  outline="Cyan 400" floating class="fas icon" v-on:click="removeUltimoPonto">
             <MDBIcon icon="ban"></MDBIcon>
-          </MDBBtn> 
-
-        </div>
-    
-      
+          </MDBBtn>
+        </div>      
 
         <MDBBtn
-          class="botao_cotar"
-          color="primary"
+          class="botao_cotar text-white"
           type="submit"
           size="lg"
+          
           @click="getCotacao">
             Cotar
         </MDBBtn>
@@ -65,11 +58,11 @@
         </div>
       </div>
 
-      <div class="flex-fill p-3 h-100 col-8">
+      <div class="flex-fill ps-5 p-3 h-100 col-9">
         <div style="height: calc(100%);">
           <GMapMap
             ref="mapRef"
-            :zoom="4"
+            :zoom="4.5"
             :center="mapCenter"
             class="h-100"
             :disableDefaultUI="true"
@@ -238,11 +231,33 @@
     }
   }
 
-
 </script>
 
 <style>
   .left{
     min-width: 250px;
+  }
+
+  main.background{
+	background: url('../assets/bg.png');
+	background-repeat: no-repeat;
+	background-position: bottom 30px left 10px;
+	background-size: 100px;
+  }
+
+  body {
+    background-color: rgb(240, 240, 240);
+  }
+
+  .botao_cotar{
+    background-color:#26C6DA;
+    max-width: 180px;
+    left: 50%;
+    transform: translate(-50%);
+  }
+
+  .icon{
+    border-color:#26C6DA;
+    color:#26C6DA;
   }
 </style>

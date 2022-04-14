@@ -1,6 +1,6 @@
 <template>
   <div class="component-main">
-      <div  class="d-flex flex-column mb-4 p-2 box-main">
+      <div  class="d-flex flex-column mb-4 p-2 box-main shadow-3">
         <GMapAutocomplete
           placeholder="Ponto de origem"
           @place_changed="placeChanged"
@@ -17,34 +17,38 @@
           <label for= "text">  </label>
           <input type = "text" placeholder="Observações" />
         </div>
-
-        <div v-if="ativaModalEntrega" class="d-flex flex-column  mb-1 mt-1">
-          <label> Categoria</label>
-          <select v-model="escolhaVeiculo">
-            <option :value="1">Moto</option>
-            <option :value="2">Carro</option>
-            <option :value="3">Van</option>
-          </select>
+        
+        <div v-if="ativaModalEntrega" class="mb-1 mt-1">
+          <MDBDropdown btnGroup v-model="dropdown11" class="shadow-0">
+              <MDBDropdownToggle @click="dropdown11 = !dropdown11" color="link" class="text-dark">
+                Veículo
+              </MDBDropdownToggle>
+              <MDBDropdownMenu>
+                <MDBDropdownItem href="#" class="text-dark">Moto</MDBDropdownItem>
+                <MDBDropdownItem href="#" class="text-dark">Carro</MDBDropdownItem>
+                <MDBDropdownItem href="#" class="text-dark">Van</MDBDropdownItem>
+              </MDBDropdownMenu>
+          </MDBDropdown>
         </div>
 
         <div v-if="ehPrimeiroPonto"  class="d-flex flex-row  mb-1 mt-1">
-          <label> Retorna Para Origem</label>
           <div >
-            <input type="checkbox" v-model="retorna" style="margin-left:8px"/>
+            <input type="checkbox" v-model="retorna" style="margin-right:8px"/>
           </div>
+          <label> Retorna Para Origem</label>
         </div>
-        
-
       </div>
   </div>
 </template>
 
 <script setup>
     import {defineProps, defineEmits, ref} from 'vue';
+    import { MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem } from "mdb-vue-ui-kit";
 
     const escolhaVeiculo = ref();
     const detalhes = ref();
     const retorna = ref();
+    const dropdown11 = ref(false);
 
     defineProps({
       ativaModalEntrega: Boolean,
@@ -56,7 +60,7 @@
         place_changed: (par) => {
             return par;
         }
-    })
+    });
 
     function placeChanged(gmapPar) {
 
@@ -93,7 +97,8 @@
 
 <style>
 .box-main {
-    background-color: #c0c0c0;
-    border: 1px solid;
+  border-radius: 10px;
+  /* border: 2px solid lightgray; */
+  background-color: white;
 }
 </style>
