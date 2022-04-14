@@ -1,3 +1,4 @@
+import 'package:app/model/cotacao_model.dart';
 import 'package:app/model/ponto_coleta_entrega.dart';
 import 'package:app/service/firebase_realtime_database.dart';
 import 'package:get_it/get_it.dart';
@@ -21,6 +22,8 @@ abstract class _CotacaoStore with Store {
   String? city;
   @observable
   String? state;
+  @observable
+  CotacaoModel? cotacao;
 
   @action
   void init() {
@@ -31,13 +34,6 @@ abstract class _CotacaoStore with Store {
         ehPrimeiroPonto: true,
         retornaParaOrigem: false));
     pontosColetaEntrega.add(PontoColetaEntrega(id: 'B'));
-
-    test();
-  }
-
-  void test() async {
-    final service = GetIt.I.get<FirebaseRealtimeDatabaseService>();
-    await service.test();
   }
 
   @action
@@ -61,5 +57,10 @@ abstract class _CotacaoStore with Store {
     street = placeDetails.street;
     city = placeDetails.city;
     state = placeDetails.state;
+  }
+
+  @action
+  void setCotacao(CotacaoModel? cotacao) {
+    cotacao = cotacao;
   }
 }

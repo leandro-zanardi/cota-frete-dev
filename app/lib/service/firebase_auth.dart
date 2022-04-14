@@ -1,3 +1,4 @@
+import 'package:app/service/firebase_realtime_database.dart';
 import 'package:app/store/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
@@ -7,10 +8,11 @@ class FirebaseAuthService {
     // auth listener
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       UserStore userStore = GetIt.I.get<UserStore>();
-
-      //TODO SET USER DB
+      FirebaseRealtimeDatabaseService realDBTimeService =
+          GetIt.I.get<FirebaseRealtimeDatabaseService>();
 
       userStore.setUser(user);
+      realDBTimeService.user = user;
 
       if (user == null) {
         print('User is currently signed out!');
