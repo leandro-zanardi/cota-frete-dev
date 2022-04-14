@@ -85,6 +85,21 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
     });
   }
 
+  final _$cotacaoAtom = Atom(name: '_CotacaoStore.cotacao');
+
+  @override
+  CotacaoModel? get cotacao {
+    _$cotacaoAtom.reportRead();
+    return super.cotacao;
+  }
+
+  @override
+  set cotacao(CotacaoModel? value) {
+    _$cotacaoAtom.reportWrite(value, super.cotacao, () {
+      super.cotacao = value;
+    });
+  }
+
   final _$_CotacaoStoreActionController =
       ActionController(name: '_CotacaoStore');
 
@@ -135,13 +150,25 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
   }
 
   @override
+  void setCotacao(CotacaoModel? cotacao) {
+    final _$actionInfo = _$_CotacaoStoreActionController.startAction(
+        name: '_CotacaoStore.setCotacao');
+    try {
+      return super.setCotacao(cotacao);
+    } finally {
+      _$_CotacaoStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 pontosColetaEntrega: ${pontosColetaEntrega},
 streetNumber: ${streetNumber},
 street: ${street},
 city: ${city},
-state: ${state}
+state: ${state},
+cotacao: ${cotacao}
     ''';
   }
 }
