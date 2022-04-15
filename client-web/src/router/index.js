@@ -33,6 +33,30 @@ const routes = [
       requiresAdmin: true
     }
   },
+  {
+    path: '/cadastro-fornecedores',
+    name: 'Cadastro Fornecedores',
+    component: () => import('../views/Cadastro-Fornecedores.vue'),
+    meta: {
+      requiresAdmin: false
+    }
+  },
+  {
+    path: '/configuracoes-fornecedor',
+    name: 'Configurações Fornecedor',
+    component: () => import('../views/Configuracao-Fornecedor.vue'),
+    meta: {
+      requiresAdmin: true
+    }
+  },
+  {
+    path: '/configuracoes-usuario',
+    name: 'Configurações Usuário',
+    component: () => import('../views/Configuracao-Usuario.vue'),
+    meta: {
+      requiresAdmin: false
+    }
+  },
 ]
 
 const router = createRouter({
