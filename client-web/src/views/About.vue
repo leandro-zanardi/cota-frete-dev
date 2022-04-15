@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="h-100 background">
     <header>
       <h1 id="title">Sobre o Aplicativo</h1>
     </header>
@@ -29,8 +29,7 @@
   }
 
   #title {
-    color: #fff;
-    background-color: #0e52c1;
+    color: black;
     padding: 100px;
     text-align: center;
     margin-bottom: 30px;
@@ -38,5 +37,12 @@
 
   h2 {
     margin-bottom: 20px;
+  }
+
+  .background{
+	background: url('../assets/bg.png');
+	background-repeat: no-repeat;
+	background-position: bottom 30px left 10px;
+	background-size: 100px;
   }
 </style>

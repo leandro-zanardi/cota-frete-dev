@@ -19,8 +19,8 @@
         </div>
         
         <div v-if="ativaModalEntrega" class="mb-1 mt-1">
-          <MDBDropdown btnGroup v-model="dropdown11" class="shadow-0">
-              <MDBDropdownToggle @click="dropdown11 = !dropdown11" color="link" class="text-dark">
+          <MDBDropdown btnGroup v-model="dropdown" class="shadow-0">
+              <MDBDropdownToggle @click="dropdown = !dropdown" color="link" class="text-dark">
                 Veículo
               </MDBDropdownToggle>
               <MDBDropdownMenu>
@@ -48,7 +48,7 @@
     const escolhaVeiculo = ref();
     const detalhes = ref();
     const retorna = ref();
-    const dropdown11 = ref(false);
+    const dropdown = ref(false);
 
     defineProps({
       ativaModalEntrega: Boolean,
