@@ -81,6 +81,10 @@
 					Ainda não é um usuário? 
 					<a @click="setRegister" href="#" class="stretched-link" style="position: relative">Registre-se!</a>
 				</h6>
+				<h6>
+					É fornecedor? 
+					<router-link class="p-2" to ="/cadastro-fornecedores">Trabalhe conosco!</router-link>
+				</h6>
 			</form>
 		</div>
 	</div>
@@ -168,8 +172,8 @@ form.register {
 .background{
 	background: url('../assets/bg2.png');
 	background-repeat: no-repeat;
-	background-position: center left 80px;
-	background-size: 40%;
+	background-position: center left 10%;
+	background-size: 35%;
 }
 
 .logo{
