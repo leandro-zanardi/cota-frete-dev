@@ -26,19 +26,31 @@ class FirebaseRealtimeDatabaseService {
     if (_user != null) {
       _ref = FirebaseDatabase.instance.ref("cotacao/${_user!.uid}");
       _ref!.onValue.listen((DatabaseEvent event) {
-        final data = event.snapshot.value;
-        print(data.toString());
-
-        CotacaoModel? model = CotacaoDTO().fromFirebaseData(data);
+        final Map<String, dynamic> data =
+            event.snapshot.value as Map<String, dynamic>;
+        CotacaoModel? model = CotacaoDTO().fromJson(data);
         CotacaoStore store = GetIt.I.get<CotacaoStore>();
         store.setCotacao(model);
-        
       }, onError: (Object error, StackTrace s) {
         print(error.toString());
         print(s);
       }, onDone: () {
         print("done");
       });
+    }
+  }
+
+  Future<void> create(Map<String, dynamic>? json) async {
+    if (_user != null) {
+      _ref = FirebaseDatabase.instance.ref("cotacao/${_user!.uid}");
+      await _ref!.set(json as Object);
+    }
+  }
+
+  Future<void> clear() async {
+    if (_user != null) {
+      _ref = FirebaseDatabase.instance.ref("cotacao/${_user!.uid}");
+      await _ref!.set(null);
     }
   }
 }
