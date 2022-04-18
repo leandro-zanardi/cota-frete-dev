@@ -16,6 +16,7 @@
               <MDBDropdownMenu aria-labelledby="dropdownMenuButton">
                 <MDBDropdownItem href="#" class="text-dark"><router-link class="p-2 nav-link" to ="/configuracoes-usuario">Configurações</router-link></MDBDropdownItem>
                 <MDBDropdownItem href="#" class="text-dark"><router-link class="p-2 nav-link" to ="/configuracoes-fornecedor">Configurações de fornecedor</router-link></MDBDropdownItem>
+                <MDBDropdownItem href="#" class="text-dark"><router-link class="p-2 nav-link" to ="/historico">Histórico de fretes</router-link></MDBDropdownItem>
                 <MDBDropdownItem divider />
                 <MDBDropdownItem href="#" class="text-dark" @click="$store.dispatch('userStore/logout')">Sair</MDBDropdownItem>
               </MDBDropdownMenu>

@@ -57,6 +57,14 @@ const routes = [
       requiresAdmin: false
     }
   },
+  {
+    path: '/historico',
+    name: 'Histórico de Fretes',
+    component: () => import('../views/Historico.vue'),
+    meta: {
+      requiresAdmin: false
+    }
+  },
 ]
 
 const router = createRouter({
