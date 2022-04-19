@@ -68,7 +68,6 @@ abstract class _UserStore with Store {
 
   @action
   Future<void> login() async {
-    
     FirebaseAuthService service = GetIt.I.get<FirebaseAuthService>();
 
     try {
@@ -91,7 +90,7 @@ abstract class _UserStore with Store {
 
   @action
   void setUser(User? user) {
-    userCredential = user;
+    userCredential = null;
   }
 
   bool get isLoggedin {
