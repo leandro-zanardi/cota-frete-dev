@@ -1,18 +1,20 @@
+import 'dart:convert';
+
 import 'package:app/model/cotacao_model.dart';
 import 'package:app/model/i_dto.dart';
 import 'package:app/model/point_model.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class CotacaoDTO implements IDTO {
   @override
-  CotacaoModel fromJson(Map<String, dynamic> json) {
+  CotacaoModel fromJson(Map<String?, dynamic> json) {
     print(json.toString());
 
     String userUid = json["userUid"];
     List<PointModel> points = _mapToPoints(json["points"]);
     int cotacaoTime = json["cotacaoTime"];
 
-    CotacaoModel model = CotacaoModel(
-        userUid: userUid, points: points, cotacaoTime: cotacaoTime);
+    CotacaoModel model = CotacaoModel(userUid, points, cotacaoTime);
     return model;
   }
 
@@ -36,9 +38,13 @@ class CotacaoDTO implements IDTO {
     return pointsMap;
   }
 
-  List<PointModel> _mapToPoints(List<Map<String, dynamic>> listMap) {
+  List<PointModel> _mapToPoints(List<dynamic> listMap) {
     List<PointModel> points = [];
-    //TODO
+    for (int x = 0; x < listMap.length; x++) {
+      PointModel point =
+          PointModel(listMap[x]["lat"], listMap[x]["lng"], listMap[x]["city"]);
+      points.add(point);
+    }
     return points;
   }
 }

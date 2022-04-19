@@ -17,24 +17,23 @@ final cotacaoStore = GetIt.I.get<CotacaoStore>();
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
-  Widget buildAutocompletes(
-      List<PontoColetaEntrega> pontosColetaEntrega) {
+  Widget buildAutocompletes(List<PontoColetaEntrega> pontosColetaEntrega) {
     List<AutocompleteWidget> autoCompletes = [];
 
     for (int x = 0; x < pontosColetaEntrega.length; x++) {
       autoCompletes.add(AutocompleteWidget(
         ativaModalEntrega: pontosColetaEntrega[x].ativaModalEntrega,
-        ehPrimeiroPonto:  pontosColetaEntrega[x].ehPrimeiroPonto,
-        retornaParaOrigem:  pontosColetaEntrega[x].retornaParaOrigem,
+        ehPrimeiroPonto: pontosColetaEntrega[x].ehPrimeiroPonto,
+        retornaParaOrigem: pontosColetaEntrega[x].retornaParaOrigem,
         onSuggestionClick: (Place place) =>
             cotacaoStore.onSuggestionClick(place, pontosColetaEntrega[x].id),
-        ativaRetornaParaOrigem: (x == pontosColetaEntrega.length -1),
+        ativaRetornaParaOrigem: (x == pontosColetaEntrega.length - 1),
       ));
     }
 
-    return Column(children: [
-      ...autoCompletes
-    ],);
+    return Column(
+      children: [...autoCompletes],
+    );
   }
 
   @override
@@ -52,37 +51,31 @@ class Home extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Observer(
-                  builder:  (_) {
-                    return buildAutocompletes(cotacaoStore.pontosColetaEntrega);
-                  }
-                ),
-
+                Observer(builder: (_) {
+                  return buildAutocompletes(cotacaoStore.pontosColetaEntrega);
+                }),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                  Observer(
-                    builder: (_) => Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: ElevatedButton(
-                        onPressed: () => cotacaoStore.addPoint('id', false, false, false), 
-                        child: const Text("Adicionar Ponto"),
-                      ),
-                    )
-                  ),
-
-                  Observer(
-                    builder: (_) => Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: ElevatedButton(
-                        onPressed: () => cotacaoStore.removeLastPoint(), 
-                        child: const Text("Remover Ponto"),
-                      ),
-                    )
-                  ),
-                ],),
-                
-                
+                    Observer(
+                        builder: (_) => Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: ElevatedButton(
+                                onPressed: () => cotacaoStore.addPoint(
+                                    'id', false, false, false),
+                                child: const Text("Adicionar Ponto"),
+                              ),
+                            )),
+                    Observer(
+                        builder: (_) => Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: ElevatedButton(
+                                onPressed: () => cotacaoStore.removeLastPoint(),
+                                child: const Text("Remover Ponto"),
+                              ),
+                            )),
+                  ],
+                ),
                 Observer(
                   builder: (_) => Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -95,15 +88,19 @@ class Home extends StatelessWidget {
                     ],
                   ),
                 ),
-                // Container(height: 100),
-                // ElevatedButton(
-                //   onPressed: () {
-                //     print("esta logado");
-                //     print(userStore.isLoggedin);
-                //     print(userStore.userCredential!.user ?? "usuario nulo");
-                //   },
-                //   child: Text("Esta Logado"),
-                // )
+                Container(height: 10),
+                ElevatedButton(
+                  onPressed: () async {
+                    cotacaoStore.cotar();
+                  },
+                  child: Text("Cotar"),
+                ),
+
+                Observer(
+                  builder: (_) => Text(
+                    cotacaoStore.isValidToCotarErrorMessage ??  "", 
+                    style: const TextStyle(color: Colors.red),),
+                )
               ],
             ),
           ),

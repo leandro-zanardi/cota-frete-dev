@@ -100,19 +100,39 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
     });
   }
 
-  final _$_CotacaoStoreActionController =
-      ActionController(name: '_CotacaoStore');
+  final _$isValidToCotarErrorMessageAtom =
+      Atom(name: '_CotacaoStore.isValidToCotarErrorMessage');
 
   @override
-  void init() {
-    final _$actionInfo =
-        _$_CotacaoStoreActionController.startAction(name: '_CotacaoStore.init');
-    try {
-      return super.init();
-    } finally {
-      _$_CotacaoStoreActionController.endAction(_$actionInfo);
-    }
+  String? get isValidToCotarErrorMessage {
+    _$isValidToCotarErrorMessageAtom.reportRead();
+    return super.isValidToCotarErrorMessage;
   }
+
+  @override
+  set isValidToCotarErrorMessage(String? value) {
+    _$isValidToCotarErrorMessageAtom
+        .reportWrite(value, super.isValidToCotarErrorMessage, () {
+      super.isValidToCotarErrorMessage = value;
+    });
+  }
+
+  final _$initAsyncAction = AsyncAction('_CotacaoStore.init');
+
+  @override
+  Future<void> init() {
+    return _$initAsyncAction.run(() => super.init());
+  }
+
+  final _$cotarAsyncAction = AsyncAction('_CotacaoStore.cotar');
+
+  @override
+  Future<void> cotar() {
+    return _$cotarAsyncAction.run(() => super.cotar());
+  }
+
+  final _$_CotacaoStoreActionController =
+      ActionController(name: '_CotacaoStore');
 
   @override
   void addPoint(String id, bool ativaModalEntrega, bool ehPrimeiroPonto,
@@ -168,7 +188,8 @@ streetNumber: ${streetNumber},
 street: ${street},
 city: ${city},
 state: ${state},
-cotacao: ${cotacao}
+cotacao: ${cotacao},
+isValidToCotarErrorMessage: ${isValidToCotarErrorMessage}
     ''';
   }
 }
