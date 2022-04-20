@@ -62,7 +62,8 @@ abstract class _CotacaoStore with Store {
   @action
   void onSuggestionClick(Place placeDetails, String id) {
     pontosColetaEntrega
-        .firstWhere((pontoColetaEntrega) => pontoColetaEntrega.id == id).place = placeDetails;
+        .firstWhere((pontoColetaEntrega) => pontoColetaEntrega.id == id)
+        .place = placeDetails;
 
     streetNumber = placeDetails.streetNumber;
     street = placeDetails.street;
@@ -71,8 +72,9 @@ abstract class _CotacaoStore with Store {
   }
 
   @action
-  void setCotacao(CotacaoModel? cotacao) {
-    cotacao = cotacao;
+  void setCotacao(CotacaoModel? nCotacao) {
+    cotacao = null;
+    cotacao = nCotacao;
   }
 
   @action
@@ -97,11 +99,8 @@ abstract class _CotacaoStore with Store {
         FirebaseRealtimeDatabaseService service =
             GetIt.I.get<FirebaseRealtimeDatabaseService>();
 
-        CotacaoModel model = CotacaoModel(
-            userStore.userCredential!.uid,
-            points,
-            DateTime.now().millisecondsSinceEpoch
-            );
+        CotacaoModel model = CotacaoModel(userStore.userCredential!.uid, points,
+            DateTime.now().millisecondsSinceEpoch, []);
 
         CotacaoDTO dto = CotacaoDTO();
         await service.create(dto.toFirebaseDate(model));

@@ -90,7 +90,7 @@ abstract class _UserStore with Store {
 
   @action
   void setUser(User? user) {
-    userCredential = null;
+    userCredential = user;
   }
 
   bool get isLoggedin {

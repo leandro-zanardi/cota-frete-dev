@@ -170,11 +170,11 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
   }
 
   @override
-  void setCotacao(CotacaoModel? cotacao) {
+  void setCotacao(CotacaoModel? nCotacao) {
     final _$actionInfo = _$_CotacaoStoreActionController.startAction(
         name: '_CotacaoStore.setCotacao');
     try {
-      return super.setCotacao(cotacao);
+      return super.setCotacao(nCotacao);
     } finally {
       _$_CotacaoStoreActionController.endAction(_$actionInfo);
     }

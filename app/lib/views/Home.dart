@@ -1,4 +1,5 @@
 import 'package:app/components/auto_complete_widget.dart';
+import 'package:app/model/valor_model.dart';
 import 'package:app/store/cotacao_store.dart';
 import 'package:app/store/user.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,22 @@ class Home extends StatelessWidget {
     return Column(
       children: [...autoCompletes],
     );
+  }
+
+  List<Widget> _buildValores(List<ValorModel> valores) {
+    List<Widget> children = [];
+
+    for (int x = 0; x < valores.length; x++) {
+      children.add(
+        Row(children: [
+          Text(valores[x].fid.toString()),
+          Text(valores[x].nome),
+          Text(valores[x].preco.toString()),
+        ],)
+      );
+    }
+
+    return children;
   }
 
   @override
@@ -89,17 +106,24 @@ class Home extends StatelessWidget {
                   ),
                 ),
                 Container(height: 10),
+                Observer(
+                    builder: (_) => Column(
+                          children: [
+                            if (cotacaoStore.cotacao != null)
+                              ..._buildValores(cotacaoStore.cotacao!.valores)
+                          ],
+                        )),
                 ElevatedButton(
                   onPressed: () async {
                     cotacaoStore.cotar();
                   },
                   child: Text("Cotar"),
                 ),
-
                 Observer(
                   builder: (_) => Text(
-                    cotacaoStore.isValidToCotarErrorMessage ??  "", 
-                    style: const TextStyle(color: Colors.red),),
+                    cotacaoStore.isValidToCotarErrorMessage ?? "",
+                    style: const TextStyle(color: Colors.red),
+                  ),
                 )
               ],
             ),

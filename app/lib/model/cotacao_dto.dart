@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 import 'package:app/model/cotacao_model.dart';
 import 'package:app/model/i_dto.dart';
 import 'package:app/model/point_model.dart';
-import 'package:firebase_database/firebase_database.dart';
-
+import 'package:app/model/valor_dto.dart';
+import 'package:app/model/valor_model.dart';
 class CotacaoDTO implements IDTO {
   @override
   CotacaoModel fromJson(Map<String?, dynamic> json) {
@@ -14,7 +12,15 @@ class CotacaoDTO implements IDTO {
     List<PointModel> points = _mapToPoints(json["points"]);
     int cotacaoTime = json["cotacaoTime"];
 
-    CotacaoModel model = CotacaoModel(userUid, points, cotacaoTime);
+    List<ValorModel> valores = [];
+    if (json["valores"] != null) {
+      List<dynamic> valoresJson = json["valores"] as List<dynamic>;
+      for (int x = 0; x < valoresJson.length; x++) {
+        valores.add(ValorDTO().fromJson(valoresJson[x]));
+      }
+    }
+
+    CotacaoModel model = CotacaoModel(userUid, points, cotacaoTime, valores);
     return model;
   }
 
