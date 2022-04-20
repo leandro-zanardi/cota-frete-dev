@@ -1,8 +1,7 @@
 class PointModel {
-  late double lat;
-  late double lng;
+  double lat;
+  double lng;
   String? city;
 
-  
-
+  PointModel(this.lat, this.lng, this.city);
 }
