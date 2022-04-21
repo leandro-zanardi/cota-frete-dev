@@ -12,7 +12,10 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    var colors2 = <Color>[
+      Color.fromARGB(255, 160, 218, 215),
+      Color.fromARGB(255, 0, 188, 212)
+    ];
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
@@ -23,7 +26,14 @@ class Login extends StatelessWidget {
           children: <Widget>[
             Container(
               decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 178, 208, 213),
+                gradient: LinearGradient(
+                    begin: Alignment.bottomRight,
+                    end: Alignment(
+                        0.8, 0.0), // 10% of the width, so there are ten blinds.
+                    colors: <Color>[
+                      Color.fromARGB(255, 160, 218, 215),
+                      Color.fromARGB(255, 0, 188, 212)
+                    ]),
                 borderRadius: BorderRadius.all(Radius.circular(8)),
               ),
               width: MediaQuery.of(context).size.width,
@@ -33,16 +43,24 @@ class Login extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  const Text("Crie sua conta"),
+                  const Text(
+                    "Crie sua conta",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16),
+                  ),
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Observer(builder: (context) {
-                      return TextField(
+                      return TextFormField(
                         onChanged: (value) => userStore.validateEmail(value),
                         decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white)),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
                             labelText: 'E-mail',
+                            labelStyle: TextStyle(color: Colors.white),
                             errorText: userStore.emailRegisterError),
                       );
                     }),
@@ -50,13 +68,15 @@ class Login extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Observer(builder: (context) {
-                      return TextField(
+                      return TextFormField(
                         onChanged: (value) => userStore.validatePassword(value),
                         obscureText: true,
                         decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white)),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
                             labelText: 'Senha',
+                            labelStyle: TextStyle(color: Colors.white),
                             errorText: userStore.passwordRegisterError),
                       );
                     }),
@@ -70,7 +90,11 @@ class Login extends StatelessWidget {
             ),
             Container(
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 230, 230, 230),
+                gradient: LinearGradient(
+                    begin: Alignment.bottomRight,
+                    end: Alignment(
+                        0.8, 0.0), // 10% of the width, so there are ten blinds.
+                    colors: colors2),
                 borderRadius: BorderRadius.all(Radius.circular(8)),
               ),
               width: MediaQuery.of(context).size.width,
@@ -80,17 +104,25 @@ class Login extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  const Text("Entre"),
+                  const Text(
+                    "Acesse sua conta",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16),
+                  ),
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Observer(builder: (context) {
-                      return TextField(
+                      return TextFormField(
                         onChanged: (value) =>
                             userStore.validateEmailLogin(value),
                         decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white)),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
                             labelText: 'E-mail',
+                            labelStyle: TextStyle(color: Colors.white),
                             errorText: userStore.emailLoginError),
                       );
                     }),
@@ -98,17 +130,23 @@ class Login extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Observer(builder: (context) {
-                      return TextField(
+                      return TextFormField(
                         onChanged: (value) =>
                             userStore.validatePasswordLogin(value),
                         obscureText: true,
                         decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white)),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
                             labelText: 'Senha',
+                            labelStyle: TextStyle(color: Colors.white),
                             errorText: userStore.passwordLoginError),
                       );
                     }),
+                  ),
+                  const Text(
+                    "Esqueci a senha",
+                    style: TextStyle(color: Colors.white),
                   ),
                   ElevatedButton(
                     onPressed: () async {
@@ -118,6 +156,14 @@ class Login extends StatelessWidget {
                       }
                     },
                     child: Text("Entrar"),
+                  ),
+                  const Text(
+                    "Ainda não é um usuário? Registre-se!",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  const Text(
+                    "É fornecedor? Trabalhe conosco!",
+                    style: TextStyle(color: Colors.white),
                   )
                 ],
               ),

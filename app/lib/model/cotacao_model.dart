@@ -1,16 +1,11 @@
 import 'package:app/model/point_model.dart';
+import 'package:app/model/valor_model.dart';
 
 class CotacaoModel {
-  late String userUid;
-  late List<PointModel> points;
-  late int cotacaoTime;
+  String? userUid;
+  List<PointModel> points = [];
+  int? cotacaoTime;
+  List<ValorModel> valores = [];
 
-  CotacaoModel(
-      {required String userUid,
-      required List<PointModel> points,
-      required int cotacaoTime}) {
-    userUid = userUid;
-    points = points;
-    cotacaoTime = cotacaoTime;
-  }
+  CotacaoModel(this.userUid, this.points, this.cotacaoTime, this.valores);
 }

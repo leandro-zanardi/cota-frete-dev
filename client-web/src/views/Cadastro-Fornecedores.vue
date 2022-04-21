@@ -37,8 +37,8 @@
 				/>
 				<MDBInput
 					size="lg"
-					type="email" 
-					label="e-mail" 
+					type="email"
+					label="E-mail"
 					v-model="register_form.email"
 					wrapperClass="mb-3"
 				/>				

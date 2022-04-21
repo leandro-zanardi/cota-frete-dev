@@ -13,8 +13,14 @@ class PontoColetaEntrega {
       this.ehPrimeiroPonto = false,
       this.retornaParaOrigem = false});
 
-  void setPlace ( Place place) {
+  void setPlace(Place place) {
     this.place = place;
   }
 
+  bool isValidToCotar() {
+    return (place != null &&
+        place!.lat != null &&
+        place!.lng != null &&
+        place!.city != null);
+  }
 }

@@ -1,6 +1,9 @@
+import 'package:app/model/cotacao_dto.dart';
 import 'package:app/model/cotacao_model.dart';
+import 'package:app/model/point_model.dart';
 import 'package:app/model/ponto_coleta_entrega.dart';
 import 'package:app/service/firebase_realtime_database.dart';
+import 'package:app/store/user.dart';
 import 'package:get_it/get_it.dart';
 import 'package:maps_places_autocomplete/model/place.dart';
 import 'package:mobx/mobx.dart';
@@ -24,9 +27,11 @@ abstract class _CotacaoStore with Store {
   String? state;
   @observable
   CotacaoModel? cotacao;
+  @observable
+  String? isValidToCotarErrorMessage;
 
   @action
-  void init() {
+  Future<void> init() async {
     pontosColetaEntrega = ObservableList<PontoColetaEntrega>();
     pontosColetaEntrega.add(PontoColetaEntrega(
         id: 'A',
@@ -34,6 +39,9 @@ abstract class _CotacaoStore with Store {
         ehPrimeiroPonto: true,
         retornaParaOrigem: false));
     pontosColetaEntrega.add(PontoColetaEntrega(id: 'B'));
+    FirebaseRealtimeDatabaseService service =
+        GetIt.I.get<FirebaseRealtimeDatabaseService>();
+    await service.clear();
   }
 
   @action
@@ -53,6 +61,10 @@ abstract class _CotacaoStore with Store {
 
   @action
   void onSuggestionClick(Place placeDetails, String id) {
+    pontosColetaEntrega
+        .firstWhere((pontoColetaEntrega) => pontoColetaEntrega.id == id)
+        .place = placeDetails;
+
     streetNumber = placeDetails.streetNumber;
     street = placeDetails.street;
     city = placeDetails.city;
@@ -60,7 +72,39 @@ abstract class _CotacaoStore with Store {
   }
 
   @action
-  void setCotacao(CotacaoModel? cotacao) {
-    cotacao = cotacao;
+  void setCotacao(CotacaoModel? nCotacao) {
+    cotacao = null;
+    cotacao = nCotacao;
+  }
+
+  @action
+  Future<void> cotar() async {
+    UserStore userStore = GetIt.I.get<UserStore>();
+    List<PointModel> points = [];
+
+    for (int x = 0; x < pontosColetaEntrega.length; x++) {
+      if (!pontosColetaEntrega[x].isValidToCotar()) {
+        isValidToCotarErrorMessage = "Ponto sem endereço";
+        break;
+      } else {
+        Place? place = pontosColetaEntrega[x].place;
+
+        points.add(PointModel(place!.lat!, place.lng!, place.city));
+        isValidToCotarErrorMessage = null;
+      }
+    }
+
+    if (isValidToCotarErrorMessage == null) {
+      if (userStore.userCredential != null) {
+        FirebaseRealtimeDatabaseService service =
+            GetIt.I.get<FirebaseRealtimeDatabaseService>();
+
+        CotacaoModel model = CotacaoModel(userStore.userCredential!.uid, points,
+            DateTime.now().millisecondsSinceEpoch, []);
+
+        CotacaoDTO dto = CotacaoDTO();
+        await service.create(dto.toFirebaseDate(model));
+      }
+    }
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:app/model/cotacao_dto.dart';
 import 'package:app/store/cotacao_store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,9 +28,8 @@ class FirebaseRealtimeDatabaseService {
     if (_user != null) {
       _ref = FirebaseDatabase.instance.ref("cotacao/${_user!.uid}");
       _ref!.onValue.listen((DatabaseEvent event) {
-        final Map<String, dynamic> data =
-            event.snapshot.value as Map<String, dynamic>;
-        CotacaoModel? model = CotacaoDTO().fromJson(data);
+        final DataSnapshot snapshot =  event.snapshot;
+        CotacaoModel? model = CotacaoDTO().fromJson(jsonDecode(jsonEncode(snapshot.value)));
         CotacaoStore store = GetIt.I.get<CotacaoStore>();
         store.setCotacao(model);
       }, onError: (Object error, StackTrace s) {

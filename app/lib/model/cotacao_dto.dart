@@ -1,18 +1,26 @@
 import 'package:app/model/cotacao_model.dart';
 import 'package:app/model/i_dto.dart';
 import 'package:app/model/point_model.dart';
-
+import 'package:app/model/valor_dto.dart';
+import 'package:app/model/valor_model.dart';
 class CotacaoDTO implements IDTO {
   @override
-  CotacaoModel fromJson(Map<String, dynamic> json) {
+  CotacaoModel fromJson(Map<String?, dynamic> json) {
     print(json.toString());
 
     String userUid = json["userUid"];
     List<PointModel> points = _mapToPoints(json["points"]);
     int cotacaoTime = json["cotacaoTime"];
 
-    CotacaoModel model = CotacaoModel(
-        userUid: userUid, points: points, cotacaoTime: cotacaoTime);
+    List<ValorModel> valores = [];
+    if (json["valores"] != null) {
+      List<dynamic> valoresJson = json["valores"] as List<dynamic>;
+      for (int x = 0; x < valoresJson.length; x++) {
+        valores.add(ValorDTO().fromJson(valoresJson[x]));
+      }
+    }
+
+    CotacaoModel model = CotacaoModel(userUid, points, cotacaoTime, valores);
     return model;
   }
 
@@ -36,9 +44,13 @@ class CotacaoDTO implements IDTO {
     return pointsMap;
   }
 
-  List<PointModel> _mapToPoints(List<Map<String, dynamic>> listMap) {
+  List<PointModel> _mapToPoints(List<dynamic> listMap) {
     List<PointModel> points = [];
-    //TODO
+    for (int x = 0; x < listMap.length; x++) {
+      PointModel point =
+          PointModel(listMap[x]["lat"], listMap[x]["lng"], listMap[x]["city"]);
+      points.add(point);
+    }
     return points;
   }
 }

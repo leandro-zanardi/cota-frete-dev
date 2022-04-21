@@ -65,6 +65,16 @@ dev_dependencies:
   build_runner: ^2.1.7
   mobx_codegen: ^2.0.5+2
 
+  flutter_native_splash: ^2.0.1+1 # native splash screen
+
+# Run commands to generate splash screen
+# 1) flutter clean
+# 2) flutter pub get
+# 3) flutter pub run flutter_native_splash:create
+flutter_native_splash:
+  color: "#f0f0f0"
+  image: web/icons/bg.png # splash figure
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
