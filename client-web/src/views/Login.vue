@@ -9,16 +9,18 @@
 		<div class="login-container d-flex justify-content-end align-items-end h-center w-100">
 			<form v-if="showRegister" class="register form-outline form-white p-3 col-sm-12 col-md-4" @submit.prevent="register">
 				<h2 class="mt-2 mb-3">Crie sua conta</h2>
-				<h6>Crie sua conta com:</h6>
-				<a class="m-1" href="#!" role="button" style="color: rgb(59, 89, 152);">
-					<MDBIcon iconStyle="fab" icon="facebook-f" size="lg"></MDBIcon>
-				</a>
-				<a class="m-1" href="#!" role="button" style="color: rgb(172, 43, 172);">
-					<MDBIcon iconStyle="fab" icon="instagram" size="lg"></MDBIcon>
-				</a>
-				<a class="m-1" href="#!" role="button" style="color: rgb(221, 75, 57);">
-					<MDBIcon iconStyle="fab" icon="google" size="lg"></MDBIcon>
-				</a>
+				<h6 class="p-2 pb-3 ps-0">Crie sua conta com:</h6>
+				<div class="rede-social">
+					<a class="m-1 rede-social" href="#!" role="button" style="color: rgb(59, 89, 152);">
+						<MDBIcon iconStyle="fab" icon="facebook-f" size="lg"></MDBIcon>
+					</a>
+					<a class="m-1 rede-social" href="#!" role="button" style="color: rgb(172, 43, 172);">
+						<MDBIcon iconStyle="fab" icon="instagram" size="lg"></MDBIcon>
+					</a>
+					<a class="m-1 rede-social" href="#!" role="button" style="color: rgb(221, 75, 57);">
+						<MDBIcon iconStyle="fab" icon="google" size="lg"></MDBIcon>
+					</a>
+				</div>
 				<MDBInput
 					size="lg"
 					type="email" 
@@ -32,6 +34,7 @@
 					label="Crie uma senha" 
 					v-model="register_form.password"
 					wrapperClass="mb-3"
+					class="mb-2"
 				/>
 				<MDBBtn
 					color="primary"
@@ -40,7 +43,7 @@
 				>
 					Cadastrar
 				</MDBBtn>
-				<h6>
+				<h6 class="p-2 pt-3 ps-0">
 					Já é um usuário? 
 					<a @click="setRegister" href="#" class="stretched-link" style="position: relative">Entre!</a>
 				</h6>
@@ -49,15 +52,17 @@
 			<form v-else class="login form-outline form-white p-3 col-sm-12 col-md-4" @submit.prevent="login">
 				<h2 class="mt-2 mb-3">Acesse sua conta</h2>
 				<h6>Acesse sua conta com:</h6>
-				<a class="m-1" href="#!" role="button" style="color: rgb(59, 89, 152);">
-					<MDBIcon iconStyle="fab" icon="facebook-f" size="lg"></MDBIcon>
-				</a>
-				<a class="m-1" href="#!" role="button" style="color: rgb(172, 43, 172);">
-					<MDBIcon iconStyle="fab" icon="instagram" size="lg"></MDBIcon>
-				</a>
-				<a class="m-1" href="#!" role="button" style="color: rgb(221, 75, 57);">
-					<MDBIcon iconStyle="fab" icon="google" size="lg"></MDBIcon>
-				</a>
+				<div class="rede-social">
+					<a class="m-1" href="#!" role="button" style="color: rgb(59, 89, 152);">
+						<MDBIcon iconStyle="fab" icon="facebook-f" size="lg"></MDBIcon>
+					</a>
+					<a class="m-1" href="#!" role="button" style="color: rgb(172, 43, 172);">
+						<MDBIcon iconStyle="fab" icon="instagram" size="lg"></MDBIcon>
+					</a>
+					<a class="m-1" href="#!" role="button" style="color: rgb(221, 75, 57);">
+						<MDBIcon iconStyle="fab" icon="google" size="lg"></MDBIcon>
+					</a>
+				</div>
 				<MDBInput
 					size="lg"
 					wrapperClass="mb-3"
@@ -71,15 +76,15 @@
 					label="Digite sua senha" 
 					v-model="login_form.password" />
 				<MDBCheckbox label="Lembre de mim" v-model="checkbox1" />
-				<h6>
+				<h6 class= "p-2 pb-2">
 					<a @click="esqueceuSenha" href="#" class="stretched-link" style="position: relative">Esqueceu sua senha?</a>
 				</h6>
 				<MDBBtn color="primary" type="submit" size="lg">
 					Entrar
 				</MDBBtn>
-				<h6>
+				<h6 class= "p-2 pt-3 ps-0">
 					Ainda não é um usuário? 
-					<a @click="setRegister" href="#" class="stretched-link" style="position: relative">Registre-se!</a>
+					<a @click="setRegister" href="#" class="stretched-link" style="position: relative" > Registre-se!</a>
 				</h6>
 				<h6>
 					É fornecedor? 
@@ -179,4 +184,9 @@ form.register {
 .logo{
 	padding-left: 20px;
 }
+
+.rede-social{
+	padding-bottom: 5px;
+}
+
 </style>
