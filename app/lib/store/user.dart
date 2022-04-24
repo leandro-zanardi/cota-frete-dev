@@ -89,6 +89,11 @@ abstract class _UserStore with Store {
   }
 
   @action
+  Future<void> logout() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
+  @action
   void setUser(User? user) {
     userCredential = user;
   }

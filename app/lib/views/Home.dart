@@ -41,13 +41,13 @@ class Home extends StatelessWidget {
     List<Widget> children = [];
 
     for (int x = 0; x < valores.length; x++) {
-      children.add(
-        Row(children: [
+      children.add(Row(
+        children: [
           Text(valores[x].fid.toString()),
           Text(valores[x].nome),
           Text(valores[x].preco.toString()),
-        ],)
-      );
+        ],
+      ));
     }
 
     return children;
@@ -93,18 +93,18 @@ class Home extends StatelessWidget {
                             )),
                   ],
                 ),
-                Observer(
-                  builder: (_) => Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Número: ${cotacaoStore.streetNumber}"),
-                      Text("Rua: ${cotacaoStore.street}"),
-                      Text("Cidade: ${cotacaoStore.city}"),
-                      Text("Estado: ${cotacaoStore.state}"),
-                    ],
-                  ),
-                ),
+                // Observer(
+                //   builder: (_) => Column(
+                //     mainAxisAlignment: MainAxisAlignment.start,
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       Text("Número: ${cotacaoStore.streetNumber}"),
+                //       Text("Rua: ${cotacaoStore.street}"),
+                //       Text("Cidade: ${cotacaoStore.city}"),
+                //       Text("Estado: ${cotacaoStore.state}"),
+                //     ],
+                //   ),
+                // ),
                 Container(height: 10),
                 Observer(
                     builder: (_) => Column(
@@ -124,7 +124,14 @@ class Home extends StatelessWidget {
                     cotacaoStore.isValidToCotarErrorMessage ?? "",
                     style: const TextStyle(color: Colors.red),
                   ),
-                )
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    await userStore.logout();
+                    await Navigator.pushReplacementNamed(context, '/login');
+                  },
+                  child: const Text("To Login"),
+                ),
               ],
             ),
           ),
