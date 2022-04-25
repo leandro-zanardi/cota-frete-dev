@@ -74,23 +74,21 @@ class Home extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Observer(
-                        builder: (_) => Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: ElevatedButton(
-                                onPressed: () => cotacaoStore.addPoint(
-                                    'id', false, false, false),
-                                child: const Text("Adicionar Ponto"),
-                              ),
-                            )),
-                    Observer(
-                        builder: (_) => Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: ElevatedButton(
-                                onPressed: () => cotacaoStore.removeLastPoint(),
-                                child: const Text("Remover Ponto"),
-                              ),
-                            )),
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: ElevatedButton(
+                        onPressed: () => cotacaoStore.addPoint(
+                            'id', false, false, false),
+                        child: const Text("Adicionar Ponto"),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: ElevatedButton(
+                        onPressed: () => cotacaoStore.removeLastPoint(),
+                        child: const Text("Remover Ponto"),
+                      ),
+                    ),
                   ],
                 ),
                 // Observer(

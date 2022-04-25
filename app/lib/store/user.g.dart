@@ -146,6 +146,21 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
+  final _$isRegisterAtom = Atom(name: '_UserStore.isRegister');
+
+  @override
+  bool get isRegister {
+    _$isRegisterAtom.reportRead();
+    return super.isRegister;
+  }
+
+  @override
+  set isRegister(bool value) {
+    _$isRegisterAtom.reportWrite(value, super.isRegister, () {
+      super.isRegister = value;
+    });
+  }
+
   final _$registerAsyncAction = AsyncAction('_UserStore.register');
 
   @override
@@ -160,7 +175,36 @@ mixin _$UserStore on _UserStore, Store {
     return _$loginAsyncAction.run(() => super.login());
   }
 
+  final _$logoutAsyncAction = AsyncAction('_UserStore.logout');
+
+  @override
+  Future<void> logout() {
+    return _$logoutAsyncAction.run(() => super.logout());
+  }
+
   final _$_UserStoreActionController = ActionController(name: '_UserStore');
+
+  @override
+  void toRegister() {
+    final _$actionInfo =
+        _$_UserStoreActionController.startAction(name: '_UserStore.toRegister');
+    try {
+      return super.toRegister();
+    } finally {
+      _$_UserStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void toLogin() {
+    final _$actionInfo =
+        _$_UserStoreActionController.startAction(name: '_UserStore.toLogin');
+    try {
+      return super.toLogin();
+    } finally {
+      _$_UserStoreActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void setUser(User? user) {
@@ -228,7 +272,8 @@ passwordRegisterError: ${passwordRegisterError},
 emailLogin: ${emailLogin},
 emailLoginError: ${emailLoginError},
 passwordLogin: ${passwordLogin},
-passwordLoginError: ${passwordLoginError}
+passwordLoginError: ${passwordLoginError},
+isRegister: ${isRegister}
     ''';
   }
 }

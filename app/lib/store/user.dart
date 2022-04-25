@@ -35,6 +35,19 @@ abstract class _UserStore with Store {
   @observable
   String? passwordLoginError;
 
+  @observable
+  bool isRegister = false;
+
+  @action
+  void toRegister() {
+    isRegister = true;
+  }
+
+  @action
+  void toLogin() {
+    isRegister = false;
+  }
+
   @action
   Future<void> register() async {
     print(" Registrando Usuario $emailRegister");

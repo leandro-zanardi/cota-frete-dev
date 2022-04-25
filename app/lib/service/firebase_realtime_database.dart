@@ -28,8 +28,11 @@ class FirebaseRealtimeDatabaseService {
     if (_user != null) {
       _ref = FirebaseDatabase.instance.ref("cotacao/${_user!.uid}");
       _ref!.onValue.listen((DatabaseEvent event) {
-        final DataSnapshot snapshot =  event.snapshot;
-        CotacaoModel? model = CotacaoDTO().fromJson(jsonDecode(jsonEncode(snapshot.value)));
+        final DataSnapshot snapshot = event.snapshot;
+        CotacaoModel? model;
+        if (snapshot.value != null) {
+          model = CotacaoDTO().fromJson(jsonDecode(jsonEncode(snapshot.value)));
+        }
         CotacaoStore store = GetIt.I.get<CotacaoStore>();
         store.setCotacao(model);
       }, onError: (Object error, StackTrace s) {
