@@ -10,15 +10,17 @@
 			<form class="register form-outline form-white p-3 col-sm-12 col-md-4" @submit.prevent="register">
 				<h2 class="mt-2 mb-3">Cadastre-se como fornecedor</h2>
 				<h6>Cadastre-se como fornecedor:</h6>
-				<a class="m-1" href="#!" role="button" style="color: rgb(59, 89, 152);">
-					<MDBIcon iconStyle="fab" icon="facebook-f" size="lg"></MDBIcon>
-				</a>
-				<a class="m-1" href="#!" role="button" style="color: rgb(172, 43, 172);">
-					<MDBIcon iconStyle="fab" icon="instagram" size="lg"></MDBIcon>
-				</a>
-				<a class="m-1" href="#!" role="button" style="color: rgb(221, 75, 57);">
-					<MDBIcon iconStyle="fab" icon="google" size="lg"></MDBIcon>
-				</a>
+				<div class="rede-social">
+					<a class="m-1" href="#!" role="button" style="color: rgb(59, 89, 152);">
+						<MDBIcon iconStyle="fab" icon="facebook-f" size="lg"></MDBIcon>
+					</a>
+					<a class="m-1" href="#!" role="button" style="color: rgb(172, 43, 172);">
+						<MDBIcon iconStyle="fab" icon="instagram" size="lg"></MDBIcon>
+					</a>
+					<a class="m-1" href="#!" role="button" style="color: rgb(221, 75, 57);">
+						<MDBIcon iconStyle="fab" icon="google" size="lg"></MDBIcon>
+					</a>
+				</div>
                 <MDBInput
 					size="lg"
 					type="empresa" 
@@ -61,7 +63,7 @@
 				>
 					Cadastrar
 				</MDBBtn>
-				<h6>
+				<h6 class= "p-2 pt-3 ps-0">
 					Já é um usuário? 
 					<router-link class="p-2" to ="/login">Entre!</router-link>
 				</h6>
@@ -128,4 +130,9 @@ form.register {
 .logo{
 	padding-left: 20px;
 }
+
+.rede-social{
+	padding-bottom: 5px;
+}
+
 </style>
