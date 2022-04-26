@@ -63,70 +63,88 @@ class Home extends StatelessWidget {
           title: const Text('Home'),
         ),
         drawer: const Sidenav(),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Observer(builder: (_) {
-                  return buildAutocompletes(cotacaoStore.pontosColetaEntrega);
-                }),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+        body: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Stack(
+            children: [SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: ElevatedButton(
-                        onPressed: () =>
-                            cotacaoStore.addPoint('id', false, false, false),
-                        child: const Text("Adicionar Ponto"),
-                      ),
+                    Observer(builder: (_) {
+                      return buildAutocompletes(cotacaoStore.pontosColetaEntrega);
+                    }),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: ElevatedButton(
+                            onPressed: () =>
+                                cotacaoStore.addPoint('id', false, false, false),
+                            child: const Text("Adicionar Ponto"),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: ElevatedButton(
+                            onPressed: () => cotacaoStore.removeLastPoint(),
+                            child: const Text("Remover Ponto"),
+                          ),
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: ElevatedButton(
-                        onPressed: () => cotacaoStore.removeLastPoint(),
-                        child: const Text("Remover Ponto"),
-                      ),
+                    // Observer(
+                    //   builder: (_) => Column(
+                    //     mainAxisAlignment: MainAxisAlignment.start,
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Text("Número: ${cotacaoStore.streetNumber}"),
+                    //       Text("Rua: ${cotacaoStore.street}"),
+                    //       Text("Cidade: ${cotacaoStore.city}"),
+                    //       Text("Estado: ${cotacaoStore.state}"),
+                    //     ],
+                    //   ),
+                    // ),
+                    Container(height: 10),
+                    Observer(
+                        builder: (_) => Column(
+                              children: [
+                                if (cotacaoStore.cotacao != null)
+                                  ..._buildValores(cotacaoStore.cotacao!.valores)
+                              ],
+                            )),
+                    ElevatedButton(
+                      onPressed: () async {
+                        cotacaoStore.cotar();
+                      },
+                      child: const Text("Cotar"),
                     ),
+                    Observer(
+                      builder: (_) => Text(
+                        cotacaoStore.isValidToCotarErrorMessage ?? "",
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    )
+          
+                    
                   ],
                 ),
-                // Observer(
-                //   builder: (_) => Column(
-                //     mainAxisAlignment: MainAxisAlignment.start,
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: [
-                //       Text("Número: ${cotacaoStore.streetNumber}"),
-                //       Text("Rua: ${cotacaoStore.street}"),
-                //       Text("Cidade: ${cotacaoStore.city}"),
-                //       Text("Estado: ${cotacaoStore.state}"),
-                //     ],
-                //   ),
-                // ),
-                Container(height: 10),
-                Observer(
-                    builder: (_) => Column(
-                          children: [
-                            if (cotacaoStore.cotacao != null)
-                              ..._buildValores(cotacaoStore.cotacao!.valores)
-                          ],
-                        )),
-                ElevatedButton(
-                  onPressed: () async {
-                    cotacaoStore.cotar();
-                  },
-                  child: const Text("Cotar"),
-                ),
-                Observer(
-                  builder: (_) => Text(
-                    cotacaoStore.isValidToCotarErrorMessage ?? "",
-                    style: const TextStyle(color: Colors.red),
-                  ),
-                ),
-              ],
+              ),
             ),
+            
+            Positioned(
+              bottom: 16,
+              right: 16,
+              child: FloatingActionButton(
+                child: const Icon(Icons.map),
+                onPressed: () => Navigator.of(context).pushNamed('/map')
+              ),
+            )
+
+            ]
           ),
         ));
   }

@@ -2,8 +2,10 @@ import 'package:app/service/firebase_auth.dart';
 import 'package:app/service/firebase_realtime_database.dart';
 import 'package:app/store/cotacao_store.dart';
 import 'package:app/store/user.dart';
+import 'package:app/views/About.dart';
 import 'package:app/views/Home.dart';
 import 'package:app/views/Login.dart';
+import 'package:app/views/map_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -48,6 +50,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => userStore.isLoggedin ? const Home() : const Login(),
         '/login': (context) => const Login(),
         '/home': (context) => const Home(),
+        '/about': (context) => const About(),
+        '/map': (context) =>  const MapView(),
       },
     );
   }
