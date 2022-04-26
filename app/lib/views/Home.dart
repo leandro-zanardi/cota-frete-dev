@@ -2,7 +2,7 @@ import 'package:app/components/auto_complete_widget.dart';
 import 'package:app/model/valor_model.dart';
 import 'package:app/store/cotacao_store.dart';
 import 'package:app/store/user.dart';
-import 'package:app/views/SideNav.dart';
+import 'package:app/views/sidenav.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -65,8 +65,8 @@ class Home extends StatelessWidget {
         drawer: const Sidenav(),
         body: SizedBox(
           height: MediaQuery.of(context).size.height,
-          child: Stack(
-            children: [SingleChildScrollView(
+          child: Stack(children: [
+            SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -74,7 +74,8 @@ class Home extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Observer(builder: (_) {
-                      return buildAutocompletes(cotacaoStore.pontosColetaEntrega);
+                      return buildAutocompletes(
+                          cotacaoStore.pontosColetaEntrega);
                     }),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -82,8 +83,8 @@ class Home extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: ElevatedButton(
-                            onPressed: () =>
-                                cotacaoStore.addPoint('id', false, false, false),
+                            onPressed: () => cotacaoStore.addPoint(
+                                'id', false, false, false),
                             child: const Text("Adicionar Ponto"),
                           ),
                         ),
@@ -113,7 +114,8 @@ class Home extends StatelessWidget {
                         builder: (_) => Column(
                               children: [
                                 if (cotacaoStore.cotacao != null)
-                                  ..._buildValores(cotacaoStore.cotacao!.valores)
+                                  ..._buildValores(
+                                      cotacaoStore.cotacao!.valores)
                               ],
                             )),
                     ElevatedButton(
@@ -128,24 +130,18 @@ class Home extends StatelessWidget {
                         style: const TextStyle(color: Colors.red),
                       ),
                     )
-          
-                    
                   ],
                 ),
               ),
             ),
-            
             Positioned(
               bottom: 16,
               right: 16,
               child: FloatingActionButton(
-                child: const Icon(Icons.map),
-                onPressed: () => Navigator.of(context).pushNamed('/map')
-              ),
+                  child: const Icon(Icons.map),
+                  onPressed: () => Navigator.of(context).pushNamed('/map')),
             )
-
-            ]
-          ),
+          ]),
         ));
   }
 }

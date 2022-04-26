@@ -8,8 +8,8 @@
         <h2>Comparador de Logística</h2>
         <p>
           Este aplicativo foi desenvolvido visando ajudar
-          as pessoas a escolher a melhor opção logística
-          para aquisição de produtos.
+          as pessoas a escolher a melhor opção frete para
+          o transporte de produtos.
         </p>
       </div>
     </main>

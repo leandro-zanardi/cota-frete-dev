@@ -2,9 +2,14 @@ import 'package:app/service/firebase_auth.dart';
 import 'package:app/service/firebase_realtime_database.dart';
 import 'package:app/store/cotacao_store.dart';
 import 'package:app/store/user.dart';
-import 'package:app/views/About.dart';
+import 'package:app/views/Fornecedores.dart';
+import 'package:app/views/Historico.dart';
+import 'package:app/views/about.dart';
 import 'package:app/views/Home.dart';
 import 'package:app/views/Login.dart';
+import 'package:app/views/cadastro_fornecedores.dart';
+import 'package:app/views/configuracao_fornecedor.dart';
+import 'package:app/views/configuracao_usuario.dart';
 import 'package:app/views/map_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +49,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        primaryColor: Colors.cyan,
       ),
       initialRoute: '/',
       routes: {
@@ -51,7 +57,12 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const Login(),
         '/home': (context) => const Home(),
         '/about': (context) => const About(),
-        '/map': (context) =>  const MapView(),
+        '/map': (context) => const MapView(),
+        '/configuracao-usuario': (context) => const ConfiguracaoUsuario(),
+        '/configuracao-fornecedor': (context) => const ConfiguracaoFornecedor(),
+        '/fornecedores': (context) => const Fornecedores(),
+        '/historico': (context) => const Historico(),
+        '/cadastro-fornecedor': (context) => const CadastroFornecedor(),
       },
     );
   }
