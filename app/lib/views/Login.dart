@@ -53,7 +53,7 @@ class Login extends StatelessWidget {
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16),
+                                  fontSize: 20),
                             ),
                             Padding(
                               padding: EdgeInsets.all(8.0),
@@ -103,7 +103,10 @@ class Login extends StatelessWidget {
                                 padding: const EdgeInsets.all(12.0),
                                 child: const Text(
                                   "Já tem conta? Login!",
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
@@ -138,7 +141,7 @@ class Login extends StatelessWidget {
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 16),
+                            fontSize: 20),
                       ),
                       Padding(
                         padding: EdgeInsets.all(8.0),
@@ -175,7 +178,7 @@ class Login extends StatelessWidget {
                       ),
                       const Text(
                         "Esqueci a senha",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                       ElevatedButton(
                         onPressed: () async {
@@ -192,19 +195,35 @@ class Login extends StatelessWidget {
                           padding: const EdgeInsets.all(12.0),
                           child: const Text(
                             "Ainda não é um usuário? Registre-se!",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
                           ),
                         ),
                       ),
-                      const Text(
-                        "É fornecedor? Trabalhe conosco!",
-                        style: TextStyle(color: Colors.white),
-                      )
+                      InkWell(
+                          onTap: () => Navigator.of(context)
+                              .pushNamed("/cadastro-fornecedor"),
+                          child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: const Text(
+                                "É fornecedor? Trabalhe conosco!",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16),
+                              )))
                     ],
                   ),
                 ),
               ),
-            )
+            ),
+            Image.asset(
+              'assets/images/bg.png',
+              width: 150.0,
+              height: 150.0,
+            ),
           ],
         ),
       ),
