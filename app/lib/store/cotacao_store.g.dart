@@ -25,6 +25,21 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
     });
   }
 
+  final _$markersAtom = Atom(name: '_CotacaoStore.markers');
+
+  @override
+  ObservableSet<Marker> get markers {
+    _$markersAtom.reportRead();
+    return super.markers;
+  }
+
+  @override
+  set markers(ObservableSet<Marker> value) {
+    _$markersAtom.reportWrite(value, super.markers, () {
+      super.markers = value;
+    });
+  }
+
   final _$streetNumberAtom = Atom(name: '_CotacaoStore.streetNumber');
 
   @override
@@ -124,6 +139,13 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
     return _$initAsyncAction.run(() => super.init());
   }
 
+  final _$updateMarkersAsyncAction = AsyncAction('_CotacaoStore.updateMarkers');
+
+  @override
+  Future<void> updateMarkers() {
+    return _$updateMarkersAsyncAction.run(() => super.updateMarkers());
+  }
+
   final _$cotarAsyncAction = AsyncAction('_CotacaoStore.cotar');
 
   @override
@@ -184,6 +206,7 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
   String toString() {
     return '''
 pontosColetaEntrega: ${pontosColetaEntrega},
+markers: ${markers},
 streetNumber: ${streetNumber},
 street: ${street},
 city: ${city},

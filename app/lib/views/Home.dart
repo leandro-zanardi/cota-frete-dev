@@ -56,7 +56,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    cotacaoStore.init();
+    //cotacaoStore.init();
 
     return Scaffold(
         appBar: AppBar(

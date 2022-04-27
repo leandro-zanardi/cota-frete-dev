@@ -4,7 +4,9 @@ import 'package:app/model/point_model.dart';
 import 'package:app/model/ponto_coleta_entrega.dart';
 import 'package:app/service/firebase_realtime_database.dart';
 import 'package:app/store/user.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maps_places_autocomplete/model/place.dart';
 import 'package:mobx/mobx.dart';
 
@@ -16,6 +18,9 @@ abstract class _CotacaoStore with Store {
   @observable
   ObservableList<PontoColetaEntrega> pontosColetaEntrega =
       ObservableList<PontoColetaEntrega>();
+
+  @observable
+  ObservableSet<Marker> markers = ObservableSet<Marker>();
 
   @observable
   String? streetNumber;
@@ -57,6 +62,7 @@ abstract class _CotacaoStore with Store {
   @action
   void removeLastPoint() {
     pontosColetaEntrega.removeLast();
+    updateMarkers();
   }
 
   @action
@@ -69,6 +75,26 @@ abstract class _CotacaoStore with Store {
     street = placeDetails.street;
     city = placeDetails.city;
     state = placeDetails.state;
+
+    updateMarkers();
+  }
+
+  @action
+  Future<void> updateMarkers() async {
+    markers = ObservableSet<Marker>();
+    for (int x = 0; x < pontosColetaEntrega.length; x++) {
+      if (pontosColetaEntrega[x].place != null) {
+        LatLng position = LatLng(pontosColetaEntrega[x].place!.lat!,
+            pontosColetaEntrega[x].place!.lng!);
+        BitmapDescriptor icon = await BitmapDescriptor.fromAssetImage(
+            ImageConfiguration.empty, "assets/images/pin_icon.png");
+        Marker marker = Marker(
+            position: position,
+            icon: icon,
+            markerId: MarkerId(pontosColetaEntrega[x].id));
+        markers.add(marker);
+      }
+    }
   }
 
   @action
