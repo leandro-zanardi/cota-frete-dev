@@ -56,7 +56,6 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //cotacaoStore.init();
 
     return Scaffold(
         appBar: AppBar(
@@ -83,8 +82,7 @@ class Home extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: ElevatedButton(
-                            onPressed: () => cotacaoStore.addPoint(
-                                'id', false, false, false),
+                            onPressed: () => cotacaoStore.addPoint(false, false, false),
                             child: const Text("Adicionar Ponto"),
                           ),
                         ),
@@ -97,18 +95,7 @@ class Home extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // Observer(
-                    //   builder: (_) => Column(
-                    //     mainAxisAlignment: MainAxisAlignment.start,
-                    //     crossAxisAlignment: CrossAxisAlignment.start,
-                    //     children: [
-                    //       Text("Número: ${cotacaoStore.streetNumber}"),
-                    //       Text("Rua: ${cotacaoStore.street}"),
-                    //       Text("Cidade: ${cotacaoStore.city}"),
-                    //       Text("Estado: ${cotacaoStore.state}"),
-                    //     ],
-                    //   ),
-                    // ),
+                    
                     Container(height: 10),
                     Observer(
                         builder: (_) => Column(

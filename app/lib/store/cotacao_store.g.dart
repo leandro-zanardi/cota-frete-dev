@@ -40,66 +40,6 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
     });
   }
 
-  final _$streetNumberAtom = Atom(name: '_CotacaoStore.streetNumber');
-
-  @override
-  String? get streetNumber {
-    _$streetNumberAtom.reportRead();
-    return super.streetNumber;
-  }
-
-  @override
-  set streetNumber(String? value) {
-    _$streetNumberAtom.reportWrite(value, super.streetNumber, () {
-      super.streetNumber = value;
-    });
-  }
-
-  final _$streetAtom = Atom(name: '_CotacaoStore.street');
-
-  @override
-  String? get street {
-    _$streetAtom.reportRead();
-    return super.street;
-  }
-
-  @override
-  set street(String? value) {
-    _$streetAtom.reportWrite(value, super.street, () {
-      super.street = value;
-    });
-  }
-
-  final _$cityAtom = Atom(name: '_CotacaoStore.city');
-
-  @override
-  String? get city {
-    _$cityAtom.reportRead();
-    return super.city;
-  }
-
-  @override
-  set city(String? value) {
-    _$cityAtom.reportWrite(value, super.city, () {
-      super.city = value;
-    });
-  }
-
-  final _$stateAtom = Atom(name: '_CotacaoStore.state');
-
-  @override
-  String? get state {
-    _$stateAtom.reportRead();
-    return super.state;
-  }
-
-  @override
-  set state(String? value) {
-    _$stateAtom.reportWrite(value, super.state, () {
-      super.state = value;
-    });
-  }
-
   final _$cotacaoAtom = Atom(name: '_CotacaoStore.cotacao');
 
   @override
@@ -132,11 +72,35 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
     });
   }
 
+  final _$cameraUpdateAtom = Atom(name: '_CotacaoStore.cameraUpdate');
+
+  @override
+  CameraUpdate? get cameraUpdate {
+    _$cameraUpdateAtom.reportRead();
+    return super.cameraUpdate;
+  }
+
+  @override
+  set cameraUpdate(CameraUpdate? value) {
+    _$cameraUpdateAtom.reportWrite(value, super.cameraUpdate, () {
+      super.cameraUpdate = value;
+    });
+  }
+
   final _$initAsyncAction = AsyncAction('_CotacaoStore.init');
 
   @override
   Future<void> init() {
     return _$initAsyncAction.run(() => super.init());
+  }
+
+  final _$onSuggestionClickAsyncAction =
+      AsyncAction('_CotacaoStore.onSuggestionClick');
+
+  @override
+  Future<void> onSuggestionClick(Place placeDetails, String id) {
+    return _$onSuggestionClickAsyncAction
+        .run(() => super.onSuggestionClick(placeDetails, id));
   }
 
   final _$updateMarkersAsyncAction = AsyncAction('_CotacaoStore.updateMarkers');
@@ -157,13 +121,13 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
       ActionController(name: '_CotacaoStore');
 
   @override
-  void addPoint(String id, bool ativaModalEntrega, bool ehPrimeiroPonto,
-      bool retornaParaOrigem) {
+  void addPoint(
+      bool ativaModalEntrega, bool ehPrimeiroPonto, bool retornaParaOrigem) {
     final _$actionInfo = _$_CotacaoStoreActionController.startAction(
         name: '_CotacaoStore.addPoint');
     try {
       return super
-          .addPoint(id, ativaModalEntrega, ehPrimeiroPonto, retornaParaOrigem);
+          .addPoint(ativaModalEntrega, ehPrimeiroPonto, retornaParaOrigem);
     } finally {
       _$_CotacaoStoreActionController.endAction(_$actionInfo);
     }
@@ -181,11 +145,11 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
   }
 
   @override
-  void onSuggestionClick(Place placeDetails, String id) {
+  void computeBounds() {
     final _$actionInfo = _$_CotacaoStoreActionController.startAction(
-        name: '_CotacaoStore.onSuggestionClick');
+        name: '_CotacaoStore.computeBounds');
     try {
-      return super.onSuggestionClick(placeDetails, id);
+      return super.computeBounds();
     } finally {
       _$_CotacaoStoreActionController.endAction(_$actionInfo);
     }
@@ -207,12 +171,9 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
     return '''
 pontosColetaEntrega: ${pontosColetaEntrega},
 markers: ${markers},
-streetNumber: ${streetNumber},
-street: ${street},
-city: ${city},
-state: ${state},
 cotacao: ${cotacao},
-isValidToCotarErrorMessage: ${isValidToCotarErrorMessage}
+isValidToCotarErrorMessage: ${isValidToCotarErrorMessage},
+cameraUpdate: ${cameraUpdate}
     ''';
   }
 }

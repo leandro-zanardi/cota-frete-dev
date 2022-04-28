@@ -4,20 +4,13 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-
 final CotacaoStore _cotacaoStore = GetIt.I.get<CotacaoStore>();
-class MapView extends StatelessWidget {
-  
-  const MapView({Key? key}) : super(key: key);
 
-  static CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(-23.6145455, -46.5006832),
-    zoom: 14.4746,
-  );
+class MapView extends StatelessWidget {
+  const MapView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
           title: const Text('Mapa'),
@@ -26,12 +19,16 @@ class MapView extends StatelessWidget {
           builder: (_) => GoogleMap(
             markers: _cotacaoStore.markers.toSet(),
             mapType: MapType.normal,
-            initialCameraPosition: _kGooglePlex,
+            initialCameraPosition: const CameraPosition(
+              target: LatLng(-23.6145455, -46.5006832),
+              zoom: 10,
+            ),
             onMapCreated: (GoogleMapController controller) {
+              if (_cotacaoStore.cameraUpdate != null) {
+                controller.animateCamera(_cotacaoStore.cameraUpdate!);
+              }
             },
           ),
-        )
-        
-      );
+        ));
   }
 }
