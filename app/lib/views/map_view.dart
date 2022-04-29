@@ -18,6 +18,7 @@ class MapView extends StatelessWidget {
         body: Observer(
           builder: (_) => GoogleMap(
             markers: _cotacaoStore.markers.toSet(),
+            polylines: _cotacaoStore.polylines.toSet(),
             mapType: MapType.normal,
             initialCameraPosition: const CameraPosition(
               target: LatLng(-23.6145455, -46.5006832),

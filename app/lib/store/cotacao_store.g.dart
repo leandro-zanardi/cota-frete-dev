@@ -40,6 +40,21 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
     });
   }
 
+  final _$polylinesAtom = Atom(name: '_CotacaoStore.polylines');
+
+  @override
+  ObservableSet<Polyline> get polylines {
+    _$polylinesAtom.reportRead();
+    return super.polylines;
+  }
+
+  @override
+  set polylines(ObservableSet<Polyline> value) {
+    _$polylinesAtom.reportWrite(value, super.polylines, () {
+      super.polylines = value;
+    });
+  }
+
   final _$cotacaoAtom = Atom(name: '_CotacaoStore.cotacao');
 
   @override
@@ -171,6 +186,7 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
     return '''
 pontosColetaEntrega: ${pontosColetaEntrega},
 markers: ${markers},
+polylines: ${polylines},
 cotacao: ${cotacao},
 isValidToCotarErrorMessage: ${isValidToCotarErrorMessage},
 cameraUpdate: ${cameraUpdate}

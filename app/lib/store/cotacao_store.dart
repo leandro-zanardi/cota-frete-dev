@@ -6,6 +6,7 @@ import 'package:app/model/point_model.dart';
 import 'package:app/model/ponto_coleta_entrega.dart';
 import 'package:app/service/firebase_realtime_database.dart';
 import 'package:app/store/user.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -29,6 +30,9 @@ abstract class _CotacaoStore with Store {
 
   @observable
   ObservableSet<Marker> markers = ObservableSet<Marker>();
+
+  @observable
+  ObservableSet<Polyline> polylines = ObservableSet<Polyline>();
 
   @observable
   CotacaoModel? cotacao;
@@ -83,28 +87,47 @@ abstract class _CotacaoStore with Store {
     // atualiza os pontos no mapa
     updateMarkers();
 
-    //ajustar os caminhos
-
     //ajustar o retangulo da camera do mapa adicionando os pontos
     computeBounds();
   }
 
   @action
   Future<void> updateMarkers() async {
+    //marcadores
     markers = ObservableSet<Marker>();
+    polylines = ObservableSet<Polyline>();
+
+    //paths
+    List<LatLng> points = [];
+    bool anyPoint = false;
+
     for (int x = 0; x < pontosColetaEntrega.length; x++) {
       if (pontosColetaEntrega[x].place != null) {
         LatLng position = LatLng(pontosColetaEntrega[x].place!.lat!,
             pontosColetaEntrega[x].place!.lng!);
         BitmapDescriptor icon = await BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(size: Size(30, 30)),
+            ImageConfiguration(devicePixelRatio: 1, size: Size(16, 16)),
             "assets/images/pin_icon.png");
+
         Marker marker = Marker(
             position: position,
             icon: icon,
             markerId: MarkerId(pontosColetaEntrega[x].id));
+        //adciona o marcador
         markers.add(marker);
+        // adiciona o ponto na polyline
+        points.add(position);
+        //verifica q existe ao menos 1 ponto
+        anyPoint = true;
       }
+    }
+
+    if (anyPoint) {
+      Polyline polyline = Polyline(
+          polylineId: const PolylineId("id"),
+          points: points,
+          color: Colors.red);
+      polylines.add(polyline);
     }
   }
 
