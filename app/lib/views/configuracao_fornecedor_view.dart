@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class Historico extends StatelessWidget {
-  const Historico({Key? key}) : super(key: key);
+class ConfiguracaoFornecedorView extends StatelessWidget {
+  const ConfiguracaoFornecedorView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Fretes'),
+          title: const Text('configurações'),
         ),
         body: Center(
             child: Column(children: [
           Column(
             children: [
-              const Text('Histórico de Fretes',
+              const Text('Configurações de Fornecedor',
                   style: TextStyle(
                     height: 3,
                     fontSize: 30,

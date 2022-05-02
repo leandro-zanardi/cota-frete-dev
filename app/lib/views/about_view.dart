@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class ConfiguracaoFornecedor extends StatelessWidget {
-  const ConfiguracaoFornecedor({Key? key}) : super(key: key);
+class AboutView extends StatelessWidget {
+  const AboutView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('configurações'),
+          title: const Text('Sobre'),
         ),
         body: Center(
             child: Column(children: [
           Column(
             children: [
-              const Text('Configurações de Fornecedor',
+              const Text('Sobre o Aplicativo',
                   style: TextStyle(
                     height: 3,
                     fontSize: 30,

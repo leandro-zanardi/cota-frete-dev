@@ -7,8 +7,8 @@ import 'package:get_it/get_it.dart';
 
 final UserStore userStore = GetIt.I.get<UserStore>();
 
-class CadastroFornecedor extends StatelessWidget {
-  const CadastroFornecedor({Key? key}) : super(key: key);
+class CadastroFornecedorView extends StatelessWidget {
+  const CadastroFornecedorView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

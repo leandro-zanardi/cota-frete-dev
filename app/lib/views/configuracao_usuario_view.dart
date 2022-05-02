@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ConfiguracaoUsuario extends StatelessWidget {
-  const ConfiguracaoUsuario({Key? key}) : super(key: key);
+class ConfiguracaoUsuarioView extends StatelessWidget {
+  const ConfiguracaoUsuarioView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

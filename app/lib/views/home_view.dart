@@ -16,8 +16,8 @@ import '../model/ponto_coleta_entrega.dart';
 final userStore = GetIt.I.get<UserStore>();
 final cotacaoStore = GetIt.I.get<CotacaoStore>();
 
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+class HomeView extends StatelessWidget {
+  const HomeView({Key? key}) : super(key: key);
 
   Widget buildAutocompletes(List<PontoColetaEntrega> pontosColetaEntrega) {
     List<AutocompleteWidget> autoCompletes = [];

@@ -1,5 +1,7 @@
-import 'package:app/views/Login.dart';
+import 'package:app/router/app_router.gr.dart';
+import 'package:app/store/user.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class Sidenav extends StatelessWidget {
   const Sidenav({Key? key}) : super(key: key);
@@ -17,34 +19,35 @@ class Sidenav extends StatelessWidget {
         title: const Text('Home'),
         leading: const Icon(Icons.home),
         onTap: () async {
-          Navigator.of(context).pop();
+          GetIt.I.get<AppRouter>().pop();
         },
       ),
       ListTile(
           title: const Text('Configurações'),
           leading: const Icon(Icons.settings),
           onTap: () =>
-              Navigator.of(context).pushNamed("/configuracao-usuario")),
+              GetIt.I.get<AppRouter>().pushNamed("/configuracao-usuario")),
       ListTile(
           title: const Text('Configurações de fornecedor'),
           leading: const Icon(Icons.manage_accounts),
           onTap: () =>
-              Navigator.of(context).pushNamed("/configuracao-fornecedor")),
+              GetIt.I.get<AppRouter>().pushNamed("/configuracao-fornecedor")),
       ListTile(
           title: const Text('Histórico de fretes'),
           leading: const Icon(Icons.local_shipping),
-          onTap: () => Navigator.of(context).pushNamed("/historico")),
+          onTap: () => GetIt.I.get<AppRouter>().pushNamed("/historico")),
       Divider(color: Colors.grey.shade400),
       ListTile(
           title: const Text('Sobre'),
           leading: const Icon(Icons.info),
-          onTap: () => Navigator.of(context).pushNamed("/about")),
+          onTap: () => GetIt.I.get<AppRouter>().pushNamed("/about")),
       ListTile(
         title: const Text('Sair'),
         leading: const Icon(Icons.logout),
         onTap: () async {
+          UserStore userStore = GetIt.I.get<UserStore>();
           await userStore.logout();
-          await Navigator.pushReplacementNamed(context, '/login');
+          GetIt.I.get<AppRouter>().pushNamed("/home");
         },
       ),
     ]));

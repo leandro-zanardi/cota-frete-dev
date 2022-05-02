@@ -1,5 +1,6 @@
 import 'package:app/service/firebase_realtime_database.dart';
 import 'package:app/store/user.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 
@@ -14,12 +15,29 @@ class FirebaseAuthService {
       userStore.setUser(user);
       realDBTimeService.user = user;
 
+      if (navigationResolver != null && !navigationResolver!.isResolved) {
+        stackRouter?.pop();
+        navigationResolver?.next(user != null);
+      }
+
       if (user == null) {
         print('User is currently signed out!');
       } else {
         print('User is signed in!');
       }
     });
+  }
+
+  NavigationResolver? navigationResolver;
+  StackRouter? stackRouter;
+  void waitLoginResult(StackRouter router, NavigationResolver resolver) {
+    navigationResolver = resolver;
+    stackRouter = router;
+  }
+
+  bool get isLoggedIn {
+    UserStore userStore = GetIt.I.get<UserStore>();
+    return userStore.isLoggedin;
   }
 
   Future<UserCredential> register(String email, String password) async {

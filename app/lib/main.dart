@@ -1,16 +1,9 @@
+import 'package:app/router/app_router.gr.dart';
 import 'package:app/service/firebase_auth.dart';
 import 'package:app/service/firebase_realtime_database.dart';
 import 'package:app/store/cotacao_store.dart';
 import 'package:app/store/user.dart';
-import 'package:app/views/Fornecedores.dart';
-import 'package:app/views/Historico.dart';
-import 'package:app/views/about.dart';
-import 'package:app/views/Home.dart';
-import 'package:app/views/Login.dart';
-import 'package:app/views/cadastro_fornecedores.dart';
-import 'package:app/views/configuracao_fornecedor.dart';
-import 'package:app/views/configuracao_usuario.dart';
-import 'package:app/views/map_view.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -34,6 +27,9 @@ void main() async {
   getIt.registerSingleton<CotacaoStore>(CotacaoStore());
   getIt.registerSingleton<UserStore>(UserStore());
 
+  //route
+  getIt.registerSingleton<AppRouter>(AppRouter());
+
   runApp(const MyApp());
 }
 
@@ -43,27 +39,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    UserStore userStore = GetIt.I.get<UserStore>();
+    final router = GetIt.I.get<AppRouter>();
 
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         primaryColor: Colors.cyan,
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => userStore.isLoggedin ? const Home() : const Login(),
-        '/login': (context) => const Login(),
-        '/home': (context) => const Home(),
-        '/about': (context) => const About(),
-        '/map': (context) => const MapView(),
-        '/configuracao-usuario': (context) => const ConfiguracaoUsuario(),
-        '/configuracao-fornecedor': (context) => const ConfiguracaoFornecedor(),
-        '/fornecedores': (context) => const Fornecedores(),
-        '/historico': (context) => const Historico(),
-        '/cadastro-fornecedor': (context) => const CadastroFornecedor(),
-      },
+      routerDelegate: AutoRouterDelegate(router),
+      routeInformationParser: router.defaultRouteParser()
     );
   }
 }

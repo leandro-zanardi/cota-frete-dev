@@ -7,8 +7,8 @@ import 'package:get_it/get_it.dart';
 
 final UserStore userStore = GetIt.I.get<UserStore>();
 
-class Login extends StatelessWidget {
-  const Login({Key? key}) : super(key: key);
+class LoginView extends StatelessWidget {
+  const LoginView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
