@@ -1,4 +1,5 @@
 import 'package:app/router/app_router.gr.dart';
+import 'package:app/router/auth_guard.dart';
 import 'package:app/service/firebase_auth.dart';
 import 'package:app/service/firebase_realtime_database.dart';
 import 'package:app/store/cotacao_store.dart';
@@ -28,7 +29,7 @@ void main() async {
   getIt.registerSingleton<UserStore>(UserStore());
 
   //route
-  getIt.registerSingleton<AppRouter>(AppRouter());
+  getIt.registerSingleton<AppRouter>(AppRouter(authGuard: AuthGuard()));
 
   runApp(const MyApp());
 }

@@ -1,3 +1,4 @@
+import 'package:app/router/auth_guard.dart';
 import 'package:app/views/about_view.dart';
 import 'package:app/views/cadastro_fornecedor_view.dart';
 import 'package:app/views/configuracao_fornecedor_view.dart';
@@ -12,15 +13,15 @@ import 'package:auto_route/annotations.dart';
 @MaterialAutoRouter(        
   replaceInRouteName: 'View,Route',        
   routes: <AutoRoute>[        
-    AutoRoute(path: "/login", page: LoginView),
-    AutoRoute(path: "/home", page: HomeView, initial: true),
+    AutoRoute(path: "/login", initial: true, page: LoginView),
+    AutoRoute(path: "/home", page: HomeView, guards: [AuthGuard]),
     AutoRoute(path: "/about", page: AboutView),
-    AutoRoute(path: "/map", page: MapView),
-    AutoRoute(path: "/configuracao-usuario", page: ConfiguracaoUsuarioView),
-    AutoRoute(path: "/configuracao-fornecedor", page: ConfiguracaoFornecedorView),
-    AutoRoute(path: "/fornecedores", page: FornecedoresView),
-    AutoRoute(path: "/historico", page: HistoricoView),
-    AutoRoute(path: "/cadastro-fornecedor", page: CadastroFornecedorView)
+    AutoRoute(path: "/map", page: MapView, guards: [AuthGuard]),
+    AutoRoute(path: "/configuracao-usuario", page: ConfiguracaoUsuarioView, guards: [AuthGuard]),
+    AutoRoute(path: "/configuracao-fornecedor", page: ConfiguracaoFornecedorView, guards: [AuthGuard]),
+    AutoRoute(path: "/fornecedores", page: FornecedoresView, guards: [AuthGuard]),
+    AutoRoute(path: "/historico", page: HistoricoView, guards: [AuthGuard]),
+    AutoRoute(path: "/cadastro-fornecedor", page: CadastroFornecedorView, guards: [AuthGuard])
   ],        
 )        
 class $AppRouter {}

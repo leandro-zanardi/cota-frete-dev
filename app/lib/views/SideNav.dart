@@ -47,7 +47,7 @@ class Sidenav extends StatelessWidget {
         onTap: () async {
           UserStore userStore = GetIt.I.get<UserStore>();
           await userStore.logout();
-          GetIt.I.get<AppRouter>().pushNamed("/home");
+          GetIt.I.get<AppRouter>().popUntilRoot();
         },
       ),
     ]));

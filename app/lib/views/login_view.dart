@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app/router/app_router.gr.dart';
 import 'package:app/store/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -183,9 +184,7 @@ class LoginView extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () async {
                           await userStore.login();
-                          if (userStore.isLoggedin) {
-                            Navigator.pushReplacementNamed(context, '/home');
-                          }
+                          GetIt.I.get<AppRouter>().pushNamed("/home");
                         },
                         child: Text("Entrar"),
                       ),
@@ -203,7 +202,7 @@ class LoginView extends StatelessWidget {
                         ),
                       ),
                       InkWell(
-                          onTap: () => Navigator.of(context)
+                          onTap: () => GetIt.I.get<AppRouter>()
                               .pushNamed("/cadastro-fornecedor"),
                           child: Padding(
                               padding: const EdgeInsets.all(12.0),

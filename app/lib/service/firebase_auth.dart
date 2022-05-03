@@ -7,16 +7,24 @@ import 'package:get_it/get_it.dart';
 class FirebaseAuthService {
   FirebaseAuthService() {
     // auth listener
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) async {
       UserStore userStore = GetIt.I.get<UserStore>();
       FirebaseRealtimeDatabaseService realDBTimeService =
           GetIt.I.get<FirebaseRealtimeDatabaseService>();
+
+      //TODO
+      // if (user != null) {
+      //   final IdTokenResult idToken = await user!.getIdTokenResult();
+      //   final claim = idToken.claims;
+      // }
 
       userStore.setUser(user);
       realDBTimeService.user = user;
 
       if (navigationResolver != null && !navigationResolver!.isResolved) {
-        stackRouter?.pop();
+        if (!stackRouter!.isRoot && stackRouter!.canPopSelfOrChildren) {
+          stackRouter?.pop();
+        }
         navigationResolver?.next(user != null);
       }
 

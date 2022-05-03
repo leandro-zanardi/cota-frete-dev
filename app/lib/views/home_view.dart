@@ -1,5 +1,6 @@
 import 'package:app/components/auto_complete_widget.dart';
 import 'package:app/model/valor_model.dart';
+import 'package:app/router/app_router.gr.dart';
 import 'package:app/store/cotacao_store.dart';
 import 'package:app/store/user.dart';
 import 'package:app/views/sidenav.dart';
@@ -126,7 +127,7 @@ class HomeView extends StatelessWidget {
               right: 16,
               child: FloatingActionButton(
                   child: const Icon(Icons.map),
-                  onPressed: () => Navigator.of(context).pushNamed('/map')),
+                  onPressed: () => GetIt.I.get<AppRouter>().pushNamed('/map')),
             )
           ]),
         ));

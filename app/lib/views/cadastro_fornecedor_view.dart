@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app/router/app_router.gr.dart';
 import 'package:app/store/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -133,7 +134,7 @@ class CadastroFornecedorView extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () =>
-                          {userStore.toLogin(), Navigator.of(context).pop()},
+                          {userStore.toLogin(), GetIt.I.get<AppRouter>().pop()},
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: const Text(

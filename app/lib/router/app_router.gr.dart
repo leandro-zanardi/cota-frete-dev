@@ -22,10 +22,15 @@ import '../views/historico_view.dart' as _i8;
 import '../views/home_view.dart' as _i2;
 import '../views/login_view.dart' as _i1;
 import '../views/map_view.dart' as _i4;
+import 'auth_guard.dart' as _i12;
 
 class AppRouter extends _i10.RootStackRouter {
-  AppRouter([_i11.GlobalKey<_i11.NavigatorState>? navigatorKey])
+  AppRouter(
+      {_i11.GlobalKey<_i11.NavigatorState>? navigatorKey,
+      required this.authGuard})
       : super(navigatorKey);
+
+  final _i12.AuthGuard authGuard;
 
   @override
   final Map<String, _i10.PageFactory> pagesMap = {
@@ -70,19 +75,21 @@ class AppRouter extends _i10.RootStackRouter {
   @override
   List<_i10.RouteConfig> get routes => [
         _i10.RouteConfig('/#redirect',
-            path: '/', redirectTo: '/home', fullMatch: true),
+            path: '/', redirectTo: '/login', fullMatch: true),
         _i10.RouteConfig(LoginRoute.name, path: '/login'),
-        _i10.RouteConfig(HomeRoute.name, path: '/home'),
+        _i10.RouteConfig(HomeRoute.name, path: '/home', guards: [authGuard]),
         _i10.RouteConfig(AboutRoute.name, path: '/about'),
-        _i10.RouteConfig(MapRoute.name, path: '/map'),
+        _i10.RouteConfig(MapRoute.name, path: '/map', guards: [authGuard]),
         _i10.RouteConfig(ConfiguracaoUsuarioRoute.name,
-            path: '/configuracao-usuario'),
+            path: '/configuracao-usuario', guards: [authGuard]),
         _i10.RouteConfig(ConfiguracaoFornecedorRoute.name,
-            path: '/configuracao-fornecedor'),
-        _i10.RouteConfig(FornecedoresRoute.name, path: '/fornecedores'),
-        _i10.RouteConfig(HistoricoRoute.name, path: '/historico'),
+            path: '/configuracao-fornecedor', guards: [authGuard]),
+        _i10.RouteConfig(FornecedoresRoute.name,
+            path: '/fornecedores', guards: [authGuard]),
+        _i10.RouteConfig(HistoricoRoute.name,
+            path: '/historico', guards: [authGuard]),
         _i10.RouteConfig(CadastroFornecedorRoute.name,
-            path: '/cadastro-fornecedor')
+            path: '/cadastro-fornecedor', guards: [authGuard])
       ];
 }
 
