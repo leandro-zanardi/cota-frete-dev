@@ -68,8 +68,10 @@ abstract class _CotacaoStore with Store {
 
   @action
   void removeLastPoint() {
-    pontosColetaEntrega.removeLast();
-    updateMarkers();
+    if (pontosColetaEntrega.length > 2) {
+      pontosColetaEntrega.removeLast();
+      updateMarkers();
+    }
   }
 
   @action
