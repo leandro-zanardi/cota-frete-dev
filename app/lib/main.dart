@@ -1,3 +1,4 @@
+import 'package:app/router/admin_guard.dart';
 import 'package:app/router/app_router.gr.dart';
 import 'package:app/router/auth_guard.dart';
 import 'package:app/service/firebase_auth.dart';
@@ -29,7 +30,7 @@ void main() async {
   getIt.registerSingleton<UserStore>(UserStore());
 
   //route
-  getIt.registerSingleton<AppRouter>(AppRouter(authGuard: AuthGuard()));
+  getIt.registerSingleton<AppRouter>(AppRouter(authGuard: AuthGuard(), adminGuard: AdminGuard()));
 
   runApp(const MyApp());
 }

@@ -22,15 +22,19 @@ import '../views/historico_view.dart' as _i8;
 import '../views/home_view.dart' as _i2;
 import '../views/login_view.dart' as _i1;
 import '../views/map_view.dart' as _i4;
+import 'admin_guard.dart' as _i13;
 import 'auth_guard.dart' as _i12;
 
 class AppRouter extends _i10.RootStackRouter {
   AppRouter(
       {_i11.GlobalKey<_i11.NavigatorState>? navigatorKey,
-      required this.authGuard})
+      required this.authGuard,
+      required this.adminGuard})
       : super(navigatorKey);
 
   final _i12.AuthGuard authGuard;
+
+  final _i13.AdminGuard adminGuard;
 
   @override
   final Map<String, _i10.PageFactory> pagesMap = {
@@ -83,13 +87,13 @@ class AppRouter extends _i10.RootStackRouter {
         _i10.RouteConfig(ConfiguracaoUsuarioRoute.name,
             path: '/configuracao-usuario', guards: [authGuard]),
         _i10.RouteConfig(ConfiguracaoFornecedorRoute.name,
-            path: '/configuracao-fornecedor', guards: [authGuard]),
+            path: '/configuracao-fornecedor', guards: [authGuard, adminGuard]),
         _i10.RouteConfig(FornecedoresRoute.name,
             path: '/fornecedores', guards: [authGuard]),
         _i10.RouteConfig(HistoricoRoute.name,
             path: '/historico', guards: [authGuard]),
         _i10.RouteConfig(CadastroFornecedorRoute.name,
-            path: '/cadastro-fornecedor', guards: [authGuard])
+            path: '/cadastro-fornecedor', guards: [authGuard, adminGuard])
       ];
 }
 

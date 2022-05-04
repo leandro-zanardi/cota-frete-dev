@@ -1,3 +1,4 @@
+import 'package:app/router/app_router.gr.dart';
 import 'package:app/service/firebase_realtime_database.dart';
 import 'package:app/store/user.dart';
 import 'package:auto_route/auto_route.dart';
@@ -12,13 +13,18 @@ class FirebaseAuthService {
       FirebaseRealtimeDatabaseService realDBTimeService =
           GetIt.I.get<FirebaseRealtimeDatabaseService>();
 
-      //TODO
-      // if (user != null) {
-      //   final IdTokenResult idToken = await user!.getIdTokenResult();
-      //   final claim = idToken.claims;
-      // }
+      Map<String, dynamic> claims = <String, dynamic>{};
+      if (user != null) {
+        final IdTokenResult idToken = await user.getIdTokenResult();
+        final tokenClaims = idToken.claims;
+        if (tokenClaims != null) {
+          claims = tokenClaims;
+        }
+      }
 
       userStore.setUser(user);
+      userStore.updateClaims(claims);
+
       realDBTimeService.user = user;
 
       if (navigationResolver != null && !navigationResolver!.isResolved) {
@@ -26,6 +32,8 @@ class FirebaseAuthService {
           stackRouter?.pop();
         }
         navigationResolver?.next(user != null);
+      } else if (navigationResolver == null && user != null) {
+        GetIt.I.get<AppRouter>().pushNamed("/home");
       }
 
       if (user == null) {
@@ -46,6 +54,11 @@ class FirebaseAuthService {
   bool get isLoggedIn {
     UserStore userStore = GetIt.I.get<UserStore>();
     return userStore.isLoggedin;
+  }
+
+  bool get isAdmin {
+    UserStore userStore = GetIt.I.get<UserStore>();
+    return userStore.isAdmin;
   }
 
   Future<UserCredential> register(String email, String password) async {

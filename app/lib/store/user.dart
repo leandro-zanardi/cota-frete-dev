@@ -9,6 +9,9 @@ class UserStore = _UserStore with _$UserStore;
 
 abstract class _UserStore with Store {
   @observable
+  ObservableMap<String, dynamic> claims = ObservableMap<String, dynamic>();
+
+  @observable
   User? userCredential;
 
   @observable
@@ -38,6 +41,9 @@ abstract class _UserStore with Store {
   @observable
   bool isRegister = false;
 
+  @observable
+  String? permissionDeniedError;
+
   @action
   void toRegister() {
     isRegister = true;
@@ -46,6 +52,12 @@ abstract class _UserStore with Store {
   @action
   void toLogin() {
     isRegister = false;
+  }
+
+  @action
+  void updateClaims(Map<String, dynamic> remoteClaims) {
+    claims = ObservableMap<String, dynamic>();
+    claims.addEntries(remoteClaims.entries);
   }
 
   @action
@@ -117,6 +129,19 @@ abstract class _UserStore with Store {
     } else {
       return false;
     }
+  }
+
+  bool get isAdmin {
+    if (claims.containsKey("admin") && claims["admin"] == true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  @action
+  void setPermissionDeniedError(String? error) {
+    permissionDeniedError = error;
   }
 
   @action
