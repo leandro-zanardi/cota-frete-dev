@@ -18,7 +18,7 @@ import 'package:auto_route/annotations.dart';
     AutoRoute(path: "/home", page: HomeView, guards: [AuthGuard]),
     AutoRoute(path: "/about", page: AboutView),
     AutoRoute(path: "/map", page: MapView, guards: [AuthGuard]),
-    AutoRoute(path: "/configuracao-usuario", page: ConfiguracaoUsuarioView, guards: [AuthGuard]),
+    AutoRoute(path: "/configuracao-usuario", page: ConfiguracaoUsuarioView, guards: [AuthGuard, AdminGuard]),
     AutoRoute(path: "/configuracao-fornecedor", page: ConfiguracaoFornecedorView, guards: [AuthGuard, AdminGuard]),
     AutoRoute(path: "/fornecedores", page: FornecedoresView, guards: [AuthGuard]),
     AutoRoute(path: "/historico", page: HistoricoView, guards: [AuthGuard]),

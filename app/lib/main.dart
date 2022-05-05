@@ -1,6 +1,8 @@
+import 'package:app/infra/api/admin/claims_api.dart';
 import 'package:app/router/admin_guard.dart';
 import 'package:app/router/app_router.gr.dart';
 import 'package:app/router/auth_guard.dart';
+import 'package:app/service/admin_service.dart';
 import 'package:app/service/firebase_auth.dart';
 import 'package:app/service/firebase_realtime_database.dart';
 import 'package:app/store/cotacao_store.dart';
@@ -20,17 +22,22 @@ void main() async {
 
   GetIt getIt = GetIt.I;
 
+  //api
+  getIt.registerLazySingleton(() => ClaimsApi());
+
   //service
   getIt.registerSingleton<FirebaseAuthService>(FirebaseAuthService());
   getIt.registerSingleton<FirebaseRealtimeDatabaseService>(
       FirebaseRealtimeDatabaseService());
+  getIt.registerLazySingleton(() => AdminService());
 
   //store
   getIt.registerSingleton<CotacaoStore>(CotacaoStore());
   getIt.registerSingleton<UserStore>(UserStore());
 
   //route
-  getIt.registerSingleton<AppRouter>(AppRouter(authGuard: AuthGuard(), adminGuard: AdminGuard()));
+  getIt.registerSingleton<AppRouter>(
+      AppRouter(authGuard: AuthGuard(), adminGuard: AdminGuard()));
 
   runApp(const MyApp());
 }
@@ -44,13 +51,12 @@ class MyApp extends StatelessWidget {
     final router = GetIt.I.get<AppRouter>();
 
     return MaterialApp.router(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        primaryColor: Colors.cyan,
-      ),
-      routerDelegate: AutoRouterDelegate(router),
-      routeInformationParser: router.defaultRouteParser()
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          primaryColor: Colors.cyan,
+        ),
+        routerDelegate: AutoRouterDelegate(router),
+        routeInformationParser: router.defaultRouteParser());
   }
 }

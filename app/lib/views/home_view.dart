@@ -134,8 +134,29 @@ class HomeView extends StatelessWidget {
               builder: (_) =>
               Visibility(
                 visible: userStore.permissionDeniedError != null,
-                child: Container(child: Text(userStore.permissionDeniedError ?? ''),
-                color: Colors.amber,)
+                child: Center(
+                  child: SizedBox(
+
+                    child: Material(
+                      elevation: 6,
+                      child: Container(
+                        width:300,
+                        height:150,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(userStore.permissionDeniedError ?? ''),
+                            ElevatedButton(onPressed: () => userStore.setPermissionDeniedError(null), child: const Text("OK"))
+                          ],
+                        ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.0),
+                        color: Colors.amber[200],
+                      )),
+                    ),
+                  ),
+                )
               )
             )
           ]),

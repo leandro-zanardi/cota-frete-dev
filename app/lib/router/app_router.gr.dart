@@ -85,7 +85,7 @@ class AppRouter extends _i10.RootStackRouter {
         _i10.RouteConfig(AboutRoute.name, path: '/about'),
         _i10.RouteConfig(MapRoute.name, path: '/map', guards: [authGuard]),
         _i10.RouteConfig(ConfiguracaoUsuarioRoute.name,
-            path: '/configuracao-usuario', guards: [authGuard]),
+            path: '/configuracao-usuario', guards: [authGuard, adminGuard]),
         _i10.RouteConfig(ConfiguracaoFornecedorRoute.name,
             path: '/configuracao-fornecedor', guards: [authGuard, adminGuard]),
         _i10.RouteConfig(FornecedoresRoute.name,
