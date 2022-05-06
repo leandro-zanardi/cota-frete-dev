@@ -9,6 +9,21 @@ part of 'user.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$UserStore on _UserStore, Store {
+  final _$claimsAtom = Atom(name: '_UserStore.claims');
+
+  @override
+  ObservableMap<String, dynamic> get claims {
+    _$claimsAtom.reportRead();
+    return super.claims;
+  }
+
+  @override
+  set claims(ObservableMap<String, dynamic> value) {
+    _$claimsAtom.reportWrite(value, super.claims, () {
+      super.claims = value;
+    });
+  }
+
   final _$userCredentialAtom = Atom(name: '_UserStore.userCredential');
 
   @override
@@ -161,6 +176,23 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
+  final _$permissionDeniedErrorAtom =
+      Atom(name: '_UserStore.permissionDeniedError');
+
+  @override
+  String? get permissionDeniedError {
+    _$permissionDeniedErrorAtom.reportRead();
+    return super.permissionDeniedError;
+  }
+
+  @override
+  set permissionDeniedError(String? value) {
+    _$permissionDeniedErrorAtom.reportWrite(value, super.permissionDeniedError,
+        () {
+      super.permissionDeniedError = value;
+    });
+  }
+
   final _$registerAsyncAction = AsyncAction('_UserStore.register');
 
   @override
@@ -207,11 +239,33 @@ mixin _$UserStore on _UserStore, Store {
   }
 
   @override
+  void updateClaims(Map<String, dynamic> remoteClaims) {
+    final _$actionInfo = _$_UserStoreActionController.startAction(
+        name: '_UserStore.updateClaims');
+    try {
+      return super.updateClaims(remoteClaims);
+    } finally {
+      _$_UserStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setUser(User? user) {
     final _$actionInfo =
         _$_UserStoreActionController.startAction(name: '_UserStore.setUser');
     try {
       return super.setUser(user);
+    } finally {
+      _$_UserStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setPermissionDeniedError(String? error) {
+    final _$actionInfo = _$_UserStoreActionController.startAction(
+        name: '_UserStore.setPermissionDeniedError');
+    try {
+      return super.setPermissionDeniedError(error);
     } finally {
       _$_UserStoreActionController.endAction(_$actionInfo);
     }
@@ -264,6 +318,7 @@ mixin _$UserStore on _UserStore, Store {
   @override
   String toString() {
     return '''
+claims: ${claims},
 userCredential: ${userCredential},
 emailRegister: ${emailRegister},
 emailRegisterError: ${emailRegisterError},
@@ -273,7 +328,8 @@ emailLogin: ${emailLogin},
 emailLoginError: ${emailLoginError},
 passwordLogin: ${passwordLogin},
 passwordLoginError: ${passwordLoginError},
-isRegister: ${isRegister}
+isRegister: ${isRegister},
+permissionDeniedError: ${permissionDeniedError}
     ''';
   }
 }

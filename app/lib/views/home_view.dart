@@ -11,6 +11,7 @@ import 'package:get_it/get_it.dart';
 
 // auto complete
 import 'package:maps_places_autocomplete/model/place.dart';
+import 'package:mobx/mobx.dart';
 
 import '../model/ponto_coleta_entrega.dart';
 
@@ -128,6 +129,35 @@ class HomeView extends StatelessWidget {
               child: FloatingActionButton(
                   child: const Icon(Icons.map),
                   onPressed: () => GetIt.I.get<AppRouter>().pushNamed('/map')),
+            ),
+            Observer(
+              builder: (_) =>
+              Visibility(
+                visible: userStore.permissionDeniedError != null,
+                child: Center(
+                  child: SizedBox(
+
+                    child: Material(
+                      elevation: 6,
+                      child: Container(
+                        width:300,
+                        height:150,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(userStore.permissionDeniedError ?? ''),
+                            ElevatedButton(onPressed: () => userStore.setPermissionDeniedError(null), child: const Text("OK"))
+                          ],
+                        ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.0),
+                        color: Colors.amber[200],
+                      )),
+                    ),
+                  ),
+                )
+              )
             )
           ]),
         ));
