@@ -1,4 +1,10 @@
+import 'package:app/store/admin_store.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
+
+final AdminStore adminStore = GetIt.I.get<AdminStore>();
 
 class ConfiguracaoUsuarioView extends StatelessWidget {
   const ConfiguracaoUsuarioView({Key? key}) : super(key: key);
@@ -19,15 +25,30 @@ class ConfiguracaoUsuarioView extends StatelessWidget {
                     fontSize: 30,
                     fontWeight: FontWeight.w500,
                   )),
-              const Text('Comparador de Logistica',
+              const Text('Digite o id do Usuário para tornar admin',
                   style: TextStyle(
                       height: 5, fontSize: 20, fontWeight: FontWeight.w500)),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.85,
-                child: const Text(
-                    'Este aplicativo foi desenvolvido visando ajudar as pessoas a escolher a melhor opção frete para o transporte de produtos.',
-                    style: TextStyle(height: 2, fontWeight: FontWeight.w400)),
-              )
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextFormField(
+                  onChanged: (value) => adminStore.setUserUUITextField(value),
+                  decoration: const InputDecoration(
+                    labelText: 'UserUUID',
+                  ),
+                ),
+              ),
+              Observer(
+                builder: (_) {
+                  if (!adminStore.loading) {
+                    return ElevatedButton(
+                        onPressed: () async {
+                          await adminStore.registerUserAdmin();
+                        },
+                        child: Text("Enviar"));
+                  } else {
+                    return Text("enviando...");
+                  }
+              }),
             ],
           ),
         ])));

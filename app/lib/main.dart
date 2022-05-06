@@ -5,6 +5,7 @@ import 'package:app/router/auth_guard.dart';
 import 'package:app/service/admin_service.dart';
 import 'package:app/service/firebase_auth.dart';
 import 'package:app/service/firebase_realtime_database.dart';
+import 'package:app/store/admin_store.dart';
 import 'package:app/store/cotacao_store.dart';
 import 'package:app/store/user.dart';
 import 'package:auto_route/auto_route.dart';
@@ -34,6 +35,7 @@ void main() async {
   //store
   getIt.registerSingleton<CotacaoStore>(CotacaoStore());
   getIt.registerSingleton<UserStore>(UserStore());
+  getIt.registerSingleton<AdminStore>(AdminStore());
 
   //route
   getIt.registerSingleton<AppRouter>(
