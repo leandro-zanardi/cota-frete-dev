@@ -27,7 +27,12 @@ class _AutocompleteWidget extends State<AutocompleteWidget> {
   bool _retornaParaOrigem = false;
   int _categoria = 1;
   final Map<int, String> _categorias = {1: "Moto", 2: "Carro", 3: "Van"};
-  List<String> dropdownItems = ["Não", "Sim"];
+  Map<String, bool> dropdownItems = {"Não": false, "Sim": true};
+  final List<Map<String, dynamic>> _categorias2 = [
+    {"label": "Moto", "value": false}, 
+    {"label": "Carro", "value": false}, 
+    {"label": "Van",  "value" : true}
+  ];
 
   @override
   void initState() {
@@ -59,36 +64,30 @@ class _AutocompleteWidget extends State<AutocompleteWidget> {
     return radioElements;
   }
 
-  List<Widget> buildRetornaOrigem() {
-    return [
-      Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text("Retorna para origem?"),
+  Widget buildRetornaOrigem() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text("Retorna para origem?"),
+        ),
+        DropdownButton<bool>(
+          value: _retornaParaOrigem,
+          items: dropdownItems.entries
+              .map((item) => DropdownMenuItem<bool>(
+                  value: item.value, child: Text(item.key)))
+              .toList(),
+          style: const TextStyle(color: Colors.grey),
+          underline: Container(
+            height: 2,
+            color: Colors.grey,
           ),
-          DropdownButton<String>(
-            value: dropdownItems[0],
-            items: dropdownItems
-                .map((item) =>
-                    DropdownMenuItem<String>(value: item, child: Text(item)))
-                .toList(),
-            style: const TextStyle(color: Colors.grey),
-            underline: Container(
-              height: 2,
-              color: Colors.grey,
-            ),
-            onChanged: (item) => setState(() => {
-                  if (item == "Não")
-                    {_retornaParaOrigem = false}
-                  else if (item == "Sim")
-                    {_retornaParaOrigem = true}
-                }),
-          ),
-        ],
-      ),
-    ];
+          onChanged: (item) =>
+              setState(() => {_retornaParaOrigem = item ?? false}),
+        ),
+      ],
+    );
   }
 
   @override
@@ -124,9 +123,21 @@ class _AutocompleteWidget extends State<AutocompleteWidget> {
             ),
             Row(
               children: [...buildCategories()],
-            )
-          ]),
-        if (widget.ativaRetornaParaOrigem) ...buildRetornaOrigem()
+            ),
+            ToggleButtons(
+              children: [
+                Icon(Icons.car_rental),
+                Icon(Icons.bike_scooter),
+                Icon(Icons.delivery_dining),
+              ], 
+            isSelected: _categorias2.map((e) => e["value"] as bool).toList(),
+            onPressed: (int index) {
+              setState(() {
+                _categorias2[index]["value"] = !_categorias2[index]["value"];
+              });
+            }),
+      ]),
+        if (widget.ativaRetornaParaOrigem) buildRetornaOrigem()
       ],
     );
   }
