@@ -58,7 +58,6 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
           title: const Text('Home'),
@@ -84,7 +83,8 @@ class HomeView extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: ElevatedButton(
-                            onPressed: () => cotacaoStore.addPoint(false, false, false),
+                            onPressed: () =>
+                                cotacaoStore.addPoint(false, false, false),
                             child: const Text("Adicionar Ponto"),
                           ),
                         ),
@@ -97,7 +97,6 @@ class HomeView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    
                     Container(height: 10),
                     Observer(
                         builder: (_) => Column(
@@ -131,34 +130,34 @@ class HomeView extends StatelessWidget {
                   onPressed: () => GetIt.I.get<AppRouter>().pushNamed('/map')),
             ),
             Observer(
-              builder: (_) =>
-              Visibility(
-                visible: userStore.permissionDeniedError != null,
-                child: Center(
-                  child: SizedBox(
-
-                    child: Material(
-                      elevation: 6,
-                      child: Container(
-                        width:300,
-                        height:150,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(userStore.permissionDeniedError ?? ''),
-                            ElevatedButton(onPressed: () => userStore.setPermissionDeniedError(null), child: const Text("OK"))
-                          ],
+                builder: (_) => Visibility(
+                    visible: userStore.permissionDeniedError != null,
+                    child: Center(
+                      child: SizedBox(
+                        child: Material(
+                          elevation: 6,
+                          child: Container(
+                              width: 300,
+                              height: 150,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text(userStore.permissionDeniedError ?? ''),
+                                  ElevatedButton(
+                                      onPressed: () => userStore
+                                          .setPermissionDeniedError(null),
+                                      child: const Text("OK"))
+                                ],
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                                color: Colors.amber[200],
+                              )),
                         ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.0),
-                        color: Colors.amber[200],
-                      )),
-                    ),
-                  ),
-                )
-              )
-            )
+                      ),
+                    )))
           ]),
         ));
   }

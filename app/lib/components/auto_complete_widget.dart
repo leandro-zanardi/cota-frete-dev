@@ -27,6 +27,7 @@ class _AutocompleteWidget extends State<AutocompleteWidget> {
   bool _retornaParaOrigem = false;
   int _categoria = 1;
   final Map<int, String> _categorias = {1: "Moto", 2: "Carro", 3: "Van"};
+  List<String> dropdownItems = ["Não", "Sim"];
 
   @override
   void initState() {
@@ -60,40 +61,30 @@ class _AutocompleteWidget extends State<AutocompleteWidget> {
 
   List<Widget> buildRetornaOrigem() {
     return [
-      const Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Text("Retorna para origem?"),
-      ),
       Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(
-            child: ListTile(
-              title: const Text('Não'),
-              leading: Radio<bool>(
-                value: false,
-                groupValue: _retornaParaOrigem,
-                onChanged: (bool? value) {
-                  setState(() {
-                    _retornaParaOrigem = value ?? false;
-                  });
-                },
-              ),
-            ),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text("Retorna para origem?"),
           ),
-          Expanded(
-            child: ListTile(
-              title: const Text('Sim'),
-              leading: Radio<bool>(
-                value: true,
-                groupValue: _retornaParaOrigem,
-                onChanged: (bool? value) {
-                  setState(() {
-                    _retornaParaOrigem = value ?? false;
-                  });
-                },
-              ),
+          DropdownButton<String>(
+            value: dropdownItems[0],
+            items: dropdownItems
+                .map((item) =>
+                    DropdownMenuItem<String>(value: item, child: Text(item)))
+                .toList(),
+            style: const TextStyle(color: Colors.grey),
+            underline: Container(
+              height: 2,
+              color: Colors.grey,
             ),
+            onChanged: (item) => setState(() => {
+                  if (item == "Não")
+                    {_retornaParaOrigem = false}
+                  else if (item == "Sim")
+                    {_retornaParaOrigem = true}
+                }),
           ),
         ],
       ),
@@ -135,8 +126,7 @@ class _AutocompleteWidget extends State<AutocompleteWidget> {
               children: [...buildCategories()],
             )
           ]),
-        if (widget.ativaRetornaParaOrigem)
-          ...buildRetornaOrigem()
+        if (widget.ativaRetornaParaOrigem) ...buildRetornaOrigem()
       ],
     );
   }
