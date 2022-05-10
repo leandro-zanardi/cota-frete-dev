@@ -11,6 +11,8 @@ abstract class _AdminStore with Store {
   String? userUUIDTextField;
   @observable
   bool loading = false;
+  @observable
+  bool isAdmin = false;
 
   @action
   void setUserUUITextField(String value) {
@@ -22,7 +24,7 @@ abstract class _AdminStore with Store {
     loading = true;
     if (userUUIDTextField != null) {
       loading = false;
-      return await GetIt.I.get<AdminService>().setAdmin(userUUIDTextField!);
+      return await GetIt.I.get<AdminService>().setAdmin(userUUIDTextField!, isAdmin);
     } else {
       loading = false;
       return false;

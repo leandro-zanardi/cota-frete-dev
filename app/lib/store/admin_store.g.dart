@@ -39,6 +39,21 @@ mixin _$AdminStore on _AdminStore, Store {
     });
   }
 
+  final _$isAdminAtom = Atom(name: '_AdminStore.isAdmin');
+
+  @override
+  bool get isAdmin {
+    _$isAdminAtom.reportRead();
+    return super.isAdmin;
+  }
+
+  @override
+  set isAdmin(bool value) {
+    _$isAdminAtom.reportWrite(value, super.isAdmin, () {
+      super.isAdmin = value;
+    });
+  }
+
   final _$registerUserAdminAsyncAction =
       AsyncAction('_AdminStore.registerUserAdmin');
 
@@ -64,7 +79,8 @@ mixin _$AdminStore on _AdminStore, Store {
   String toString() {
     return '''
 userUUIDTextField: ${userUUIDTextField},
-loading: ${loading}
+loading: ${loading},
+isAdmin: ${isAdmin}
     ''';
   }
 }

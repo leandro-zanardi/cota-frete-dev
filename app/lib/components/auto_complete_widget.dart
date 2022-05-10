@@ -29,9 +29,9 @@ class _AutocompleteWidget extends State<AutocompleteWidget> {
   final Map<int, String> _categorias = {1: "Moto", 2: "Carro", 3: "Van"};
   Map<String, bool> dropdownItems = {"Não": false, "Sim": true};
   final List<Map<String, dynamic>> _categorias2 = [
-    {"label": "Moto", "value": false}, 
-    {"label": "Carro", "value": false}, 
-    {"label": "Van",  "value" : true}
+    {"label": "Moto", "value": true},
+    {"label": "Carro", "value": false},
+    {"label": "Van", "value": false}
   ];
 
   @override
@@ -40,28 +40,25 @@ class _AutocompleteWidget extends State<AutocompleteWidget> {
     _retornaParaOrigem = widget.retornaParaOrigem;
   }
 
-  List<Widget> buildCategories() {
-    List<Widget> radioElements = [];
+  List<Widget> _buildToggleItems() {
+    List<Widget> items = [];
+    for (String item
+        in _categorias2.map((e) => e["label"] as String).toList()) {
+      items.add(Text(item));
+    }
+    return items;
+  }
 
-    _categorias.entries.forEach((element) => {
-          radioElements.add(Expanded(
-            child: ListTile(
-              horizontalTitleGap: 0,
-              title: Text(element.value),
-              leading: Radio<int>(
-                value: element.key,
-                groupValue: _categoria,
-                onChanged: (int? value) {
-                  setState(() {
-                    _categoria = value ?? 0;
-                  });
-                },
-              ),
-            ),
-          ))
-        });
-
-    return radioElements;
+  void _updateToogleVeicle(int index) {
+    if (_categorias2[index]["value"] == false) {
+      for (int x = 0; x < _categorias2.length; x++) {
+        if (x == index) {
+          _categorias2[x]["value"] = true;
+        } else {
+          _categorias2[x]["value"] = false;
+        }
+      }
+    }
   }
 
   Widget buildRetornaOrigem() {
@@ -121,22 +118,17 @@ class _AutocompleteWidget extends State<AutocompleteWidget> {
               padding: EdgeInsets.all(8.0),
               child: Text("Veículos"),
             ),
-            Row(
-              children: [...buildCategories()],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ToggleButtons(
+                  children: _buildToggleItems(),
+                  isSelected:
+                      _categorias2.map((e) => e["value"] as bool).toList(),
+                  onPressed: (int index) {
+                    setState(() {_updateToogleVeicle(index);});
+                  }),
             ),
-            ToggleButtons(
-              children: [
-                Icon(Icons.car_rental),
-                Icon(Icons.bike_scooter),
-                Icon(Icons.delivery_dining),
-              ], 
-            isSelected: _categorias2.map((e) => e["value"] as bool).toList(),
-            onPressed: (int index) {
-              setState(() {
-                _categorias2[index]["value"] = !_categorias2[index]["value"];
-              });
-            }),
-      ]),
+          ]),
         if (widget.ativaRetornaParaOrigem) buildRetornaOrigem()
       ],
     );
