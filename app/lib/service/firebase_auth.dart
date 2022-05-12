@@ -14,16 +14,19 @@ class FirebaseAuthService {
           GetIt.I.get<FirebaseRealtimeDatabaseService>();
 
       Map<String, dynamic> claims = <String, dynamic>{};
+      String? token;
       if (user != null) {
         final IdTokenResult idToken = await user.getIdTokenResult();
         final tokenClaims = idToken.claims;
         if (tokenClaims != null) {
           claims = tokenClaims;
         }
+        token = idToken.token;
       }
 
       userStore.setUser(user);
       userStore.updateClaims(claims);
+      userStore.setToken(token);
 
       realDBTimeService.user = user;
 
@@ -49,6 +52,11 @@ class FirebaseAuthService {
   void waitLoginResult(StackRouter router, NavigationResolver resolver) {
     navigationResolver = resolver;
     stackRouter = router;
+  }
+
+  String? get authToken {
+    UserStore userStore = GetIt.I.get<UserStore>();
+    return userStore.userToken;
   }
 
   bool get isLoggedIn {

@@ -1,9 +1,16 @@
 import 'dart:convert';
 
+import 'package:app/service/firebase_auth.dart';
+import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 
 class Api {
+  String? get token {
+    FirebaseAuthService authService = GetIt.I.get<FirebaseAuthService>();
+    return authService.authToken;
+  }
+
   Future<Map<String, dynamic>> get(Uri uri,
       {Map<String, String>? headers}) async {
     try {

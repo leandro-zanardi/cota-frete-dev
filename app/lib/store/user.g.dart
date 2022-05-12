@@ -9,6 +9,21 @@ part of 'user.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$UserStore on _UserStore, Store {
+  final _$userTokenAtom = Atom(name: '_UserStore.userToken');
+
+  @override
+  String? get userToken {
+    _$userTokenAtom.reportRead();
+    return super.userToken;
+  }
+
+  @override
+  set userToken(String? value) {
+    _$userTokenAtom.reportWrite(value, super.userToken, () {
+      super.userToken = value;
+    });
+  }
+
   final _$claimsAtom = Atom(name: '_UserStore.claims');
 
   @override
@@ -250,6 +265,17 @@ mixin _$UserStore on _UserStore, Store {
   }
 
   @override
+  void setToken(String? token) {
+    final _$actionInfo =
+        _$_UserStoreActionController.startAction(name: '_UserStore.setToken');
+    try {
+      return super.setToken(token);
+    } finally {
+      _$_UserStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setUser(User? user) {
     final _$actionInfo =
         _$_UserStoreActionController.startAction(name: '_UserStore.setUser');
@@ -318,6 +344,7 @@ mixin _$UserStore on _UserStore, Store {
   @override
   String toString() {
     return '''
+userToken: ${userToken},
 claims: ${claims},
 userCredential: ${userCredential},
 emailRegister: ${emailRegister},

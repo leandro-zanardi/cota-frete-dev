@@ -9,6 +9,9 @@ class UserStore = _UserStore with _$UserStore;
 
 abstract class _UserStore with Store {
   @observable
+  String? userToken;
+
+  @observable
   ObservableMap<String, dynamic> claims = ObservableMap<String, dynamic>();
 
   @observable
@@ -58,6 +61,11 @@ abstract class _UserStore with Store {
   void updateClaims(Map<String, dynamic> remoteClaims) {
     claims = ObservableMap<String, dynamic>();
     claims.addEntries(remoteClaims.entries);
+  }
+
+  @action
+  void setToken(String? token) {
+    userToken = token;
   }
 
   @action
