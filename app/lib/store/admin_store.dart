@@ -1,3 +1,4 @@
+import 'package:app/model/user_client.dart';
 import 'package:app/service/admin_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -14,9 +15,24 @@ abstract class _AdminStore with Store {
   @observable
   bool isAdmin = false;
 
+  @observable
+  ObservableList<UserClient> userClients = ObservableList<UserClient>();
+
   @action
   void setUserUUITextField(String value) {
     userUUIDTextField = value;
+  }
+
+  @action
+  void setUserClients(List<UserClient> clients) {
+    userClients = ObservableList<UserClient>();
+    userClients.addAll(clients);
+  }
+
+  Future<void> updateUserClients() async {
+    // TODO
+    // instanciar o servicer
+    // chamar o service q popula o setUserCLients
   }
 
   @action
@@ -24,7 +40,9 @@ abstract class _AdminStore with Store {
     loading = true;
     if (userUUIDTextField != null) {
       loading = false;
-      return await GetIt.I.get<AdminService>().setAdmin(userUUIDTextField!, isAdmin);
+      return await GetIt.I
+          .get<AdminService>()
+          .setAdmin(userUUIDTextField!, isAdmin);
     } else {
       loading = false;
       return false;

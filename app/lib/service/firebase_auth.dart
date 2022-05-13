@@ -47,6 +47,16 @@ class FirebaseAuthService {
     });
   }
 
+  Future<void> updateUserClients() async {
+    // TODO
+
+    // buscar usarios
+    //https://firebase.google.com/docs/auth/admin/manage-users?hl=pt-br
+
+    // instanciar a admin store
+    // setar uduarios na admin store
+  }
+
   NavigationResolver? navigationResolver;
   StackRouter? stackRouter;
   void waitLoginResult(StackRouter router, NavigationResolver resolver) {

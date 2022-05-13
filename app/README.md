@@ -21,3 +21,6 @@ rodar o comando abaixo sempre que alterar uma classe abstrata do diretorio store
 
 flutter pub run build_runner watch --delete-conflicting-outputs
 
+## Exemplo comando para deploy de funcoes separadas por ,
+
+firebase deploy --only functions:admin-setCustomClaims

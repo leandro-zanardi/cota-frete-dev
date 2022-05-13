@@ -54,6 +54,21 @@ mixin _$AdminStore on _AdminStore, Store {
     });
   }
 
+  final _$userClientsAtom = Atom(name: '_AdminStore.userClients');
+
+  @override
+  ObservableList<UserClient> get userClients {
+    _$userClientsAtom.reportRead();
+    return super.userClients;
+  }
+
+  @override
+  set userClients(ObservableList<UserClient> value) {
+    _$userClientsAtom.reportWrite(value, super.userClients, () {
+      super.userClients = value;
+    });
+  }
+
   final _$registerUserAdminAsyncAction =
       AsyncAction('_AdminStore.registerUserAdmin');
 
@@ -76,11 +91,23 @@ mixin _$AdminStore on _AdminStore, Store {
   }
 
   @override
+  void setUserClients(List<UserClient> clients) {
+    final _$actionInfo = _$_AdminStoreActionController.startAction(
+        name: '_AdminStore.setUserClients');
+    try {
+      return super.setUserClients(clients);
+    } finally {
+      _$_AdminStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 userUUIDTextField: ${userUUIDTextField},
 loading: ${loading},
-isAdmin: ${isAdmin}
+isAdmin: ${isAdmin},
+userClients: ${userClients}
     ''';
   }
 }
