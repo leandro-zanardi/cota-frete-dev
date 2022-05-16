@@ -1,5 +1,6 @@
 import 'package:app/model/user_client.dart';
 import 'package:app/service/admin_service.dart';
+import 'package:app/service/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
@@ -33,6 +34,9 @@ abstract class _AdminStore with Store {
     // TODO
     // instanciar o servicer
     // chamar o service q popula o setUserCLients
+    FirebaseAuthService firebaseAuthService =
+        GetIt.I.get<FirebaseAuthService>();
+    firebaseAuthService.updateUserClients();
   }
 
   @action

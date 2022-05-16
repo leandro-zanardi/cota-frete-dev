@@ -1,8 +1,11 @@
+import 'package:app/model/user_client.dart';
 import 'package:app/router/app_router.gr.dart';
 import 'package:app/service/firebase_realtime_database.dart';
+import 'package:app/store/admin_store.dart';
 import 'package:app/store/user.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/ui/firebase_list.dart';
 import 'package:get_it/get_it.dart';
 
 class FirebaseAuthService {
@@ -51,10 +54,13 @@ class FirebaseAuthService {
     // TODO
 
     // buscar usarios
+    List<UserClient> listAllUsers = [];
     //https://firebase.google.com/docs/auth/admin/manage-users?hl=pt-br
 
     // instanciar a admin store
     // setar uduarios na admin store
+    AdminStore adminStore = GetIt.I.get<AdminStore>();
+    adminStore.setUserClients(listAllUsers);
   }
 
   NavigationResolver? navigationResolver;
