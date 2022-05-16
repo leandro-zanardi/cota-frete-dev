@@ -1,9 +1,6 @@
 const functions = require('firebase-functions');
 const firebaseAdmin = require('firebase-admin');
 
-firebaseAdmin.initializeApp();
-
-
 exports.setCustomClaims = functions.https.onRequest( async (req, res) => {
     // Get the ID token passed.
     const uid = req.body.idToken;

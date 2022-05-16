@@ -1,4 +1,6 @@
+import 'package:app/infra/api/admin/list_all_users_api.dart';
 import 'package:app/model/user_client.dart';
+import 'package:app/model/user_list_data.dart';
 import 'package:app/router/app_router.gr.dart';
 import 'package:app/service/firebase_realtime_database.dart';
 import 'package:app/store/admin_store.dart';
@@ -56,6 +58,16 @@ class FirebaseAuthService {
     // buscar usarios
     List<UserClient> listAllUsers = [];
     //https://firebase.google.com/docs/auth/admin/manage-users?hl=pt-br
+
+    ListAllUsersApi api = GetIt.I.get<ListAllUsersApi>();
+
+    UserListData data = await api.listAllUsers(null);
+    data.users.forEach((user) {
+      listAllUsers.add(UserClient(
+          uuid: user["uuid"] as String,
+          email: user["email"] as String,
+          admin: false));
+    });
 
     // instanciar a admin store
     // setar uduarios na admin store

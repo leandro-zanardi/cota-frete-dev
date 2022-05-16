@@ -1,4 +1,5 @@
 import 'package:app/infra/api/admin/claims_api.dart';
+import 'package:app/infra/api/admin/list_all_users_api.dart';
 import 'package:app/router/admin_guard.dart';
 import 'package:app/router/app_router.gr.dart';
 import 'package:app/router/auth_guard.dart';
@@ -25,6 +26,7 @@ void main() async {
 
   //api
   getIt.registerLazySingleton(() => ClaimsApi());
+  getIt.registerLazySingleton(() => ListAllUsersApi());
 
   //service
   getIt.registerSingleton<FirebaseAuthService>(FirebaseAuthService());
