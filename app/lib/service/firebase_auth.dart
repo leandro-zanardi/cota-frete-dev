@@ -64,9 +64,9 @@ class FirebaseAuthService {
     UserListData data = await api.listAllUsers(null);
     data.users.forEach((user) {
       listAllUsers.add(UserClient(
-          uuid: user["uuid"] as String,
+          uuid: user["uid"] as String,
           email: user["email"] as String,
-          admin: false));
+          admin: user["customClaims"] != null ? user["customClaims"]["admin"] as bool : false));
     });
 
     // instanciar a admin store

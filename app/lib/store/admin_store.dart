@@ -10,19 +10,10 @@ class AdminStore = _AdminStore with _$AdminStore;
 
 abstract class _AdminStore with Store {
   @observable
-  String? userUUIDTextField;
-  @observable
   bool loading = false;
-  @observable
-  bool isAdmin = false;
 
   @observable
   ObservableList<UserClient> userClients = ObservableList<UserClient>();
-
-  @action
-  void setUserUUITextField(String value) {
-    userUUIDTextField = value;
-  }
 
   @action
   void setUserClients(List<UserClient> clients) {
@@ -31,25 +22,21 @@ abstract class _AdminStore with Store {
   }
 
   Future<void> updateUserClients() async {
-    // TODO
-    // instanciar o servicer
-    // chamar o service q popula o setUserCLients
     FirebaseAuthService firebaseAuthService =
         GetIt.I.get<FirebaseAuthService>();
-    firebaseAuthService.updateUserClients();
+    await firebaseAuthService.updateUserClients();
   }
 
   @action
-  Future<bool> registerUserAdmin() async {
+  Future<void> registerUserAdmin(String uuid, bool isAdmin) async {
     loading = true;
-    if (userUUIDTextField != null) {
+    try {
+      await GetIt.I.get<AdminService>().setAdmin(uuid, isAdmin);
+      await updateUserClients();
       loading = false;
-      return await GetIt.I
-          .get<AdminService>()
-          .setAdmin(userUUIDTextField!, isAdmin);
-    } else {
+    } catch (e) {
       loading = false;
-      return false;
+      print(e);
     }
   }
 }

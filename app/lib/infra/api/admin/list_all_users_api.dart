@@ -18,8 +18,8 @@ class ListAllUsersApi extends Api {
 
       if (retorno["error"] != true) {
         UserListData userListData = UserListData(
-            users: retorno["userData"]["users"],
-            pageToken: retorno["userData"]["pageToken"]);
+            users: retorno["users_data"]["users"],
+            pageToken: retorno["users_data"]["pageToken"]);
         return userListData;
       } else {
         throw Exception(retorno["status"]);

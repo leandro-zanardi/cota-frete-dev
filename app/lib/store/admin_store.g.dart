@@ -9,21 +9,6 @@ part of 'admin_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AdminStore on _AdminStore, Store {
-  final _$userUUIDTextFieldAtom = Atom(name: '_AdminStore.userUUIDTextField');
-
-  @override
-  String? get userUUIDTextField {
-    _$userUUIDTextFieldAtom.reportRead();
-    return super.userUUIDTextField;
-  }
-
-  @override
-  set userUUIDTextField(String? value) {
-    _$userUUIDTextFieldAtom.reportWrite(value, super.userUUIDTextField, () {
-      super.userUUIDTextField = value;
-    });
-  }
-
   final _$loadingAtom = Atom(name: '_AdminStore.loading');
 
   @override
@@ -36,21 +21,6 @@ mixin _$AdminStore on _AdminStore, Store {
   set loading(bool value) {
     _$loadingAtom.reportWrite(value, super.loading, () {
       super.loading = value;
-    });
-  }
-
-  final _$isAdminAtom = Atom(name: '_AdminStore.isAdmin');
-
-  @override
-  bool get isAdmin {
-    _$isAdminAtom.reportRead();
-    return super.isAdmin;
-  }
-
-  @override
-  set isAdmin(bool value) {
-    _$isAdminAtom.reportWrite(value, super.isAdmin, () {
-      super.isAdmin = value;
     });
   }
 
@@ -73,22 +43,12 @@ mixin _$AdminStore on _AdminStore, Store {
       AsyncAction('_AdminStore.registerUserAdmin');
 
   @override
-  Future<bool> registerUserAdmin() {
-    return _$registerUserAdminAsyncAction.run(() => super.registerUserAdmin());
+  Future<void> registerUserAdmin(String uuid, bool isAdmin) {
+    return _$registerUserAdminAsyncAction
+        .run(() => super.registerUserAdmin(uuid, isAdmin));
   }
 
   final _$_AdminStoreActionController = ActionController(name: '_AdminStore');
-
-  @override
-  void setUserUUITextField(String value) {
-    final _$actionInfo = _$_AdminStoreActionController.startAction(
-        name: '_AdminStore.setUserUUITextField');
-    try {
-      return super.setUserUUITextField(value);
-    } finally {
-      _$_AdminStoreActionController.endAction(_$actionInfo);
-    }
-  }
 
   @override
   void setUserClients(List<UserClient> clients) {
@@ -104,9 +64,7 @@ mixin _$AdminStore on _AdminStore, Store {
   @override
   String toString() {
     return '''
-userUUIDTextField: ${userUUIDTextField},
 loading: ${loading},
-isAdmin: ${isAdmin},
 userClients: ${userClients}
     ''';
   }

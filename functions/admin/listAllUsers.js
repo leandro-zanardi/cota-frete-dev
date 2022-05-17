@@ -37,7 +37,9 @@ exports.listAllUsers = functions.https.onRequest(async (req, res) => {
             res.end(JSON.stringify({
               error: false,
               status: 'fetch',
-              users_data: {users: users, pageToken: pageToken}, 
+              users_data: {
+                users: users.map((u) => { return {"uid": u.uid, "email": u.email, "customClaims": u.customClaims};}),
+                pageToken: pageToken}, 
               code: 200
             }));
 
