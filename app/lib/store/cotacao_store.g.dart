@@ -9,6 +9,21 @@ part of 'cotacao_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$CotacaoStore on _CotacaoStore, Store {
+  final _$loadingAtom = Atom(name: '_CotacaoStore.loading');
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
   final _$pontosColetaEntregaAtom =
       Atom(name: '_CotacaoStore.pontosColetaEntrega');
 
@@ -184,6 +199,7 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
   @override
   String toString() {
     return '''
+loading: ${loading},
 pontosColetaEntrega: ${pontosColetaEntrega},
 markers: ${markers},
 polylines: ${polylines},

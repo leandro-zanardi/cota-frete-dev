@@ -24,3 +24,7 @@ flutter pub run build_runner watch --delete-conflicting-outputs
 ## Exemplo comando para deploy de funcoes separadas por ,
 
 firebase deploy --only functions:admin-setCustomClaims
+
+## Exemplo de delay no código
+
+await Future.delayed(const Duration(seconds: 20), (() => {}));

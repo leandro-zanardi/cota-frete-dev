@@ -25,6 +25,9 @@ abstract class _CotacaoStore with Store {
   }
 
   @observable
+  bool loading = false;
+
+  @observable
   ObservableList<PontoColetaEntrega> pontosColetaEntrega =
       ObservableList<PontoColetaEntrega>();
 
@@ -167,32 +170,39 @@ abstract class _CotacaoStore with Store {
 
   @action
   Future<void> cotar() async {
-    UserStore userStore = GetIt.I.get<UserStore>();
-    List<PointModel> points = [];
+    try {
+      loading = true;
+      UserStore userStore = GetIt.I.get<UserStore>();
+      List<PointModel> points = [];
 
-    for (int x = 0; x < pontosColetaEntrega.length; x++) {
-      if (!pontosColetaEntrega[x].isValidToCotar()) {
-        isValidToCotarErrorMessage = "Ponto sem endereço";
-        break;
-      } else {
-        Place? place = pontosColetaEntrega[x].place;
+      for (int x = 0; x < pontosColetaEntrega.length; x++) {
+        if (!pontosColetaEntrega[x].isValidToCotar()) {
+          isValidToCotarErrorMessage = "Ponto sem endereço";
+          break;
+        } else {
+          Place? place = pontosColetaEntrega[x].place;
 
-        points.add(PointModel(place!.lat!, place.lng!, place.city));
-        isValidToCotarErrorMessage = null;
+          points.add(PointModel(place!.lat!, place.lng!, place.city));
+          isValidToCotarErrorMessage = null;
+        }
       }
-    }
 
-    if (isValidToCotarErrorMessage == null) {
-      if (userStore.userCredential != null) {
-        FirebaseRealtimeDatabaseService service =
-            GetIt.I.get<FirebaseRealtimeDatabaseService>();
+      if (isValidToCotarErrorMessage == null) {
+        if (userStore.userCredential != null) {
+          FirebaseRealtimeDatabaseService service =
+              GetIt.I.get<FirebaseRealtimeDatabaseService>();
 
-        CotacaoModel model = CotacaoModel(userStore.userCredential!.uid, points,
-            DateTime.now().millisecondsSinceEpoch, []);
+          CotacaoModel model = CotacaoModel(userStore.userCredential!.uid,
+              points, DateTime.now().millisecondsSinceEpoch, []);
 
-        CotacaoDTO dto = CotacaoDTO();
-        await service.create(dto.toFirebaseDate(model));
+          CotacaoDTO dto = CotacaoDTO();
+          await service.create(dto.toFirebaseDate(model));
+        }
       }
+    } catch (e) {
+      print(e);
+    } finally {
+      loading = false;
     }
   }
 }

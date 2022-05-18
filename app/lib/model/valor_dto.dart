@@ -4,11 +4,6 @@ import 'package:app/model/valor_model.dart';
 class ValorDTO implements IDTO {
   @override
   ValorModel fromJson(Map<String, dynamic> json) {
-    
-    return ValorModel(
-      json["fid"],
-      json["nome"],
-      json["preco"]
-    );
+    return ValorModel(json["fid"], json["nome"], json["preco"] as double);
   }
 }
