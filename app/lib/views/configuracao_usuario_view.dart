@@ -32,7 +32,7 @@ class ConfiguracaoUsuarioView extends StatelessWidget {
                   builder: (_) {
                     return Column(children: [
                       Row(
-                        children: [Text("Email"), Text("Ações")],
+                        children: const [Text("Email"), Text("Ações")],
                       ),
                       for (UserClient client in adminStore.userClients)
                         Row(
@@ -64,7 +64,21 @@ class ConfiguracaoUsuarioView extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
                     color: Colors.black45,
-                    child: const Text("Carregando..."),
+                    decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Center(
+                        child: Container(
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            color: Colors.grey,
+                            child: Stack(children: const [
+                              Center(child: CircularProgressIndicator()),
+                              Text("Carregando...",
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold))
+                            ]))),
                   )))
         ]));
   }
