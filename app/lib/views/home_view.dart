@@ -1,4 +1,5 @@
 import 'package:app/components/auto_complete_widget.dart';
+import 'package:app/components/loader_widget.dart';
 import 'package:app/model/valor_model.dart';
 import 'package:app/router/app_router.gr.dart';
 import 'package:app/store/cotacao_store.dart';
@@ -158,37 +159,8 @@ class HomeView extends StatelessWidget {
                         ),
                       ),
                     ))),
-            Observer(
-                builder: (_) => Visibility(
-                    visible: cotacaoStore.loading,
-                    child: Stack(children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                        color: Colors.black45,
-                      ),
-                      Center(
-                          child: Container(
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              height: MediaQuery.of(context).size.height * 0.3,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border.all(),
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(20))),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: const [
-                                    Text("Carregando...",
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold)),
-                                    Center(child: CircularProgressIndicator()),
-                                  ]))),
-                    ])))
+            Observer( 
+                builder: (_) => LoaderWidget(visible: cotacaoStore.loading))
           ]),
         ));
   }
