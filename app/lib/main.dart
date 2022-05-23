@@ -6,6 +6,7 @@ import 'package:app/router/auth_guard.dart';
 import 'package:app/service/admin_service.dart';
 import 'package:app/service/firebase_auth.dart';
 import 'package:app/service/firebase_realtime_database.dart';
+import 'package:app/service/firebase_realtime_fornecedor.dart';
 import 'package:app/store/admin_store.dart';
 import 'package:app/store/cotacao_store.dart';
 import 'package:app/store/user.dart';
@@ -32,6 +33,7 @@ void main() async {
   getIt.registerSingleton<FirebaseAuthService>(FirebaseAuthService());
   getIt.registerSingleton<FirebaseRealtimeDatabaseService>(
       FirebaseRealtimeDatabaseService());
+  getIt.registerLazySingleton(() => FirebaseRealtimeFornecedor());
   getIt.registerLazySingleton(() => AdminService());
 
   //store
