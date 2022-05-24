@@ -9,6 +9,7 @@ import 'package:app/service/firebase_realtime_database.dart';
 import 'package:app/service/firebase_realtime_fornecedor.dart';
 import 'package:app/store/admin_store.dart';
 import 'package:app/store/cotacao_store.dart';
+import 'package:app/store/fornecedor_store.dart';
 import 'package:app/store/user.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -40,6 +41,7 @@ void main() async {
   getIt.registerSingleton<CotacaoStore>(CotacaoStore());
   getIt.registerSingleton<UserStore>(UserStore());
   getIt.registerSingleton<AdminStore>(AdminStore());
+  getIt.registerSingleton<FornecedorStore>(FornecedorStore());
 
   //route
   getIt.registerSingleton<AppRouter>(
