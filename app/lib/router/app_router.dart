@@ -4,7 +4,6 @@ import 'package:app/views/about_view.dart';
 import 'package:app/views/cadastro_fornecedor_view.dart';
 import 'package:app/views/configuracao_fornecedor_view.dart';
 import 'package:app/views/configuracao_usuario_view.dart';
-import 'package:app/views/fornecedores_view.dart';
 import 'package:app/views/historico_view.dart';
 import 'package:app/views/home_view.dart';
 import 'package:app/views/login_view.dart';
@@ -20,7 +19,6 @@ import 'package:auto_route/annotations.dart';
     AutoRoute(path: "/map", page: MapView, guards: [AuthGuard]),
     AutoRoute(path: "/configuracao-usuario", page: ConfiguracaoUsuarioView, guards: [AuthGuard, AdminGuard]),
     AutoRoute(path: "/configuracao-fornecedor", page: ConfiguracaoFornecedorView, guards: [AuthGuard, AdminGuard]),
-    AutoRoute(path: "/fornecedores", page: FornecedoresView, guards: [AuthGuard]),
     AutoRoute(path: "/historico", page: HistoricoView, guards: [AuthGuard]),
     AutoRoute(path: "/cadastro-fornecedor", page: CadastroFornecedorView, guards: [AuthGuard, AdminGuard])
   ],        

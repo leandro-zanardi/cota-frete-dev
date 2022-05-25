@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app/model/fornecedor_model.dart';
+import 'package:app/model/regiao_frete_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class FirebaseRealtimeFornecedor {
@@ -18,8 +19,24 @@ class FirebaseRealtimeFornecedor {
         Map<String, dynamic> fornecedor = json[nomeFornecedor];
 
         for (int x = 0; x < fornecedor["origens"].length; x++) {
-          FornecedorOrigem origem =
-              FornecedorOrigem(capital: false, destinos: [], estado: "teste");
+          List<RegiaoFreteModel> destinos = [];
+
+          Map<String, dynamic> origemMap = fornecedor["origens"][x];
+
+          for (int y = 0; y < origemMap["destinos"].length; y++) {
+            Map<String, dynamic> destinoMap = origemMap["destinos"][y];
+            RegiaoFreteModel freteModel = RegiaoFreteModel(
+                estado: destinoMap["estado"],
+                capital: destinoMap["capital"],
+                precoKm: double.tryParse(destinoMap["preco_km"].toString()) ?? 0.0,
+                precoMin: double.tryParse(destinoMap["preco_min"].toString()) ?? 0.0);
+            destinos.add(freteModel);
+          }
+
+          FornecedorOrigem origem = FornecedorOrigem(
+              capital: origemMap["capital"],
+              destinos: destinos,
+              estado: origemMap["estado"]);
           origens.add(origem);
         }
 
