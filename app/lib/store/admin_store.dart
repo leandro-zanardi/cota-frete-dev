@@ -22,9 +22,11 @@ abstract class _AdminStore with Store {
   }
 
   Future<void> updateUserClients() async {
+    loading = true;
     FirebaseAuthService firebaseAuthService =
         GetIt.I.get<FirebaseAuthService>();
     await firebaseAuthService.updateUserClients();
+    loading = false;
   }
 
   @action

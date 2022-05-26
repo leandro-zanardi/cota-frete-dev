@@ -18,33 +18,55 @@ class ConfiguracaoFornecedorView extends StatelessWidget {
         children: [
           Text(fornecedores[x].nome),
           for (int y = 0; y < fornecedores[x].origens.length; y++)
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text("Capital"),
-                    Text(fornecedores[x].origens[y].capital ? "Sim" : "Não"),
-                    Text("Estado"),
-                    Text(fornecedores[x].origens[y].estado)
-                    ],
-                ),
-                Text("Destinos"),
-                for (int z = 0; z< fornecedores[x].origens[y].destinos.length; z++)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 16.0),
+              child: Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(0, 8.0, 0, 8.0),
+                    child: Text("Origem"),
+                  ),
                   Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children:[
-                    Text("Capital"),
-                    Text(fornecedores[x].origens[y].destinos[z].capital ? "Sim" : "Não"),
-                    Text("Estado"),
-                    Text(fornecedores[x].origens[y].destinos[z].estado),
-                    Text("Preço por KM"),
-                    Text(fornecedores[x].origens[y].destinos[z].precoKm.toString()),
-                    Text("Preço Mínimo"),
-                    Text(fornecedores[x].origens[y].destinos[z].precoMin.toString()),
-
-                ])
-              ],
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const Text("Capital"),
+                      Text(fornecedores[x].origens[y].capital ? "Sim" : "Não"),
+                      const Text("Estado"),
+                      Text(fornecedores[x].origens[y].estado)
+                    ],
+                  ),
+                  const Text("Destinos"),
+                  for (int z = 0;
+                      z < fornecedores[x].origens[y].destinos.length;
+                      z++)
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 4.0, 0, 4.0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            const Text("Capital"),
+                            Text(fornecedores[x].origens[y].destinos[z].capital
+                                ? "Sim"
+                                : "Não"),
+                            const Text("Estado"),
+                            Text(fornecedores[x].origens[y].destinos[z].estado),
+                            const Text("Preço por KM"),
+                            Text(fornecedores[x]
+                                .origens[y]
+                                .destinos[z]
+                                .precoKm
+                                .toString()),
+                            const Text("Preço Mínimo"),
+                            Text(fornecedores[x]
+                                .origens[y]
+                                .destinos[z]
+                                .precoMin
+                                .toString()),
+                          ]),
+                    ),
+                  Divider(color: Colors.grey.shade400),
+                ],
+              ),
             )
         ],
       );
@@ -63,20 +85,26 @@ class ConfiguracaoFornecedorView extends StatelessWidget {
         ),
         body: Center(
           child: Observer(
-            builder: (_) => Column(
-              children: [
-                const Text('Configurações de Fornecedor',
-                    style: TextStyle(
-                      height: 3,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w500,
-                    )),
-                 FloatingActionButton(
-                    onPressed: () => GetIt.I.get<AppRouter>().pushNamed("/cadastro-fornecedor"),
-                    child: Text("Cadastrar Novo Fornecedor"),
+            builder: (_) => Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  const Text('Configurações de Fornecedor',
+                      style: TextStyle(
+                        height: 3,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w500,
+                      )),
+                  ElevatedButton(
+                    onPressed: () => GetIt.I
+                        .get<AppRouter>()
+                        .pushNamed("/cadastro-fornecedor"),
+                    child: const Text("Cadastrar Novo Fornecedor"),
                   ),
-                ...buildListaFornecedores(fornecedorStore.fornecedores.toList())
-              ],
+                  ...buildListaFornecedores(
+                      fornecedorStore.fornecedores.toList()),
+                ],
+              ),
             ),
           ),
         ));
