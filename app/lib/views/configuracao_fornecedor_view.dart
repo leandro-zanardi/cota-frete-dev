@@ -16,7 +16,15 @@ class ConfiguracaoFornecedorView extends StatelessWidget {
     for (int x = 0; x < fornecedores.length; x++) {
       Widget w = Column(
         children: [
-          Text(fornecedores[x].nome),
+          InkWell(
+            onTap: () => GetIt.I
+                        .get<AppRouter>()
+                        .pushNamed("/registro-fornecedor?id_fornecedor=${fornecedores[x].nome}"),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(fornecedores[x].nome),
+            )
+          ),
           for (int y = 0; y < fornecedores[x].origens.length; y++)
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 16.0),
@@ -98,7 +106,7 @@ class ConfiguracaoFornecedorView extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () => GetIt.I
                         .get<AppRouter>()
-                        .pushNamed("/cadastro-fornecedor"),
+                        .pushNamed("/registro-fornecedor"),
                     child: const Text("Cadastrar Novo Fornecedor"),
                   ),
                   ...buildListaFornecedores(

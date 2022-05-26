@@ -23,4 +23,9 @@ abstract class _FornecedorStore with Store {
 
     fornecedores.addAll(fornecedoresModel);
   }
+
+  @action
+  Future<void> salvarFornecedor(String? idFornecedor) async {
+
+  }
 }

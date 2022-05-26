@@ -1,15 +1,20 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app/router/app_router.gr.dart';
-import 'package:app/store/user.dart';
+import 'package:app/store/fornecedor_store.dart';
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
-final UserStore userStore = GetIt.I.get<UserStore>();
+final FornecedorStore fornecedorStore = GetIt.I.get<FornecedorStore>();
 
 class RegistroFornecedorView extends StatelessWidget {
-  const RegistroFornecedorView({Key? key}) : super(key: key);
+  const RegistroFornecedorView(
+      {Key? key, @QueryParam('id_fornecedor') this.idFornecedor})
+      : super(key: key);
+
+  final String? idFornecedor;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,7 @@ class RegistroFornecedorView extends StatelessWidget {
     ];
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Criar/Editar Fornecedor'),
+        title: Text('${(idFornecedor != null ? 'Editar' : 'Criar')} Fornecedor'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -47,8 +52,8 @@ class RegistroFornecedorView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    const Text(
-                      "Crie sua conta",
+                    Text(
+                      (idFornecedor != null ? 'Editar' : 'Criar') + " Fornecedor",
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -58,6 +63,7 @@ class RegistroFornecedorView extends StatelessWidget {
                       padding: EdgeInsets.all(8.0),
                       child: Observer(builder: (context) {
                         return TextFormField(
+                          initialValue: idFornecedor,
                             //onSaved: (String? value) => {},
                             decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
@@ -68,83 +74,9 @@ class RegistroFornecedorView extends StatelessWidget {
                         ));
                       }),
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Observer(builder: (context) {
-                        return TextFormField(
-                            //onSaved: (String? value) => {},
-                            decoration: InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                          labelText: 'CNPJ',
-                          labelStyle: TextStyle(color: Colors.white),
-                        ));
-                      }),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Observer(builder: (context) {
-                        return TextFormField(
-                          onChanged: (value) => userStore.validateEmail(value),
-                          decoration: InputDecoration(
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                              labelText: 'E-mail',
-                              labelStyle: TextStyle(color: Colors.white),
-                              errorText: userStore.emailRegisterError),
-                        );
-                      }),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Observer(builder: (context) {
-                        return TextFormField(
-                          onChanged: (value) =>
-                              userStore.validatePassword(value),
-                          obscureText: true,
-                          decoration: InputDecoration(
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                              labelText: 'Senha',
-                              labelStyle: TextStyle(color: Colors.white),
-                              errorText: userStore.passwordRegisterError),
-                        );
-                      }),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Observer(builder: (context) {
-                        return TextFormField(
-                            //onSaved: (String? value) => {},
-                            decoration: InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                          labelText: 'Confirme a senha',
-                          labelStyle: TextStyle(color: Colors.white),
-                        ));
-                      }),
-                    ),
                     ElevatedButton(
-                      onPressed: userStore.register,
-                      child: const Text('Cadastrar'),
-                    ),
-                    InkWell(
-                      onTap: () =>
-                          {userStore.toLogin(), GetIt.I.get<AppRouter>().pop()},
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: const Text(
-                          "Já tem conta? Login!",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
+                      onPressed: () => fornecedorStore.salvarFornecedor(idFornecedor),
+                      child: Text(idFornecedor != null ? 'Salvar' : 'Cadastrar'),
                     ),
                   ],
                 ),

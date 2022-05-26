@@ -32,6 +32,15 @@ mixin _$FornecedorStore on _FornecedorStore, Store {
     return _$getFornecedoresAsyncAction.run(() => super.getFornecedores());
   }
 
+  final _$salvarFornecedorAsyncAction =
+      AsyncAction('_FornecedorStore.salvarFornecedor');
+
+  @override
+  Future<void> salvarFornecedor(String? idFornecedor) {
+    return _$salvarFornecedorAsyncAction
+        .run(() => super.salvarFornecedor(idFornecedor));
+  }
+
   @override
   String toString() {
     return '''
