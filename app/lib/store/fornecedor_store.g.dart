@@ -41,6 +41,20 @@ mixin _$FornecedorStore on _FornecedorStore, Store {
         .run(() => super.salvarFornecedor(idFornecedor));
   }
 
+  final _$_FornecedorStoreActionController =
+      ActionController(name: '_FornecedorStore');
+
+  @override
+  FornecedorModel getFornecedorByIdOrNew(String? idFornecedor) {
+    final _$actionInfo = _$_FornecedorStoreActionController.startAction(
+        name: '_FornecedorStore.getFornecedorByIdOrNew');
+    try {
+      return super.getFornecedorByIdOrNew(idFornecedor);
+    } finally {
+      _$_FornecedorStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''

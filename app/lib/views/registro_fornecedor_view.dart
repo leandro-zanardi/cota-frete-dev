@@ -1,5 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app/components/origem_destino_widget.dart';
+import 'package:app/model/fornecedor_model.dart';
+import 'package:app/model/regiao_frete_model.dart';
 import 'package:app/router/app_router.gr.dart';
 import 'package:app/store/fornecedor_store.dart';
 import 'package:auto_route/annotations.dart';
@@ -16,6 +19,29 @@ class RegistroFornecedorView extends StatelessWidget {
 
   final String? idFornecedor;
 
+  Widget buildOrigens() {
+    FornecedorModel fornecedor =
+        fornecedorStore.getFornecedorByIdOrNew(idFornecedor);
+
+    return Column(
+      children: [
+        for (int x = 0; x < fornecedor.origens.length; x++)
+          OrigemWidget(
+              isCapital: fornecedor.origens[x].capital,
+              estado: fornecedor.origens[x].estado,
+              destinos: buildDestinos(fornecedor.origens[x].destinos))
+      ],
+    );
+  }
+
+  List<DestinoWidget> buildDestinos(List<RegiaoFreteModel> destinosModel) {
+    List<DestinoWidget> destinos = [];
+
+    //TODO
+
+    return destinos;
+  }
+
   @override
   Widget build(BuildContext context) {
     var colors2 = <Color>[
@@ -24,7 +50,8 @@ class RegistroFornecedorView extends StatelessWidget {
     ];
     return Scaffold(
       appBar: AppBar(
-        title: Text('${(idFornecedor != null ? 'Editar' : 'Criar')} Fornecedor'),
+        title:
+            Text('${(idFornecedor != null ? 'Editar' : 'Criar')} Fornecedor'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -53,7 +80,8 @@ class RegistroFornecedorView extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      (idFornecedor != null ? 'Editar' : 'Criar') + " Fornecedor",
+                      (idFornecedor != null ? 'Editar' : 'Criar') +
+                          " Fornecedor",
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -63,20 +91,23 @@ class RegistroFornecedorView extends StatelessWidget {
                       padding: EdgeInsets.all(8.0),
                       child: Observer(builder: (context) {
                         return TextFormField(
-                          initialValue: idFornecedor,
+                            initialValue: idFornecedor,
                             //onSaved: (String? value) => {},
                             decoration: InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                          ),
-                          labelText: 'Nome da empresa',
-                          labelStyle: TextStyle(color: Colors.white),
-                        ));
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                              labelText: 'Nome da empresa',
+                              labelStyle: TextStyle(color: Colors.white),
+                            ));
                       }),
                     ),
+                    Observer(builder: (_) => buildOrigens()),
                     ElevatedButton(
-                      onPressed: () => fornecedorStore.salvarFornecedor(idFornecedor),
-                      child: Text(idFornecedor != null ? 'Salvar' : 'Cadastrar'),
+                      onPressed: () =>
+                          fornecedorStore.salvarFornecedor(idFornecedor),
+                      child:
+                          Text(idFornecedor != null ? 'Salvar' : 'Cadastrar'),
                     ),
                   ],
                 ),

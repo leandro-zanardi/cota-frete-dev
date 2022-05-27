@@ -15,7 +15,7 @@ abstract class _FornecedorStore with Store {
   @action
   Future<void> getFornecedores() async {
     fornecedores.clear();
-    
+
     FirebaseRealtimeFornecedor fornecedorService =
         GetIt.I.get<FirebaseRealtimeFornecedor>();
     List<FornecedorModel> fornecedoresModel =
@@ -25,7 +25,17 @@ abstract class _FornecedorStore with Store {
   }
 
   @action
-  Future<void> salvarFornecedor(String? idFornecedor) async {
-
+  FornecedorModel getFornecedorByIdOrNew(String? idFornecedor) {
+    if (idFornecedor != null) {
+      List<FornecedorModel> fornecedoresModel = fornecedores.toList();
+      FornecedorModel model = fornecedoresModel.firstWhere(
+          (fornecedor) => fornecedor.nome == idFornecedor);
+      return model;
+    } else {
+      return FornecedorModel(nome: "", origens: []);
+    }
   }
+
+  @action
+  Future<void> salvarFornecedor(String? idFornecedor) async {}
 }
