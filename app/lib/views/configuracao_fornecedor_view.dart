@@ -10,6 +10,18 @@ final FornecedorStore fornecedorStore = GetIt.I.get<FornecedorStore>();
 class ConfiguracaoFornecedorView extends StatelessWidget {
   const ConfiguracaoFornecedorView({Key? key}) : super(key: key);
 
+  List<Widget> buildExpansionTileFornecedores() {
+    List<Widget> expansionTiles = [];
+    List<Widget> listaFornecedores =
+        buildListaFornecedores(fornecedorStore.fornecedores.toList());
+    for (int x = 0; x < listaFornecedores.length; x++) {
+      expansionTiles.add(ExpansionTile(
+          title: const Text('Nome do fornecedor'),
+          children: [listaFornecedores[x]]));
+    }
+    return expansionTiles;
+  }
+
   List<Widget> buildListaFornecedores(List<FornecedorModel> fornecedores) {
     List<Widget> widgets = [];
 
@@ -17,14 +29,12 @@ class ConfiguracaoFornecedorView extends StatelessWidget {
       Widget w = Column(
         children: [
           InkWell(
-            onTap: () => GetIt.I
-                        .get<AppRouter>()
-                        .pushNamed("/registro-fornecedor?id_fornecedor=${fornecedores[x].nome}"),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(fornecedores[x].nome),
-            )
-          ),
+              onTap: () => GetIt.I.get<AppRouter>().pushNamed(
+                  "/registro-fornecedor?id_fornecedor=${fornecedores[x].nome}"),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(fornecedores[x].nome),
+              )),
           for (int y = 0; y < fornecedores[x].origens.length; y++)
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 16.0),
@@ -72,7 +82,6 @@ class ConfiguracaoFornecedorView extends StatelessWidget {
                                 .toString()),
                           ]),
                     ),
-                  Divider(color: Colors.grey.shade400),
                 ],
               ),
             )
@@ -86,6 +95,8 @@ class ConfiguracaoFornecedorView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     fornecedorStore.getFornecedores();
+    // List<Widget> listaFornecedores =
+    //     buildListaFornecedores(fornecedorStore.fornecedores.toList());
 
     return Scaffold(
         appBar: AppBar(
@@ -109,8 +120,9 @@ class ConfiguracaoFornecedorView extends StatelessWidget {
                         .pushNamed("/registro-fornecedor"),
                     child: const Text("Cadastrar Novo Fornecedor"),
                   ),
-                  ...buildListaFornecedores(
-                      fornecedorStore.fornecedores.toList()),
+                  Column(children: buildExpansionTileFornecedores()),
+                  // ...buildListaFornecedores(
+                  //     fornecedorStore.fornecedores.toList())
                 ],
               ),
             ),
