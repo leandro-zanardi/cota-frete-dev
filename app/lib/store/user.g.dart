@@ -6,10 +6,11 @@ part of 'user.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$UserStore on _UserStore, Store {
-  final _$userTokenAtom = Atom(name: '_UserStore.userToken');
+  late final _$userTokenAtom =
+      Atom(name: '_UserStore.userToken', context: context);
 
   @override
   String? get userToken {
@@ -24,7 +25,7 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
-  final _$claimsAtom = Atom(name: '_UserStore.claims');
+  late final _$claimsAtom = Atom(name: '_UserStore.claims', context: context);
 
   @override
   ObservableMap<String, dynamic> get claims {
@@ -39,7 +40,8 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
-  final _$userCredentialAtom = Atom(name: '_UserStore.userCredential');
+  late final _$userCredentialAtom =
+      Atom(name: '_UserStore.userCredential', context: context);
 
   @override
   User? get userCredential {
@@ -54,7 +56,8 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
-  final _$emailRegisterAtom = Atom(name: '_UserStore.emailRegister');
+  late final _$emailRegisterAtom =
+      Atom(name: '_UserStore.emailRegister', context: context);
 
   @override
   String? get emailRegister {
@@ -69,7 +72,8 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
-  final _$emailRegisterErrorAtom = Atom(name: '_UserStore.emailRegisterError');
+  late final _$emailRegisterErrorAtom =
+      Atom(name: '_UserStore.emailRegisterError', context: context);
 
   @override
   String? get emailRegisterError {
@@ -84,7 +88,8 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
-  final _$passwordRegisterAtom = Atom(name: '_UserStore.passwordRegister');
+  late final _$passwordRegisterAtom =
+      Atom(name: '_UserStore.passwordRegister', context: context);
 
   @override
   String? get passwordRegister {
@@ -99,8 +104,8 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
-  final _$passwordRegisterErrorAtom =
-      Atom(name: '_UserStore.passwordRegisterError');
+  late final _$passwordRegisterErrorAtom =
+      Atom(name: '_UserStore.passwordRegisterError', context: context);
 
   @override
   String? get passwordRegisterError {
@@ -116,7 +121,8 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
-  final _$emailLoginAtom = Atom(name: '_UserStore.emailLogin');
+  late final _$emailLoginAtom =
+      Atom(name: '_UserStore.emailLogin', context: context);
 
   @override
   String? get emailLogin {
@@ -131,7 +137,8 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
-  final _$emailLoginErrorAtom = Atom(name: '_UserStore.emailLoginError');
+  late final _$emailLoginErrorAtom =
+      Atom(name: '_UserStore.emailLoginError', context: context);
 
   @override
   String? get emailLoginError {
@@ -146,7 +153,8 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
-  final _$passwordLoginAtom = Atom(name: '_UserStore.passwordLogin');
+  late final _$passwordLoginAtom =
+      Atom(name: '_UserStore.passwordLogin', context: context);
 
   @override
   String? get passwordLogin {
@@ -161,7 +169,8 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
-  final _$passwordLoginErrorAtom = Atom(name: '_UserStore.passwordLoginError');
+  late final _$passwordLoginErrorAtom =
+      Atom(name: '_UserStore.passwordLoginError', context: context);
 
   @override
   String? get passwordLoginError {
@@ -176,7 +185,8 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
-  final _$isRegisterAtom = Atom(name: '_UserStore.isRegister');
+  late final _$isRegisterAtom =
+      Atom(name: '_UserStore.isRegister', context: context);
 
   @override
   bool get isRegister {
@@ -191,8 +201,8 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
-  final _$permissionDeniedErrorAtom =
-      Atom(name: '_UserStore.permissionDeniedError');
+  late final _$permissionDeniedErrorAtom =
+      Atom(name: '_UserStore.permissionDeniedError', context: context);
 
   @override
   String? get permissionDeniedError {
@@ -208,28 +218,32 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
-  final _$registerAsyncAction = AsyncAction('_UserStore.register');
+  late final _$registerAsyncAction =
+      AsyncAction('_UserStore.register', context: context);
 
   @override
   Future<void> register() {
     return _$registerAsyncAction.run(() => super.register());
   }
 
-  final _$loginAsyncAction = AsyncAction('_UserStore.login');
+  late final _$loginAsyncAction =
+      AsyncAction('_UserStore.login', context: context);
 
   @override
   Future<void> login() {
     return _$loginAsyncAction.run(() => super.login());
   }
 
-  final _$logoutAsyncAction = AsyncAction('_UserStore.logout');
+  late final _$logoutAsyncAction =
+      AsyncAction('_UserStore.logout', context: context);
 
   @override
   Future<void> logout() {
     return _$logoutAsyncAction.run(() => super.logout());
   }
 
-  final _$_UserStoreActionController = ActionController(name: '_UserStore');
+  late final _$_UserStoreActionController =
+      ActionController(name: '_UserStore', context: context);
 
   @override
   void toRegister() {

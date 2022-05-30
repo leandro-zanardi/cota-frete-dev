@@ -19,9 +19,8 @@ class RegistroFornecedorView extends StatelessWidget {
 
   final String? idFornecedor;
 
-  Widget buildOrigens() {
-    FornecedorModel fornecedor =
-        fornecedorStore.getFornecedorByIdOrNew(idFornecedor);
+  Widget buildOrigens(FornecedorModel fornecedor) {
+    
 
     return Column(
       children: [
@@ -29,21 +28,33 @@ class RegistroFornecedorView extends StatelessWidget {
           OrigemWidget(
               isCapital: fornecedor.origens[x].capital,
               estado: fornecedor.origens[x].estado,
-              destinos: buildDestinos(fornecedor.origens[x].destinos))
+              destinos: buildDestinos(fornecedor.origens[x].destinos),
+              addDestino: (estado, capital) =>
+                fornecedorStore.addDestinoToOrigem(fornecedor, estado, capital),
+              )
       ],
     );
   }
 
   List<DestinoWidget> buildDestinos(List<RegiaoFreteModel> destinosModel) {
     List<DestinoWidget> destinos = [];
-
-    //TODO
-
+    for (int x = 0; x < destinosModel.length; x++) {
+      DestinoWidget destWidget = DestinoWidget(
+          isCapital: destinosModel[x].capital,
+          estado: destinosModel[x].estado,
+          precoMinimo: destinosModel[x].precoMin,
+          precoKm: destinosModel[x].precoKm);
+      destinos.add(destWidget);
+    }
     return destinos;
   }
 
   @override
   Widget build(BuildContext context) {
+
+    FornecedorModel fornecedor =
+        fornecedorStore.getFornecedorByIdOrNew(idFornecedor);
+
     var colors2 = <Color>[
       Color.fromARGB(255, 160, 218, 215),
       Color.fromARGB(255, 0, 188, 212)
@@ -102,10 +113,14 @@ class RegistroFornecedorView extends StatelessWidget {
                             ));
                       }),
                     ),
-                    Observer(builder: (_) => buildOrigens()),
+                    ElevatedButton(
+                      onPressed: () => fornecedorStore.addOrigemToFornecedor(fornecedor), 
+                      child: Text("Adicionar Origem")
+                    ),
+                    Observer(builder: (_) => buildOrigens(fornecedor)),
                     ElevatedButton(
                       onPressed: () =>
-                          fornecedorStore.salvarFornecedor(idFornecedor),
+                          fornecedorStore.salvarFornecedor(fornecedor),
                       child:
                           Text(idFornecedor != null ? 'Salvar' : 'Cadastrar'),
                     ),

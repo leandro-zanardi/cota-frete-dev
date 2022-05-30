@@ -6,10 +6,11 @@ part of 'admin_store.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AdminStore on _AdminStore, Store {
-  final _$loadingAtom = Atom(name: '_AdminStore.loading');
+  late final _$loadingAtom =
+      Atom(name: '_AdminStore.loading', context: context);
 
   @override
   bool get loading {
@@ -24,7 +25,8 @@ mixin _$AdminStore on _AdminStore, Store {
     });
   }
 
-  final _$userClientsAtom = Atom(name: '_AdminStore.userClients');
+  late final _$userClientsAtom =
+      Atom(name: '_AdminStore.userClients', context: context);
 
   @override
   ObservableList<UserClient> get userClients {
@@ -39,8 +41,8 @@ mixin _$AdminStore on _AdminStore, Store {
     });
   }
 
-  final _$registerUserAdminAsyncAction =
-      AsyncAction('_AdminStore.registerUserAdmin');
+  late final _$registerUserAdminAsyncAction =
+      AsyncAction('_AdminStore.registerUserAdmin', context: context);
 
   @override
   Future<void> registerUserAdmin(String uuid, bool isAdmin) {
@@ -48,7 +50,8 @@ mixin _$AdminStore on _AdminStore, Store {
         .run(() => super.registerUserAdmin(uuid, isAdmin));
   }
 
-  final _$_AdminStoreActionController = ActionController(name: '_AdminStore');
+  late final _$_AdminStoreActionController =
+      ActionController(name: '_AdminStore', context: context);
 
   @override
   void setUserClients(List<UserClient> clients) {

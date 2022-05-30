@@ -6,10 +6,11 @@ part of 'cotacao_store.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$CotacaoStore on _CotacaoStore, Store {
-  final _$loadingAtom = Atom(name: '_CotacaoStore.loading');
+  late final _$loadingAtom =
+      Atom(name: '_CotacaoStore.loading', context: context);
 
   @override
   bool get loading {
@@ -24,8 +25,8 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
     });
   }
 
-  final _$pontosColetaEntregaAtom =
-      Atom(name: '_CotacaoStore.pontosColetaEntrega');
+  late final _$pontosColetaEntregaAtom =
+      Atom(name: '_CotacaoStore.pontosColetaEntrega', context: context);
 
   @override
   ObservableList<PontoColetaEntrega> get pontosColetaEntrega {
@@ -40,7 +41,8 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
     });
   }
 
-  final _$markersAtom = Atom(name: '_CotacaoStore.markers');
+  late final _$markersAtom =
+      Atom(name: '_CotacaoStore.markers', context: context);
 
   @override
   ObservableSet<Marker> get markers {
@@ -55,7 +57,8 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
     });
   }
 
-  final _$polylinesAtom = Atom(name: '_CotacaoStore.polylines');
+  late final _$polylinesAtom =
+      Atom(name: '_CotacaoStore.polylines', context: context);
 
   @override
   ObservableSet<Polyline> get polylines {
@@ -70,7 +73,8 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
     });
   }
 
-  final _$cotacaoAtom = Atom(name: '_CotacaoStore.cotacao');
+  late final _$cotacaoAtom =
+      Atom(name: '_CotacaoStore.cotacao', context: context);
 
   @override
   CotacaoModel? get cotacao {
@@ -85,8 +89,8 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
     });
   }
 
-  final _$isValidToCotarErrorMessageAtom =
-      Atom(name: '_CotacaoStore.isValidToCotarErrorMessage');
+  late final _$isValidToCotarErrorMessageAtom =
+      Atom(name: '_CotacaoStore.isValidToCotarErrorMessage', context: context);
 
   @override
   String? get isValidToCotarErrorMessage {
@@ -102,7 +106,8 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
     });
   }
 
-  final _$cameraUpdateAtom = Atom(name: '_CotacaoStore.cameraUpdate');
+  late final _$cameraUpdateAtom =
+      Atom(name: '_CotacaoStore.cameraUpdate', context: context);
 
   @override
   CameraUpdate? get cameraUpdate {
@@ -117,15 +122,16 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
     });
   }
 
-  final _$initAsyncAction = AsyncAction('_CotacaoStore.init');
+  late final _$initAsyncAction =
+      AsyncAction('_CotacaoStore.init', context: context);
 
   @override
   Future<void> init() {
     return _$initAsyncAction.run(() => super.init());
   }
 
-  final _$onSuggestionClickAsyncAction =
-      AsyncAction('_CotacaoStore.onSuggestionClick');
+  late final _$onSuggestionClickAsyncAction =
+      AsyncAction('_CotacaoStore.onSuggestionClick', context: context);
 
   @override
   Future<void> onSuggestionClick(Place placeDetails, String id) {
@@ -133,22 +139,24 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
         .run(() => super.onSuggestionClick(placeDetails, id));
   }
 
-  final _$updateMarkersAsyncAction = AsyncAction('_CotacaoStore.updateMarkers');
+  late final _$updateMarkersAsyncAction =
+      AsyncAction('_CotacaoStore.updateMarkers', context: context);
 
   @override
   Future<void> updateMarkers() {
     return _$updateMarkersAsyncAction.run(() => super.updateMarkers());
   }
 
-  final _$cotarAsyncAction = AsyncAction('_CotacaoStore.cotar');
+  late final _$cotarAsyncAction =
+      AsyncAction('_CotacaoStore.cotar', context: context);
 
   @override
   Future<void> cotar() {
     return _$cotarAsyncAction.run(() => super.cotar());
   }
 
-  final _$_CotacaoStoreActionController =
-      ActionController(name: '_CotacaoStore');
+  late final _$_CotacaoStoreActionController =
+      ActionController(name: '_CotacaoStore', context: context);
 
   @override
   void addPoint(

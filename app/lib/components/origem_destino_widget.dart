@@ -16,34 +16,40 @@ class DestinoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        TextFormField(
-          //onChanged: (value) => ,
-          initialValue: isCapital ? "Sim" : "Não",
-          obscureText: false,
-          decoration: InputDecoration(labelText: 'Capital', errorText: null),
-        ),
-        TextFormField(
-          //onChanged: (value) => ,
-          initialValue: estado,
-          obscureText: false,
-          decoration: InputDecoration(labelText: 'Estado', errorText: null),
-        ),
-        TextFormField(
-          //onChanged: (value) => ,
-          initialValue: precoKm.toString(),
-          obscureText: false,
-          decoration: InputDecoration(labelText: 'Preço/km', errorText: null),
-        ),
-        TextFormField(
-          //onChanged: (value) => ,
-          initialValue: precoMinimo.toString(),
-          obscureText: false,
-          decoration:
-              InputDecoration(labelText: 'Preço Minimo', errorText: null),
-        ),
-      ],
+    return 
+    
+    SizedBox(
+      height: 100,
+      width: MediaQuery.of(context).size.width,
+      child: Row(
+        children: [
+          // TextFormField(
+          //   //onChanged: (value) => ,
+          //   initialValue: isCapital ? "Sim" : "Não",
+          //   obscureText: false,
+          //   decoration: InputDecoration(labelText: 'Capital', errorText: null),
+          // ),
+          // TextFormField(
+          //   //onChanged: (value) => ,
+          //   initialValue: estado,
+          //   obscureText: false,
+          //   decoration: InputDecoration(labelText: 'Estado', errorText: null),
+          // ),
+          // TextFormField(
+          //   //onChanged: (value) => ,
+          //   initialValue: precoKm.toString(),
+          //   obscureText: false,
+          //   decoration: InputDecoration(labelText: 'Preço/km', errorText: null),
+          // ),
+          // TextFormField(
+          //   //onChanged: (value) => ,
+          //   initialValue: precoMinimo.toString(),
+          //   obscureText: false,
+          //   decoration:
+          //       InputDecoration(labelText: 'Preço Minimo', errorText: null),
+          // ),
+        ],
+      ),
     );
   }
 }
@@ -53,12 +59,14 @@ class OrigemWidget extends StatelessWidget {
       {Key? key,
       required this.isCapital,
       required this.estado,
-      required this.destinos})
+      required this.destinos,
+      required this.addDestino})
       : super(key: key);
 
   final bool isCapital;
   final String estado;
   final List<DestinoWidget> destinos;
+  final void Function(String estado, bool isCapital) addDestino;
 
   @override
   Widget build(BuildContext context) {
@@ -67,27 +75,22 @@ class OrigemWidget extends StatelessWidget {
         Row(children: [
           Text("Origem"),
           ElevatedButton(
-            onPressed: () {
-              
-            },
+            onPressed: () => addDestino(estado, isCapital),
             child: Text("Novo Destino"),
           ),
         ],),
-        // Row(children: [
-        //   TextFormField(
-        //   //onChanged: (value) => ,
-        //   initialValue: isCapital ? "Sim" : "Não",
-        //   obscureText: false,
-        //   decoration: InputDecoration(labelText: 'Capital', errorText: null),
-        //   ),
-        //   TextFormField(
-        //     //onChanged: (value) => ,
-        //     initialValue: estado,
-        //     obscureText: false,
-        //     decoration: InputDecoration(labelText: 'Estado', errorText: null),
-        //   ),
-        // ],),
-         Row(children: [
+
+        SizedBox(
+          height:50,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+            Text(estado),
+            Text(isCapital ? "Sim" : "Não")
+          ],),
+        ),
+        
+         Column(children: [
            for(int x=0; x<destinos.length; x++)
             DestinoWidget(
               isCapital: destinos[x].isCapital, 

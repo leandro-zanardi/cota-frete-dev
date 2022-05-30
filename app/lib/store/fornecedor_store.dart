@@ -37,5 +37,16 @@ abstract class _FornecedorStore with Store {
   }
 
   @action
-  Future<void> salvarFornecedor(String? idFornecedor) async {}
+  Future<void> salvarFornecedor(FornecedorModel fornecedor) async {}
+
+  @action
+  void addDestinoToOrigem(FornecedorModel fornecedor, String estado, bool isCapital) {
+
+  }
+
+  @action
+  void addOrigemToFornecedor(FornecedorModel fornecedor) {
+
+  }
+
 }
