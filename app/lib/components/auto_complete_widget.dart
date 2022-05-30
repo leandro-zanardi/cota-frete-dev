@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:maps_places_autocomplete/maps_places_autocomplete.dart';
 import 'package:maps_places_autocomplete/model/place.dart';
 import 'package:maps_places_autocomplete/model/suggestion.dart';
@@ -91,6 +92,36 @@ class _AutocompleteWidget extends State<AutocompleteWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        if (widget.ehPrimeiroPonto)
+          Column(children: [
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                "Selecione o Veículo:",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ToggleButtons(
+                  constraints: BoxConstraints(
+                    minWidth: MediaQuery.of(context).size.width / 3.5,
+                    minHeight: 40,
+                    maxWidth: 500,
+                    maxHeight: 200,
+                  ),
+                  children: _buildToggleItems(),
+                  fillColor: Colors.black12,
+                  selectedColor: Colors.cyan,
+                  isSelected:
+                      _categorias2.map((e) => e["value"] as bool).toList(),
+                  onPressed: (int index) {
+                    setState(() {
+                      _updateToogleVeicle(index);
+                    });
+                  }),
+            ),
+          ]),
         MapsPlacesAutocomplete(
           mapsApiKey: 'AIzaSyAR9I6Frmuh5iyJo7xQXGmQT21Jc_B3DcE',
           onSuggestionClick: (Place place) => widget.onSuggestionClick(place),
@@ -112,23 +143,6 @@ class _AutocompleteWidget extends State<AutocompleteWidget> {
               errorText: null),
           clearButton: const Icon(Icons.close),
         ),
-        if (widget.ehPrimeiroPonto)
-          Column(children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("Veículos"),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ToggleButtons(
-                  children: _buildToggleItems(),
-                  isSelected:
-                      _categorias2.map((e) => e["value"] as bool).toList(),
-                  onPressed: (int index) {
-                    setState(() {_updateToogleVeicle(index);});
-                  }),
-            ),
-          ]),
         if (widget.ativaRetornaParaOrigem) buildRetornaOrigem()
       ],
     );

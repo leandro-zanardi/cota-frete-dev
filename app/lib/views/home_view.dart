@@ -84,6 +84,9 @@ class HomeView extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.cyan,
+                            ),
                             onPressed: () =>
                                 cotacaoStore.addPoint(false, false, false),
                             child: const Text("Adicionar Ponto"),
@@ -92,6 +95,9 @@ class HomeView extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.cyan,
+                            ),
                             onPressed: () => cotacaoStore.removeLastPoint(),
                             child: const Text("Remover Ponto"),
                           ),
@@ -108,6 +114,9 @@ class HomeView extends StatelessWidget {
                               ],
                             )),
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.cyan,
+                      ),
                       onPressed: () async {
                         cotacaoStore.cotar();
                       },
@@ -127,6 +136,7 @@ class HomeView extends StatelessWidget {
               bottom: 16,
               right: 16,
               child: FloatingActionButton(
+                  backgroundColor: Colors.cyan,
                   child: const Icon(Icons.map),
                   onPressed: () => GetIt.I.get<AppRouter>().pushNamed('/map')),
             ),
@@ -159,7 +169,7 @@ class HomeView extends StatelessWidget {
                         ),
                       ),
                     ))),
-            Observer( 
+            Observer(
                 builder: (_) => LoaderWidget(visible: cotacaoStore.loading))
           ]),
         ));

@@ -63,6 +63,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
           primaryColor: Colors.cyan,
+          appBarTheme: const AppBarTheme(backgroundColor: Colors.cyan),
         ),
         routerDelegate: AutoRouterDelegate(router),
         routeInformationParser: router.defaultRouteParser());
