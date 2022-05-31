@@ -9,6 +9,22 @@ part of 'fornecedor_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$FornecedorStore on _FornecedorStore, Store {
+  late final _$currentFornecedorAtom =
+      Atom(name: '_FornecedorStore.currentFornecedor', context: context);
+
+  @override
+  FornecedorModel get currentFornecedor {
+    _$currentFornecedorAtom.reportRead();
+    return super.currentFornecedor;
+  }
+
+  @override
+  set currentFornecedor(FornecedorModel value) {
+    _$currentFornecedorAtom.reportWrite(value, super.currentFornecedor, () {
+      super.currentFornecedor = value;
+    });
+  }
+
   late final _$fornecedoresAtom =
       Atom(name: '_FornecedorStore.fornecedores', context: context);
 
@@ -46,6 +62,17 @@ mixin _$FornecedorStore on _FornecedorStore, Store {
       ActionController(name: '_FornecedorStore', context: context);
 
   @override
+  void setCurrentFornecedor(String? idFornecedor) {
+    final _$actionInfo = _$_FornecedorStoreActionController.startAction(
+        name: '_FornecedorStore.setCurrentFornecedor');
+    try {
+      return super.setCurrentFornecedor(idFornecedor);
+    } finally {
+      _$_FornecedorStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   FornecedorModel getFornecedorByIdOrNew(String? idFornecedor) {
     final _$actionInfo = _$_FornecedorStoreActionController.startAction(
         name: '_FornecedorStore.getFornecedorByIdOrNew');
@@ -57,23 +84,22 @@ mixin _$FornecedorStore on _FornecedorStore, Store {
   }
 
   @override
-  void addDestinoToOrigem(
-      FornecedorModel fornecedor, String estado, bool isCapital) {
+  void addDestinoToOrigem(String estado, bool isCapital) {
     final _$actionInfo = _$_FornecedorStoreActionController.startAction(
         name: '_FornecedorStore.addDestinoToOrigem');
     try {
-      return super.addDestinoToOrigem(fornecedor, estado, isCapital);
+      return super.addDestinoToOrigem(estado, isCapital);
     } finally {
       _$_FornecedorStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void addOrigemToFornecedor(FornecedorModel fornecedor) {
+  void addOrigemToFornecedor() {
     final _$actionInfo = _$_FornecedorStoreActionController.startAction(
         name: '_FornecedorStore.addOrigemToFornecedor');
     try {
-      return super.addOrigemToFornecedor(fornecedor);
+      return super.addOrigemToFornecedor();
     } finally {
       _$_FornecedorStoreActionController.endAction(_$actionInfo);
     }
@@ -82,6 +108,7 @@ mixin _$FornecedorStore on _FornecedorStore, Store {
   @override
   String toString() {
     return '''
+currentFornecedor: ${currentFornecedor},
 fornecedores: ${fornecedores}
     ''';
   }

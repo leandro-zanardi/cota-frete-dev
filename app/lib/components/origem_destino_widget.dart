@@ -18,36 +18,55 @@ class DestinoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return 
     
-    SizedBox(
-      height: 100,
+    Container(
+      padding: EdgeInsets.all(4),
+      color: Colors.white,
+      height: 70,
       width: MediaQuery.of(context).size.width,
       child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // TextFormField(
-          //   //onChanged: (value) => ,
-          //   initialValue: isCapital ? "Sim" : "Não",
-          //   obscureText: false,
-          //   decoration: InputDecoration(labelText: 'Capital', errorText: null),
-          // ),
-          // TextFormField(
-          //   //onChanged: (value) => ,
-          //   initialValue: estado,
-          //   obscureText: false,
-          //   decoration: InputDecoration(labelText: 'Estado', errorText: null),
-          // ),
-          // TextFormField(
-          //   //onChanged: (value) => ,
-          //   initialValue: precoKm.toString(),
-          //   obscureText: false,
-          //   decoration: InputDecoration(labelText: 'Preço/km', errorText: null),
-          // ),
-          // TextFormField(
-          //   //onChanged: (value) => ,
-          //   initialValue: precoMinimo.toString(),
-          //   obscureText: false,
-          //   decoration:
-          //       InputDecoration(labelText: 'Preço Minimo', errorText: null),
-          // ),
+          SizedBox(
+            width: (MediaQuery.of(context).size.width / 4) -40,
+            height: 60,
+            child: TextFormField(
+              initialValue: isCapital ? "Sim" : "Não",
+              //onSaved: (String? value) => {},
+              decoration: InputDecoration(
+                labelText: 'Capital',
+              )),
+          ),
+          SizedBox(
+            width: (MediaQuery.of(context).size.width / 4) -20,
+            height: 60,
+            child: TextFormField(
+              initialValue: estado,
+              //onSaved: (String? value) => {},
+              decoration: InputDecoration(
+                labelText: 'Estado',
+              )),
+          ),
+          SizedBox(
+            width: (MediaQuery.of(context).size.width / 4) -12,
+            height: 60,
+            child: TextFormField(
+              initialValue: precoKm.toString(),
+              //onSaved: (String? value) => {},
+              decoration: InputDecoration(
+                labelText: 'Preço/km',
+              )),
+          ),
+          SizedBox(
+            width: (MediaQuery.of(context).size.width / 4) -12,
+            height: 60,
+            child: TextFormField(
+              initialValue: precoMinimo.toString(),
+              //onSaved: (String? value) => {},
+              decoration: InputDecoration(
+                labelText: 'Preço/Min.',
+              )),
+          ),
         ],
       ),
     );
@@ -80,9 +99,10 @@ class OrigemWidget extends StatelessWidget {
           ),
         ],),
 
-        SizedBox(
-          height:50,
-          child: Column(
+        Container(
+          color: Colors.white,
+          height:70,
+          child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
             Text(estado),
