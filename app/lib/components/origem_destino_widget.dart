@@ -91,13 +91,15 @@ class OrigemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(children: [
-          Text("Origem"),
-          ElevatedButton(
-            onPressed: () => addDestino(estado, isCapital),
-            child: Text("Novo Destino"),
-          ),
-        ],),
+        Container(
+          color: Colors.white,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+            const Text("Origem:"),
+            
+          ],),
+        ),
 
         Container(
           color: Colors.white,
@@ -105,19 +107,50 @@ class OrigemWidget extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-            Text(estado),
-            Text(isCapital ? "Sim" : "Não")
+            SizedBox(
+              width: (MediaQuery.of(context).size.width / 4) -12,
+              height: 60,
+              child: TextFormField(
+                initialValue: estado,
+                onSaved: (String? value) => {},
+                decoration: InputDecoration(
+                  labelText: 'Estado',
+                )),
+            ),
+            SizedBox(
+              width: (MediaQuery.of(context).size.width / 4) -12,
+              height: 60,
+              child: TextFormField(
+                initialValue: isCapital ? "Sim" : "Não",
+                onSaved: (String? value) => {},
+                decoration: InputDecoration(
+                  labelText: 'Capital',
+                )),
+            ),
           ],),
         ),
         
-         Column(children: [
-           for(int x=0; x<destinos.length; x++)
-            DestinoWidget(
-              isCapital: destinos[x].isCapital, 
-              estado: destinos[x].estado,
-              precoMinimo: destinos[x].precoMinimo,
-              precoKm: destinos[x].precoKm)
-           ]
+         Container(
+           color: Colors.white,
+           child: Column(children: [
+             Row(
+               children: [
+                 const Text("Destinos:"),
+                  ElevatedButton(
+                      onPressed: () => addDestino(estado, isCapital),
+                      child: const Text("Novo Destino"),
+                    ),
+               ],
+             ),
+             
+             for(int x=0; x<destinos.length; x++)
+              DestinoWidget(
+                isCapital: destinos[x].isCapital, 
+                estado: destinos[x].estado,
+                precoMinimo: destinos[x].precoMinimo,
+                precoKm: destinos[x].precoKm)
+             ]
+           ),
          )
       ],
     );

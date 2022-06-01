@@ -6,6 +6,11 @@ class FornecedorModel {
   List<FornecedorOrigem> origens;
 
   FornecedorModel({required this.nome, this.logo, required this.origens});
+
+  bool ehValidaOrigem() {
+    //TODO
+    return true;
+  }
 }
 
 class FornecedorOrigem {

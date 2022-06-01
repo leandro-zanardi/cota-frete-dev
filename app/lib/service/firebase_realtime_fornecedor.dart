@@ -51,4 +51,11 @@ class FirebaseRealtimeFornecedor {
       rethrow;
     }
   }
+
+  Future<void> salvarFornecedor(FornecedorModel fornecedor) async {
+    DatabaseReference ref = FirebaseDatabase.instance.ref("fornecedor/${fornecedor.nome}");
+
+    await ref.set(fornecedor);
+
+  }
 }

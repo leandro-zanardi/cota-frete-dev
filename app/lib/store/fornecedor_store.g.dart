@@ -53,9 +53,8 @@ mixin _$FornecedorStore on _FornecedorStore, Store {
       AsyncAction('_FornecedorStore.salvarFornecedor', context: context);
 
   @override
-  Future<void> salvarFornecedor(FornecedorModel fornecedor) {
-    return _$salvarFornecedorAsyncAction
-        .run(() => super.salvarFornecedor(fornecedor));
+  Future<void> salvarFornecedor() {
+    return _$salvarFornecedorAsyncAction.run(() => super.salvarFornecedor());
   }
 
   late final _$_FornecedorStoreActionController =

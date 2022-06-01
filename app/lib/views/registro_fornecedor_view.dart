@@ -23,12 +23,15 @@ class RegistroFornecedorView extends StatelessWidget {
     return Column(
       children: [
         for (int x = 0; x < fornecedor.origens.length; x++)
-          OrigemWidget(
-            isCapital: fornecedor.origens[x].capital,
-            estado: fornecedor.origens[x].estado,
-            destinos: buildDestinos(fornecedor.origens[x].destinos),
-            addDestino: (estado, capital) =>
-                fornecedorStore.addDestinoToOrigem(estado, capital),
+          Padding(
+            padding: const EdgeInsets.only(top:8.0),
+            child: OrigemWidget(
+              isCapital: fornecedor.origens[x].capital,
+              estado: fornecedor.origens[x].estado,
+              destinos: buildDestinos(fornecedor.origens[x].destinos),
+              addDestino: (estado, capital) =>
+                  fornecedorStore.addDestinoToOrigem(estado, capital),
+            ),
           )
       ],
     );
@@ -115,7 +118,7 @@ class RegistroFornecedorView extends StatelessWidget {
                           buildOrigens(fornecedorStore.currentFornecedor)),
                   ElevatedButton(
                     onPressed: () => fornecedorStore
-                        .salvarFornecedor(fornecedorStore.currentFornecedor),
+                        .salvarFornecedor(),
                     child: Text(idFornecedor != null ? 'Salvar' : 'Cadastrar'),
                   ),
                 ],
