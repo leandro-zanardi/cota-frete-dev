@@ -1,18 +1,14 @@
+import 'package:app/model/fornecedor_model.dart';
+import 'package:app/model/regiao_frete_model.dart';
 import 'package:flutter/material.dart';
 
 class DestinoWidget extends StatelessWidget {
   const DestinoWidget(
       {Key? key,
-      required this.isCapital,
-      required this.estado,
-      required this.precoMinimo,
-      required this.precoKm})
+      required this.destino})
       : super(key: key);
 
-  final bool isCapital;
-  final String estado;
-  final double precoMinimo;
-  final double precoKm;
+  final RegiaoFreteModel destino;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +27,7 @@ class DestinoWidget extends StatelessWidget {
             width: (MediaQuery.of(context).size.width / 4) -40,
             height: 60,
             child: TextFormField(
-              initialValue: isCapital ? "Sim" : "Não",
+              initialValue: destino.capital ? "Sim" : "Não",
               //onSaved: (String? value) => {},
               decoration: InputDecoration(
                 labelText: 'Capital',
@@ -41,7 +37,7 @@ class DestinoWidget extends StatelessWidget {
             width: (MediaQuery.of(context).size.width / 4) -20,
             height: 60,
             child: TextFormField(
-              initialValue: estado,
+              initialValue: destino.estado,
               //onSaved: (String? value) => {},
               decoration: InputDecoration(
                 labelText: 'Estado',
@@ -51,7 +47,7 @@ class DestinoWidget extends StatelessWidget {
             width: (MediaQuery.of(context).size.width / 4) -12,
             height: 60,
             child: TextFormField(
-              initialValue: precoKm.toString(),
+              initialValue: destino.precoKm.toString(),
               //onSaved: (String? value) => {},
               decoration: InputDecoration(
                 labelText: 'Preço/km',
@@ -61,10 +57,11 @@ class DestinoWidget extends StatelessWidget {
             width: (MediaQuery.of(context).size.width / 4) -12,
             height: 60,
             child: TextFormField(
-              initialValue: precoMinimo.toString(),
+              initialValue: destino.precoMin.toString(),
               //onSaved: (String? value) => {},
               decoration: InputDecoration(
                 labelText: 'Preço/Min.',
+                errorText: destino.precoMinInvalido
               )),
           ),
         ],
@@ -76,16 +73,20 @@ class DestinoWidget extends StatelessWidget {
 class OrigemWidget extends StatelessWidget {
   const OrigemWidget(
       {Key? key,
-      required this.isCapital,
-      required this.estado,
+      required this.origem,
       required this.destinos,
-      required this.addDestino})
+      required this.addDestino,
+      required this.editDestino,
+      required this.editOrigemCapital,
+      required this.editOrigemEstado})
       : super(key: key);
 
-  final bool isCapital;
-  final String estado;
+  final FornecedorOrigem origem;
   final List<DestinoWidget> destinos;
   final void Function(String estado, bool isCapital) addDestino;
+  final void Function(FornecedorOrigem origem, RegiaoFreteModel destino) editDestino;
+  final void Function(FornecedorOrigem origem, bool capital) editOrigemCapital;
+  final void Function(FornecedorOrigem origem, String estado) editOrigemEstado;
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +112,7 @@ class OrigemWidget extends StatelessWidget {
               width: (MediaQuery.of(context).size.width / 4) -12,
               height: 60,
               child: TextFormField(
-                initialValue: estado,
+                initialValue: origem.estado,
                 onSaved: (String? value) => {},
                 decoration: InputDecoration(
                   labelText: 'Estado',
@@ -121,7 +122,7 @@ class OrigemWidget extends StatelessWidget {
               width: (MediaQuery.of(context).size.width / 4) -12,
               height: 60,
               child: TextFormField(
-                initialValue: isCapital ? "Sim" : "Não",
+                initialValue: origem.capital ? "Sim" : "Não",
                 onSaved: (String? value) => {},
                 decoration: InputDecoration(
                   labelText: 'Capital',
@@ -137,7 +138,7 @@ class OrigemWidget extends StatelessWidget {
                children: [
                  const Text("Destinos:"),
                   ElevatedButton(
-                      onPressed: () => addDestino(estado, isCapital),
+                      onPressed: () => addDestino(origem.estado, origem.capital),
                       child: const Text("Novo Destino"),
                     ),
                ],
@@ -145,10 +146,7 @@ class OrigemWidget extends StatelessWidget {
              
              for(int x=0; x<destinos.length; x++)
               DestinoWidget(
-                isCapital: destinos[x].isCapital, 
-                estado: destinos[x].estado,
-                precoMinimo: destinos[x].precoMinimo,
-                precoKm: destinos[x].precoKm)
+                destino: destinos[x].destino)
              ]
            ),
          )

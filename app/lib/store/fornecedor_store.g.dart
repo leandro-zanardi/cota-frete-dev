@@ -83,6 +83,39 @@ mixin _$FornecedorStore on _FornecedorStore, Store {
   }
 
   @override
+  void editDestino(FornecedorOrigem origem, RegiaoFreteModel destino) {
+    final _$actionInfo = _$_FornecedorStoreActionController.startAction(
+        name: '_FornecedorStore.editDestino');
+    try {
+      return super.editDestino(origem, destino);
+    } finally {
+      _$_FornecedorStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void editOrigemCapital(FornecedorOrigem origem, bool value) {
+    final _$actionInfo = _$_FornecedorStoreActionController.startAction(
+        name: '_FornecedorStore.editOrigemCapital');
+    try {
+      return super.editOrigemCapital(origem, value);
+    } finally {
+      _$_FornecedorStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void editOrigemEstado(FornecedorOrigem origem, String value) {
+    final _$actionInfo = _$_FornecedorStoreActionController.startAction(
+        name: '_FornecedorStore.editOrigemEstado');
+    try {
+      return super.editOrigemEstado(origem, value);
+    } finally {
+      _$_FornecedorStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void addDestinoToOrigem(String estado, bool isCapital) {
     final _$actionInfo = _$_FornecedorStoreActionController.startAction(
         name: '_FornecedorStore.addDestinoToOrigem');

@@ -26,11 +26,13 @@ class RegistroFornecedorView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top:8.0),
             child: OrigemWidget(
-              isCapital: fornecedor.origens[x].capital,
-              estado: fornecedor.origens[x].estado,
+              origem: fornecedor.origens[x],
               destinos: buildDestinos(fornecedor.origens[x].destinos),
               addDestino: (estado, capital) =>
                   fornecedorStore.addDestinoToOrigem(estado, capital),
+              editDestino: (origem, destino) => fornecedorStore.editDestino(origem, destino),
+              editOrigemCapital: (origem, value) => fornecedorStore.editOrigemCapital(origem, value),
+              editOrigemEstado: (origem, value) => fornecedorStore.editOrigemEstado(origem, value)
             ),
           )
       ],
@@ -41,10 +43,7 @@ class RegistroFornecedorView extends StatelessWidget {
     List<DestinoWidget> destinos = [];
     for (int x = 0; x < destinosModel.length; x++) {
       DestinoWidget destWidget = DestinoWidget(
-          isCapital: destinosModel[x].capital,
-          estado: destinosModel[x].estado,
-          precoMinimo: destinosModel[x].precoMin,
-          precoKm: destinosModel[x].precoKm);
+          destino: destinosModel[x]);
       destinos.add(destWidget);
     }
     return destinos;

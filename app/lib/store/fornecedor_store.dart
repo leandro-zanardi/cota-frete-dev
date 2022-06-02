@@ -49,14 +49,37 @@ abstract class _FornecedorStore with Store {
     }
   }
 
-  //TODO inserir campos do formulario no modelo de fornecedor corrente
-  //primeiro ponto
+  @action
+  void editDestino(FornecedorOrigem origem, RegiaoFreteModel destino) {
+    // TODO validar o destino
+    // nao interromper a edicao
+
+    // TODO validar destinos
+    // interrompe a edicao
+
+    // FornecedorModel old = currentFornecedor;
+    // old.origens.firstWhere((element) => false).removeWhere(
+    //     (d) => d.capital == destino.capital && d.estado == destino.estado);
+    
+    
+    //old.origens.add(destino);
+  }
+
+  @action
+  void editOrigemCapital(FornecedorOrigem origem, bool value) {
+
+  }
+
+  @action
+  void editOrigemEstado(FornecedorOrigem origem, String value) {
+
+  }
 
   @action
   Future<void> salvarFornecedor() async {
     FirebaseRealtimeFornecedor fornecedorService =
         GetIt.I.get<FirebaseRealtimeFornecedor>();
-    
+
     //TODO validar dados no modelo do fornecedor
 
     await fornecedorService.salvarFornecedor(currentFornecedor);
