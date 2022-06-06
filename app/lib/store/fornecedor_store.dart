@@ -57,23 +57,22 @@ abstract class _FornecedorStore with Store {
     // TODO validar destinos
     // interrompe a edicao
 
-    // FornecedorModel old = currentFornecedor;
+    FornecedorModel old = currentFornecedor;
+    if (origem.ehValidoDestino(destino)) {}
+
+    currentFornecedor = FornecedorModel(nome: "", origens: []);
+    currentFornecedor = old;
     // old.origens.firstWhere((element) => false).removeWhere(
     //     (d) => d.capital == destino.capital && d.estado == destino.estado);
-    
-    
+
     //old.origens.add(destino);
   }
 
   @action
-  void editOrigemCapital(FornecedorOrigem origem, bool value) {
-
-  }
+  void editOrigemCapital(FornecedorOrigem origem, bool value) {}
 
   @action
-  void editOrigemEstado(FornecedorOrigem origem, String value) {
-
-  }
+  void editOrigemEstado(FornecedorOrigem origem, String value) {}
 
   @action
   Future<void> salvarFornecedor() async {

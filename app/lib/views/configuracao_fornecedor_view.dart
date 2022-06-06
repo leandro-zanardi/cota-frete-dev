@@ -88,34 +88,6 @@ class ConfiguracaoFornecedorView extends StatelessWidget {
                         ),
                     ],
                   ),
-                  // for (int z = 0;
-                  //     z < fornecedores[x].origens[y].destinos.length;
-                  //     z++)
-                  //   Padding(
-                  //     padding: const EdgeInsets.fromLTRB(0, 4.0, 0, 4.0),
-                  //     child: Row(
-                  //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //         children: [
-                  //           const Text("Capital"),
-                  //           Text(fornecedores[x].origens[y].destinos[z].capital
-                  //               ? "Sim"
-                  //               : "Não"),
-                  //           const Text("Estado"),
-                  //           Text(fornecedores[x].origens[y].destinos[z].estado),
-                  //           const Text("Preço por KM"),
-                  //           Text(fornecedores[x]
-                  //               .origens[y]
-                  //               .destinos[z]
-                  //               .precoKm
-                  //               .toString()),
-                  //           const Text("Preço Mínimo"),
-                  //           Text(fornecedores[x]
-                  //               .origens[y]
-                  //               .destinos[z]
-                  //               .precoMin
-                  //               .toString()),
-                  //         ]),
-                  //   ),
                 ]))
         ],
       );
