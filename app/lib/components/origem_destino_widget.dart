@@ -20,7 +20,7 @@ class DestinoWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(4),
       color: Colors.white,
-      height: 70,
+      height: 90,
       width: MediaQuery.of(context).size.width,
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -28,7 +28,7 @@ class DestinoWidget extends StatelessWidget {
         children: [
           SizedBox(
             width: (MediaQuery.of(context).size.width / 4) - 40,
-            height: 60,
+            height: 85,
             child: TextFormField(
                 initialValue: destino.capital ? "Sim" : "Não",
                 onSaved: (String? value) {
@@ -36,11 +36,13 @@ class DestinoWidget extends StatelessWidget {
                   editDestino(origem, destino);
                 },
                 decoration: InputDecoration(
-                    labelText: 'Capital', errorText: destino.capitalInvalida)),
+                    labelText: 'Capital', errorText: destino.capitalInvalida,
+                    errorMaxLines: 3,
+                    errorStyle: TextStyle(overflow: TextOverflow.ellipsis))),
           ),
           SizedBox(
             width: (MediaQuery.of(context).size.width / 4) - 20,
-            height: 60,
+            height: 85,
             child: TextFormField(
                 initialValue: destino.estado,
                 onChanged: (String? value) {
@@ -48,27 +50,47 @@ class DestinoWidget extends StatelessWidget {
                   editDestino(origem, destino);
                 },
                 decoration: InputDecoration(
-                    labelText: 'Estado', errorText: destino.estadoInvalido)),
+                    labelText: 'Estado', 
+                    errorText: destino.estadoInvalido,
+                    errorMaxLines: 3,
+                    errorStyle: TextStyle(overflow: TextOverflow.ellipsis))),
           ),
           SizedBox(
             width: (MediaQuery.of(context).size.width / 4) - 12,
-            height: 60,
+            height: 85,
             child: TextFormField(
                 initialValue: destino.precoKm.toString(),
-                //onSaved: (String? value) => {},
+                onChanged: (String? value) {
+                  if (value != null && value != '') {
+                    destino.precoKm = double.tryParse(value) ?? 0;
+                  } else {
+                    destino.precoKm = 0;
+                  }
+                  editDestino(origem, destino);
+                },
                 decoration: InputDecoration(
-                  labelText: 'Preço/km',
-                )),
+                    labelText: 'Preço/km', errorText: destino.precoKmInvalido,
+                    errorMaxLines: 3,
+                    errorStyle: TextStyle(overflow: TextOverflow.ellipsis))),
           ),
           SizedBox(
             width: (MediaQuery.of(context).size.width / 4) - 12,
-            height: 60,
+            height: 85,
             child: TextFormField(
                 initialValue: destino.precoMin.toString(),
-                //onSaved: (String? value) => {},
+                onChanged: (String? value) {
+                  if (value != null) {
+                    destino.precoMin = double.tryParse(value) ?? 0;
+                  } else {
+                    destino.precoMin = 0;
+                  }
+                  editDestino(origem, destino);
+                },
                 decoration: InputDecoration(
                     labelText: 'Preço/Min.',
-                    errorText: destino.precoMinInvalido)),
+                    errorText: destino.precoMinInvalido,
+                    errorMaxLines: 3,
+                    errorStyle: TextStyle(overflow: TextOverflow.ellipsis))),
           ),
         ],
       ),

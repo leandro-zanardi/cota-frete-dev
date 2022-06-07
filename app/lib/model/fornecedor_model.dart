@@ -63,7 +63,7 @@ class FornecedorOrigem {
 
   bool ehValidoDestino(RegiaoFreteModel destino) {
     for (int x = 0; x < destinos.length; x++) {
-      if (!identical(this, destino) && !destinos[x].ehValidoDestino(destino)) {
+      if (!identical(destinos[x], destino) && !destino.ehValidoDestino(destinos[x])) {
         return false;
       }
     }

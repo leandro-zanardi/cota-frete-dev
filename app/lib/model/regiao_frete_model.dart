@@ -63,6 +63,6 @@ class RegiaoFreteModel {
   }
 
   bool get ehValido {
-    return ehValidoEstado && ehValidoPrecoMin && ehValidoPrecoKm;
+    return ehValidoEstado && ehValidoPrecoKm && ehValidoPrecoMin;
   }
 }

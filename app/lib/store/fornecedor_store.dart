@@ -51,21 +51,18 @@ abstract class _FornecedorStore with Store {
 
   @action
   void editDestino(FornecedorOrigem origem, RegiaoFreteModel destino) {
-    // TODO validar o destino
-    // nao interromper a edicao
-
-    // TODO validar destinos
-    // interrompe a edicao
 
     FornecedorModel old = currentFornecedor;
-    if (origem.ehValidoDestino(destino)) {}
+
+    if (destino.ehValido) {
+      if (origem.ehValidoDestino(destino)) {
+        //save
+      }
+    }
 
     currentFornecedor = FornecedorModel(nome: "", origens: []);
     currentFornecedor = old;
-    // old.origens.firstWhere((element) => false).removeWhere(
-    //     (d) => d.capital == destino.capital && d.estado == destino.estado);
 
-    //old.origens.add(destino);
   }
 
   @action
