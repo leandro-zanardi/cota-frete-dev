@@ -1,3 +1,4 @@
+import 'package:app/model/capital_model.dart';
 import 'package:app/model/fornecedor_model.dart';
 import 'package:app/model/regiao_frete_model.dart';
 import 'package:flutter/material.dart';
@@ -5,11 +6,13 @@ import 'package:flutter/material.dart';
 class DestinoWidget extends StatelessWidget {
   const DestinoWidget(
       {Key? key,
+      required this.capitais,
       required this.origem,
       required this.destino,
       required this.editDestino})
       : super(key: key);
 
+  final List<CapitalModel> capitais;
   final FornecedorOrigem origem;
   final RegiaoFreteModel destino;
   final void Function(FornecedorOrigem origem, RegiaoFreteModel destino)
@@ -36,27 +39,35 @@ class DestinoWidget extends StatelessWidget {
                   editDestino(origem, destino);
                 },
                 decoration: InputDecoration(
-                    labelText: 'Capital', errorText: destino.capitalInvalida,
+                    labelText: 'Capital',
+                    errorText: destino.capitalInvalida,
                     errorMaxLines: 3,
                     errorStyle: TextStyle(overflow: TextOverflow.ellipsis))),
           ),
           SizedBox(
-            width: (MediaQuery.of(context).size.width / 4) - 20,
-            height: 85,
-            child: TextFormField(
-                initialValue: destino.estado,
-                onChanged: (String? value) {
-                  destino.estado = value ?? '';
+            width: (MediaQuery.of(context).size.width / 4) + 60,
+            child: 
+            
+            DropdownButton<String>(
+              value: destino.estado,
+              items: capitais
+                  .map((item) => DropdownMenuItem<String>(
+                      value: item.estado, child: Text(item.estado)))
+                  .toList(),
+              style: const TextStyle(color: Colors.black),
+              underline: Container(
+                height: 1,
+                color: Colors.grey,
+              ),
+              onChanged: (item) 
+                {
+                  destino.estado = item ?? '';
                   editDestino(origem, destino);
                 },
-                decoration: InputDecoration(
-                    labelText: 'Estado', 
-                    errorText: destino.estadoInvalido,
-                    errorMaxLines: 3,
-                    errorStyle: TextStyle(overflow: TextOverflow.ellipsis))),
+            ),
           ),
           SizedBox(
-            width: (MediaQuery.of(context).size.width / 4) - 12,
+            width: (MediaQuery.of(context).size.width / 4) - 40,
             height: 85,
             child: TextFormField(
                 initialValue: destino.precoKm.toString(),
@@ -69,12 +80,13 @@ class DestinoWidget extends StatelessWidget {
                   editDestino(origem, destino);
                 },
                 decoration: InputDecoration(
-                    labelText: 'Preço/km', errorText: destino.precoKmInvalido,
+                    labelText: 'Preço/km',
+                    errorText: destino.precoKmInvalido,
                     errorMaxLines: 3,
                     errorStyle: TextStyle(overflow: TextOverflow.ellipsis))),
           ),
           SizedBox(
-            width: (MediaQuery.of(context).size.width / 4) - 12,
+            width: (MediaQuery.of(context).size.width / 4) - 40,
             height: 85,
             child: TextFormField(
                 initialValue: destino.precoMin.toString(),
@@ -101,6 +113,7 @@ class DestinoWidget extends StatelessWidget {
 class OrigemWidget extends StatelessWidget {
   const OrigemWidget(
       {Key? key,
+      required this.capitais,
       required this.origem,
       required this.destinos,
       required this.addDestino,
@@ -109,6 +122,7 @@ class OrigemWidget extends StatelessWidget {
       required this.editOrigemEstado})
       : super(key: key);
 
+  final List<CapitalModel> capitais;
   final FornecedorOrigem origem;
   final List<DestinoWidget> destinos;
   final void Function(String estado, bool isCapital) addDestino;
@@ -173,6 +187,7 @@ class OrigemWidget extends StatelessWidget {
             ),
             for (int x = 0; x < destinos.length; x++)
               DestinoWidget(
+                capitais: capitais,
                 origem: origem,
                 destino: destinos[x].destino,
                 editDestino: editDestino,

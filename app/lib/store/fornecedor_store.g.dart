@@ -41,6 +41,30 @@ mixin _$FornecedorStore on _FornecedorStore, Store {
     });
   }
 
+  late final _$capitaisAtom =
+      Atom(name: '_FornecedorStore.capitais', context: context);
+
+  @override
+  ObservableList<CapitalModel> get capitais {
+    _$capitaisAtom.reportRead();
+    return super.capitais;
+  }
+
+  @override
+  set capitais(ObservableList<CapitalModel> value) {
+    _$capitaisAtom.reportWrite(value, super.capitais, () {
+      super.capitais = value;
+    });
+  }
+
+  late final _$initAsyncAction =
+      AsyncAction('_FornecedorStore.init', context: context);
+
+  @override
+  Future init() {
+    return _$initAsyncAction.run(() => super.init());
+  }
+
   late final _$getFornecedoresAsyncAction =
       AsyncAction('_FornecedorStore.getFornecedores', context: context);
 
@@ -141,7 +165,8 @@ mixin _$FornecedorStore on _FornecedorStore, Store {
   String toString() {
     return '''
 currentFornecedor: ${currentFornecedor},
-fornecedores: ${fornecedores}
+fornecedores: ${fornecedores},
+capitais: ${capitais}
     ''';
   }
 }

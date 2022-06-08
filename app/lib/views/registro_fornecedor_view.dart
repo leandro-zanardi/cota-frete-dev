@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:app/components/origem_destino_widget.dart';
+import 'package:app/model/capital_model.dart';
 import 'package:app/model/fornecedor_model.dart';
 import 'package:app/model/regiao_frete_model.dart';
 import 'package:app/router/app_router.gr.dart';
@@ -26,8 +27,9 @@ class RegistroFornecedorView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top:8.0),
             child: OrigemWidget(
+              capitais: fornecedorStore.capitais.toList(),
               origem: fornecedor.origens[x],
-              destinos: buildDestinos(fornecedor.origens[x], fornecedor.origens[x].destinos),
+              destinos: buildDestinos(fornecedorStore.capitais.toList(), fornecedor.origens[x], fornecedor.origens[x].destinos),
               addDestino: (estado, capital) =>
                   fornecedorStore.addDestinoToOrigem(estado, capital),
               editDestino: (origem, destino) => fornecedorStore.editDestino(origem, destino),
@@ -39,10 +41,11 @@ class RegistroFornecedorView extends StatelessWidget {
     );
   }
 
-  List<DestinoWidget> buildDestinos(FornecedorOrigem origem, List<RegiaoFreteModel> destinosModel) {
+  List<DestinoWidget> buildDestinos(List<CapitalModel> capitais, FornecedorOrigem origem, List<RegiaoFreteModel> destinosModel) {
     List<DestinoWidget> destinos = [];
     for (int x = 0; x < destinosModel.length; x++) {
       DestinoWidget destWidget = DestinoWidget(
+        capitais: capitais,
         origem: origem,
         destino: destinosModel[x],
         editDestino: fornecedorStore.editDestino,  

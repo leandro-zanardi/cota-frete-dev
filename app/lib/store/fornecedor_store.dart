@@ -1,5 +1,7 @@
+import 'package:app/model/capital_model.dart';
 import 'package:app/model/fornecedor_model.dart';
 import 'package:app/model/regiao_frete_model.dart';
+import 'package:app/service/firebase_realtime_capitais.dart';
 import 'package:app/service/firebase_realtime_fornecedor.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
@@ -9,12 +11,32 @@ part 'fornecedor_store.g.dart';
 class FornecedorStore = _FornecedorStore with _$FornecedorStore;
 
 abstract class _FornecedorStore with Store {
+  _FornecedorStore() {
+    init();
+  }
+
   @observable
   FornecedorModel currentFornecedor = FornecedorModel(nome: "", origens: []);
 
   @observable
   ObservableList<FornecedorModel> fornecedores =
       ObservableList<FornecedorModel>();
+
+  @observable
+  ObservableList<CapitalModel> capitais = ObservableList<CapitalModel>();
+
+  @action
+  init() async {
+    FirebaseRealtimeCapitais capitaisService =
+        GetIt.I.get<FirebaseRealtimeCapitais>();
+    try {
+      capitais = ObservableList<CapitalModel>();
+      List<CapitalModel> capitaisList = await capitaisService.getCapitais();
+      capitais.addAll(capitaisList);
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @action
   Future<void> getFornecedores() async {
@@ -51,7 +73,6 @@ abstract class _FornecedorStore with Store {
 
   @action
   void editDestino(FornecedorOrigem origem, RegiaoFreteModel destino) {
-
     FornecedorModel old = currentFornecedor;
 
     if (destino.ehValido) {
@@ -62,7 +83,6 @@ abstract class _FornecedorStore with Store {
 
     currentFornecedor = FornecedorModel(nome: "", origens: []);
     currentFornecedor = old;
-
   }
 
   @action
