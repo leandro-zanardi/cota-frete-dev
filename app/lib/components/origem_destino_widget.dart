@@ -18,6 +18,13 @@ class DestinoWidget extends StatelessWidget {
   final void Function(FornecedorOrigem origem, RegiaoFreteModel destino)
       editDestino;
 
+  List<Map<String, dynamic>> buildSimNao() {
+    List<Map<String, dynamic>> simNao = [];
+    simNao.add({"value": true, "label": "Sim"});
+    simNao.add({"value": false, "label": "Não"});
+    return simNao;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,26 +37,31 @@ class DestinoWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
-            width: (MediaQuery.of(context).size.width / 4) - 40,
-            height: 85,
-            child: TextFormField(
-                initialValue: destino.capital ? "Sim" : "Não",
-                onSaved: (String? value) {
-                  destino.capital = value == 'Sim' ? true : false;
-                  editDestino(origem, destino);
-                },
-                decoration: InputDecoration(
-                    labelText: 'Capital',
-                    errorText: destino.capitalInvalida,
-                    errorMaxLines: 3,
-                    errorStyle: TextStyle(overflow: TextOverflow.ellipsis))),
+            width: (MediaQuery.of(context).size.width / 4) - 45,
+            child: DropdownButton<bool>(
+              value: destino.capital,
+              items: buildSimNao()
+                  .map((item) => DropdownMenuItem<bool>(
+                      value: item["value"] as bool,
+                      child: Text(item["label"] as String)))
+                  .toList(),
+              style: const TextStyle(color: Colors.black),
+              underline: Container(
+                height: 1,
+                color:
+                    destino.capitalInvalida == null ? Colors.grey : Colors.red,
+              ),
+              onChanged: (item) {
+                destino.capital = item ?? false;
+                editDestino(origem, destino);
+              },
+            ),
           ),
           SizedBox(
             width: (MediaQuery.of(context).size.width / 4) + 60,
-            child: 
-            
-            DropdownButton<String>(
-              value: destino.estado,
+            child: DropdownButton<String>(
+              hint: const Text("estado..."),
+              value: destino.estado == '' ? null : destino.estado,
               items: capitais
                   .map((item) => DropdownMenuItem<String>(
                       value: item.estado, child: Text(item.estado)))
@@ -57,13 +69,13 @@ class DestinoWidget extends StatelessWidget {
               style: const TextStyle(color: Colors.black),
               underline: Container(
                 height: 1,
-                color: Colors.grey,
+                color:
+                    destino.estadoInvalido == null ? Colors.grey : Colors.red,
               ),
-              onChanged: (item) 
-                {
-                  destino.estado = item ?? '';
-                  editDestino(origem, destino);
-                },
+              onChanged: (item) {
+                destino.estado = item ?? '';
+                editDestino(origem, destino);
+              },
             ),
           ),
           SizedBox(
@@ -131,6 +143,13 @@ class OrigemWidget extends StatelessWidget {
   final void Function(FornecedorOrigem origem, bool capital) editOrigemCapital;
   final void Function(FornecedorOrigem origem, String estado) editOrigemEstado;
 
+  List<Map<String, dynamic>> buildSimNao() {
+    List<Map<String, dynamic>> simNao = [];
+    simNao.add({"value": true, "label": "Sim"});
+    simNao.add({"value": false, "label": "Não"});
+    return simNao;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -150,25 +169,49 @@ class OrigemWidget extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-              SizedBox(
-                width: (MediaQuery.of(context).size.width / 4) - 12,
-                height: 60,
-                child: TextFormField(
-                    initialValue: origem.estado,
-                    onSaved: (String? value) => {},
-                    decoration: InputDecoration(
-                      labelText: 'Estado',
-                    )),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: DropdownButton<String>(
+                  hint: const Text("estado..."),
+                  value: origem.estado == '' ? null : origem.estado,
+                  items: capitais
+                      .map((item) => DropdownMenuItem<String>(
+                          value: item.estado, child: Text(item.estado)))
+                      .toList(),
+                  style: const TextStyle(color: Colors.black),
+                  underline: Container(
+                    height: 1,
+                    color: origem.estadoInvalido == null
+                        ? Colors.grey
+                        : Colors.red,
+                  ),
+                  onChanged: (item) {
+                    origem.estado = item ?? '';
+                    editOrigemEstado(origem, item ?? '');
+                  },
+                ),
               ),
-              SizedBox(
-                width: (MediaQuery.of(context).size.width / 4) - 12,
-                height: 60,
-                child: TextFormField(
-                    initialValue: origem.capital ? "Sim" : "Não",
-                    onSaved: (String? value) => {},
-                    decoration: InputDecoration(
-                      labelText: 'Capital',
-                    )),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: 
+                DropdownButton<bool>(
+              value: origem.capital,
+              items: buildSimNao()
+                  .map((item) => DropdownMenuItem<bool>(
+                      value: item["value"] as bool,
+                      child: Text(item["label"] as String)))
+                  .toList(),
+              style: const TextStyle(color: Colors.black),
+              underline: Container(
+                height: 1,
+                color:
+                    origem.capitalInvalida == null ? Colors.grey : Colors.red,
+              ),
+              onChanged: (item) {
+                origem.capital = item ?? false;
+                editOrigemCapital(origem, item ?? false);
+              },
+            ),
               ),
             ],
           ),

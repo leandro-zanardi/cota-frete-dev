@@ -21,7 +21,7 @@ class RegiaoFreteModel {
       required this.precoMin});
 
   bool get ehValidoEstado {
-    if (estado.length == 2) {
+    if (estado != '') {
       estadoInvalido = null;
       return true;
     } else {

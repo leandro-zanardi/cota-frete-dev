@@ -45,6 +45,11 @@ class FornecedorModel {
     novaOrigemInvalida = null;
     return true;
   }
+
+  Map<String, dynamic> toMap() {
+    //TODO
+    return {"teste": "teste"};
+  }
 }
 
 class FornecedorOrigem {
@@ -63,7 +68,8 @@ class FornecedorOrigem {
 
   bool ehValidoDestino(RegiaoFreteModel destino) {
     for (int x = 0; x < destinos.length; x++) {
-      if (!identical(destinos[x], destino) && !destino.ehValidoDestino(destinos[x])) {
+      if (!identical(destinos[x], destino) &&
+          !destino.ehValidoDestino(destinos[x])) {
         return false;
       }
     }
@@ -80,7 +86,7 @@ class FornecedorOrigem {
   }
 
   bool get ehValidoEstado {
-    if (estado.length == 2) {
+    if (estado != '') {
       estadoInvalido = null;
       return true;
     } else {
