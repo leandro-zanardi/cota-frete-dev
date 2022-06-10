@@ -25,6 +25,23 @@ mixin _$FornecedorStore on _FornecedorStore, Store {
     });
   }
 
+  late final _$currentFornecedorErrorAtom =
+      Atom(name: '_FornecedorStore.currentFornecedorError', context: context);
+
+  @override
+  String? get currentFornecedorError {
+    _$currentFornecedorErrorAtom.reportRead();
+    return super.currentFornecedorError;
+  }
+
+  @override
+  set currentFornecedorError(String? value) {
+    _$currentFornecedorErrorAtom
+        .reportWrite(value, super.currentFornecedorError, () {
+      super.currentFornecedorError = value;
+    });
+  }
+
   late final _$fornecedoresAtom =
       Atom(name: '_FornecedorStore.fornecedores', context: context);
 
@@ -107,7 +124,7 @@ mixin _$FornecedorStore on _FornecedorStore, Store {
   }
 
   @override
-  void editDestino(FornecedorOrigem origem, RegiaoFreteModel destino) {
+  void editDestino(FornecedorOrigem origem, FornecedorDestino destino) {
     final _$actionInfo = _$_FornecedorStoreActionController.startAction(
         name: '_FornecedorStore.editDestino');
     try {
@@ -165,6 +182,7 @@ mixin _$FornecedorStore on _FornecedorStore, Store {
   String toString() {
     return '''
 currentFornecedor: ${currentFornecedor},
+currentFornecedorError: ${currentFornecedorError},
 fornecedores: ${fornecedores},
 capitais: ${capitais}
     ''';

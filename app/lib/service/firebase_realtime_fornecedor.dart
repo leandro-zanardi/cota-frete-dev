@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:app/model/fornecedor_dto.dart';
 import 'package:app/model/fornecedor_model.dart';
-import 'package:app/model/regiao_frete_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class FirebaseRealtimeFornecedor {
@@ -19,17 +19,19 @@ class FirebaseRealtimeFornecedor {
         Map<String, dynamic> fornecedor = json[nomeFornecedor];
 
         for (int x = 0; x < fornecedor["origens"].length; x++) {
-          List<RegiaoFreteModel> destinos = [];
+          List<FornecedorDestino> destinos = [];
 
           Map<String, dynamic> origemMap = fornecedor["origens"][x];
 
           for (int y = 0; y < origemMap["destinos"].length; y++) {
             Map<String, dynamic> destinoMap = origemMap["destinos"][y];
-            RegiaoFreteModel freteModel = RegiaoFreteModel(
+            FornecedorDestino freteModel = FornecedorDestino(
                 estado: destinoMap["estado"],
                 capital: destinoMap["capital"],
-                precoKm: double.tryParse(destinoMap["preco_km"].toString()) ?? 0.0,
-                precoMin: double.tryParse(destinoMap["preco_min"].toString()) ?? 0.0);
+                precoKm:
+                    double.tryParse(destinoMap["preco_km"].toString()) ?? 0.0,
+                precoMin:
+                    double.tryParse(destinoMap["preco_min"].toString()) ?? 0.0);
             destinos.add(freteModel);
           }
 
@@ -53,10 +55,12 @@ class FirebaseRealtimeFornecedor {
   }
 
   Future<void> salvarFornecedor(FornecedorModel fornecedor) async {
-    //DatabaseReference ref = FirebaseDatabase.instance.ref("fornecedor/${fornecedor.nome}");
-    DatabaseReference ref = FirebaseDatabase.instance.ref("fornecedor/teste_nome");
-
-    await ref.set(fornecedor.toMap());
-
+    try {
+      DatabaseReference ref =
+          FirebaseDatabase.instance.ref("fornecedor/${fornecedor.nome}");
+      await ref.set(FornecedorDTO(fornecedor: fornecedor).toMap());
+    } catch (e) {
+      rethrow;
+    }
   }
 }

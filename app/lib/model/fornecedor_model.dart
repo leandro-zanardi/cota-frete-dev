@@ -1,5 +1,3 @@
-import 'package:app/model/regiao_frete_model.dart';
-
 class FornecedorModel {
   // propriedades
   String nome;
@@ -46,9 +44,8 @@ class FornecedorModel {
     return true;
   }
 
-  Map<String, dynamic> toMap() {
-    //TODO
-    return {"teste": "teste"};
+  bool get ehValido {
+    return nome != '' && origensSaoValidas();
   }
 }
 
@@ -56,7 +53,7 @@ class FornecedorOrigem {
   //propriedade
   String estado;
   bool capital;
-  List<RegiaoFreteModel> destinos;
+  List<FornecedorDestino> destinos;
 
   //propriedades de erro
   String? estadoInvalido;
@@ -66,7 +63,7 @@ class FornecedorOrigem {
   FornecedorOrigem(
       {required this.estado, required this.capital, required this.destinos});
 
-  bool ehValidoDestino(RegiaoFreteModel destino) {
+  bool ehValidoDestino(FornecedorDestino destino) {
     for (int x = 0; x < destinos.length; x++) {
       if (!identical(destinos[x], destino) &&
           !destino.ehValidoDestino(destinos[x])) {
@@ -109,5 +106,71 @@ class FornecedorOrigem {
 
   bool get ehValido {
     return ehValidoEstado && saoValidosDestinos;
+  }
+}
+
+class FornecedorDestino {
+  //propriedades
+  String estado;
+  bool capital;
+  double precoMin;
+  double precoKm;
+
+  //variaveis de erro
+  String? estadoInvalido;
+  String? capitalInvalida;
+  String? precoMinInvalido;
+  String? precoKmInvalido;
+
+  FornecedorDestino(
+      {required this.estado,
+      required this.capital,
+      required this.precoKm,
+      required this.precoMin});
+
+  bool get ehValidoEstado {
+    if (estado != '') {
+      estadoInvalido = null;
+      return true;
+    } else {
+      estadoInvalido = "Estado invádido";
+      return false;
+    }
+  }
+
+  bool get ehValidoPrecoMin {
+    if (precoMin > 0) {
+      precoMinInvalido = null;
+      return true;
+    } else {
+      precoMinInvalido = "Preço Min. Inválido";
+      return false;
+    }
+  }
+
+  bool get ehValidoPrecoKm {
+    if (precoKm > 0) {
+      precoKmInvalido = null;
+      return true;
+    } else {
+      precoKmInvalido = "Preço Km Inválido";
+      return false;
+    }
+  }
+
+  bool ehValidoDestino(FornecedorDestino destino) {
+    if (capital != destino.capital || estado != destino.estado) {
+      capitalInvalida = null;
+      estadoInvalido = null;
+      return true;
+    } else {
+      estadoInvalido = "destino repetido";
+      capitalInvalida = "destino repetido";
+      return false;
+    }
+  }
+
+  bool get ehValido {
+    return ehValidoEstado && ehValidoPrecoKm && ehValidoPrecoMin;
   }
 }

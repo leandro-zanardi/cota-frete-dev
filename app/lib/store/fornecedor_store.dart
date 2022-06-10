@@ -1,6 +1,5 @@
 import 'package:app/model/capital_model.dart';
 import 'package:app/model/fornecedor_model.dart';
-import 'package:app/model/regiao_frete_model.dart';
 import 'package:app/service/firebase_realtime_capitais.dart';
 import 'package:app/service/firebase_realtime_fornecedor.dart';
 import 'package:get_it/get_it.dart';
@@ -17,6 +16,9 @@ abstract class _FornecedorStore with Store {
 
   @observable
   FornecedorModel currentFornecedor = FornecedorModel(nome: "", origens: []);
+
+  @observable
+  String? currentFornecedorError;
 
   @observable
   ObservableList<FornecedorModel> fornecedores =
@@ -72,7 +74,7 @@ abstract class _FornecedorStore with Store {
   }
 
   @action
-  void editDestino(FornecedorOrigem origem, RegiaoFreteModel destino) {
+  void editDestino(FornecedorOrigem origem, FornecedorDestino destino) {
     FornecedorModel old = currentFornecedor;
 
     if (destino.ehValido) {
@@ -93,12 +95,19 @@ abstract class _FornecedorStore with Store {
 
   @action
   Future<void> salvarFornecedor() async {
-    FirebaseRealtimeFornecedor fornecedorService =
-        GetIt.I.get<FirebaseRealtimeFornecedor>();
-
-    //TODO validar dados no modelo do fornecedor
-
-    await fornecedorService.salvarFornecedor(currentFornecedor);
+    try {
+      FirebaseRealtimeFornecedor fornecedorService =
+          GetIt.I.get<FirebaseRealtimeFornecedor>();
+      if (currentFornecedor.ehValido) {
+        await fornecedorService.salvarFornecedor(currentFornecedor);
+        currentFornecedorError = null;
+      } else {
+        currentFornecedorError = "Erro de formatação no fornecedor";
+      }
+    } catch (e) {
+      print(e);
+      currentFornecedorError = "erro ao salvar fornecedor";
+    }
   }
 
   @action
@@ -108,7 +117,7 @@ abstract class _FornecedorStore with Store {
       currentFornecedor = FornecedorModel(nome: "", origens: []);
       FornecedorOrigem origem = old.origens
           .firstWhere((o) => o.estado == estado && o.capital == isCapital);
-      origem.destinos.add(RegiaoFreteModel(
+      origem.destinos.add(FornecedorDestino(
           estado: "", capital: false, precoKm: 0, precoMin: 0));
       currentFornecedor = old;
     } catch (e) {

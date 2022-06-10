@@ -1,6 +1,5 @@
 import 'package:app/model/capital_model.dart';
 import 'package:app/model/fornecedor_model.dart';
-import 'package:app/model/regiao_frete_model.dart';
 import 'package:flutter/material.dart';
 
 class DestinoWidget extends StatelessWidget {
@@ -14,8 +13,8 @@ class DestinoWidget extends StatelessWidget {
 
   final List<CapitalModel> capitais;
   final FornecedorOrigem origem;
-  final RegiaoFreteModel destino;
-  final void Function(FornecedorOrigem origem, RegiaoFreteModel destino)
+  final FornecedorDestino destino;
+  final void Function(FornecedorOrigem origem, FornecedorDestino destino)
       editDestino;
 
   List<Map<String, dynamic>> buildSimNao() {
@@ -138,7 +137,7 @@ class OrigemWidget extends StatelessWidget {
   final FornecedorOrigem origem;
   final List<DestinoWidget> destinos;
   final void Function(String estado, bool isCapital) addDestino;
-  final void Function(FornecedorOrigem origem, RegiaoFreteModel destino)
+  final void Function(FornecedorOrigem origem, FornecedorDestino destino)
       editDestino;
   final void Function(FornecedorOrigem origem, bool capital) editOrigemCapital;
   final void Function(FornecedorOrigem origem, String estado) editOrigemEstado;
