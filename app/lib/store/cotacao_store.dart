@@ -46,6 +46,9 @@ abstract class _CotacaoStore with Store {
   @observable
   CameraUpdate? cameraUpdate;
 
+  @observable
+  double? distanciaTotalRota;
+
   @action
   Future<void> init() async {
     pontosColetaEntrega = ObservableList<PontoColetaEntrega>();
@@ -199,10 +202,31 @@ abstract class _CotacaoStore with Store {
           await service.create(dto.toFirebaseDate(model));
         }
       }
+
+      distanciaTotalRota = computeTotalDistance(points);
     } catch (e) {
       print(e);
     } finally {
       loading = false;
     }
   }
+}
+
+@action
+double computeTotalDistance(points) {
+  double totalDistance = 0;
+  for (var i = 0; i < points.length - 1; i++) {
+    totalDistance += calculateDistance(
+        points[i].lat, points[i].lng, points[i + 1].lat, points[i + 1].lng);
+  }
+  return totalDistance;
+}
+
+@action
+double calculateDistance(lat1, lon1, lat2, lon2) {
+  var p = 0.017453292519943295;
+  var a = 0.5 -
+      cos((lat2 - lat1) * p) / 2 +
+      cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
+  return 12742 * asin(sqrt(a));
 }

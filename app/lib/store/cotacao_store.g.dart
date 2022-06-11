@@ -122,6 +122,22 @@ mixin _$CotacaoStore on _CotacaoStore, Store {
     });
   }
 
+  late final _$distanciaTotalRotaAtom =
+      Atom(name: '_CotacaoStore.distanciaTotalRota', context: context);
+
+  @override
+  double? get distanciaTotalRota {
+    _$distanciaTotalRotaAtom.reportRead();
+    return super.distanciaTotalRota;
+  }
+
+  @override
+  set distanciaTotalRota(double? value) {
+    _$distanciaTotalRotaAtom.reportWrite(value, super.distanciaTotalRota, () {
+      super.distanciaTotalRota = value;
+    });
+  }
+
   late final _$initAsyncAction =
       AsyncAction('_CotacaoStore.init', context: context);
 
@@ -213,7 +229,8 @@ markers: ${markers},
 polylines: ${polylines},
 cotacao: ${cotacao},
 isValidToCotarErrorMessage: ${isValidToCotarErrorMessage},
-cameraUpdate: ${cameraUpdate}
+cameraUpdate: ${cameraUpdate},
+distanciaTotalRota: ${distanciaTotalRota}
     ''';
   }
 }

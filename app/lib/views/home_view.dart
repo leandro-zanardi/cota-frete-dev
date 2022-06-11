@@ -108,6 +108,17 @@ class HomeView extends StatelessWidget {
                     Observer(
                         builder: (_) => Column(
                               children: [
+                                Visibility(
+                                    visible:
+                                        cotacaoStore.distanciaTotalRota != null,
+                                    child: Row(
+                                      children: [
+                                        const Text("Distância Total: "),
+                                        Text(cotacaoStore.distanciaTotalRota!
+                                                .toStringAsFixed(2) +
+                                            ' Km')
+                                      ],
+                                    )),
                                 if (cotacaoStore.cotacao != null)
                                   ..._buildValores(
                                       cotacaoStore.cotacao!.valores)
