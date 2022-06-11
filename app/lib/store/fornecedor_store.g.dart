@@ -179,6 +179,17 @@ mixin _$FornecedorStore on _FornecedorStore, Store {
   }
 
   @override
+  void clearCurrentFornecedorError() {
+    final _$actionInfo = _$_FornecedorStoreActionController.startAction(
+        name: '_FornecedorStore.clearCurrentFornecedorError');
+    try {
+      return super.clearCurrentFornecedorError();
+    } finally {
+      _$_FornecedorStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 currentFornecedor: ${currentFornecedor},

@@ -138,4 +138,9 @@ abstract class _FornecedorStore with Store {
       print(e);
     }
   }
+
+  @action
+  void clearCurrentFornecedorError() {
+    currentFornecedorError = null;
+  }
 }

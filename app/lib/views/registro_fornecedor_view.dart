@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:app/components/alert_dialog_widget.dart';
 import 'package:app/components/origem_destino_widget.dart';
 import 'package:app/model/capital_model.dart';
 import 'package:app/model/fornecedor_model.dart';
@@ -24,31 +25,35 @@ class RegistroFornecedorView extends StatelessWidget {
       children: [
         for (int x = 0; x < fornecedor.origens.length; x++)
           Padding(
-            padding: const EdgeInsets.only(top:8.0),
+            padding: const EdgeInsets.only(top: 8.0),
             child: OrigemWidget(
-              capitais: fornecedorStore.capitais.toList(),
-              origem: fornecedor.origens[x],
-              destinos: buildDestinos(fornecedorStore.capitais.toList(), fornecedor.origens[x], fornecedor.origens[x].destinos),
-              addDestino: (estado, capital) =>
-                  fornecedorStore.addDestinoToOrigem(estado, capital),
-              editDestino: (origem, destino) => fornecedorStore.editDestino(origem, destino),
-              editOrigemCapital: (origem, value) => fornecedorStore.editOrigemCapital(origem, value),
-              editOrigemEstado: (origem, value) => fornecedorStore.editOrigemEstado(origem, value)
-            ),
+                capitais: fornecedorStore.capitais.toList(),
+                origem: fornecedor.origens[x],
+                destinos: buildDestinos(fornecedorStore.capitais.toList(),
+                    fornecedor.origens[x], fornecedor.origens[x].destinos),
+                addDestino: (estado, capital) =>
+                    fornecedorStore.addDestinoToOrigem(estado, capital),
+                editDestino: (origem, destino) =>
+                    fornecedorStore.editDestino(origem, destino),
+                editOrigemCapital: (origem, value) =>
+                    fornecedorStore.editOrigemCapital(origem, value),
+                editOrigemEstado: (origem, value) =>
+                    fornecedorStore.editOrigemEstado(origem, value)),
           )
       ],
     );
   }
 
-  List<DestinoWidget> buildDestinos(List<CapitalModel> capitais, FornecedorOrigem origem, List<FornecedorDestino> destinosModel) {
+  List<DestinoWidget> buildDestinos(List<CapitalModel> capitais,
+      FornecedorOrigem origem, List<FornecedorDestino> destinosModel) {
     List<DestinoWidget> destinos = [];
     for (int x = 0; x < destinosModel.length; x++) {
       DestinoWidget destWidget = DestinoWidget(
         capitais: capitais,
         origem: origem,
         destino: destinosModel[x],
-        editDestino: fornecedorStore.editDestino,  
-        );
+        editDestino: fornecedorStore.editDestino,
+      );
       destinos.add(destWidget);
     }
     return destinos;
@@ -79,8 +84,8 @@ class RegistroFornecedorView extends StatelessWidget {
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
                         begin: Alignment.bottomRight,
-                        end: Alignment(
-                            0.8, 0.0), // 10% of the width, so there are ten blinds.
+                        end: Alignment(0.8,
+                            0.0), // 10% of the width, so there are ten blinds.
                         colors: <Color>[
                           Color.fromARGB(255, 160, 218, 215),
                           Color.fromARGB(255, 0, 188, 212)
@@ -95,7 +100,8 @@ class RegistroFornecedorView extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Text(
-                        (idFornecedor != null ? 'Editar' : 'Criar') + " Fornecedor",
+                        (idFornecedor != null ? 'Editar' : 'Criar') +
+                            " Fornecedor",
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -105,7 +111,8 @@ class RegistroFornecedorView extends StatelessWidget {
                         padding: EdgeInsets.all(8.0),
                         child: Observer(builder: (context) {
                           return TextFormField(
-                              initialValue: fornecedorStore.currentFornecedor.nome,
+                              initialValue:
+                                  fornecedorStore.currentFornecedor.nome,
                               //onSaved: (String? value) => {},
                               decoration: InputDecoration(
                                 enabledBorder: UnderlineInputBorder(
@@ -117,15 +124,16 @@ class RegistroFornecedorView extends StatelessWidget {
                         }),
                       ),
                       ElevatedButton(
-                          onPressed: () => fornecedorStore.addOrigemToFornecedor(),
+                          onPressed: () =>
+                              fornecedorStore.addOrigemToFornecedor(),
                           child: Text("Adicionar Origem")),
                       Observer(
                           builder: (_) =>
                               buildOrigens(fornecedorStore.currentFornecedor)),
                       ElevatedButton(
-                        onPressed: () => fornecedorStore
-                            .salvarFornecedor(),
-                        child: Text(idFornecedor != null ? 'Salvar' : 'Cadastrar'),
+                        onPressed: () => fornecedorStore.salvarFornecedor(),
+                        child:
+                            Text(idFornecedor != null ? 'Salvar' : 'Cadastrar'),
                       ),
                     ],
                   ),
@@ -139,12 +147,10 @@ class RegistroFornecedorView extends StatelessWidget {
               ],
             ),
           ),
-          Observer(builder: (_) => Visibility(
-            visible: fornecedorStore.currentFornecedorError != null,
-            child: Container(
-              child: Text(fornecedorStore.currentFornecedorError ?? '')
-            )
-          ))
+          Observer(
+              builder: (_) => AlertDialogWidget(
+                  erro: fornecedorStore.currentFornecedorError,
+                  clearFunction: fornecedorStore.clearCurrentFornecedorError()))
         ],
       ),
     );
