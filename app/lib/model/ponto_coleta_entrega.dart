@@ -21,6 +21,7 @@ class PontoColetaEntrega {
     return (place != null &&
         place!.lat != null &&
         place!.lng != null &&
-        place!.city != null);
+        place!.city != null &&
+        place!.state != null);
   }
 }

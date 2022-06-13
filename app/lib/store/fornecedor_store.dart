@@ -140,7 +140,7 @@ abstract class _FornecedorStore with Store {
   }
 
   @action
-  clearCurrentFornecedorError() {
+  void clearCurrentFornecedorError() {
     currentFornecedorError = null;
   }
 }

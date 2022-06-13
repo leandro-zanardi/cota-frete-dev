@@ -179,7 +179,7 @@ mixin _$FornecedorStore on _FornecedorStore, Store {
   }
 
   @override
-  dynamic clearCurrentFornecedorError() {
+  void clearCurrentFornecedorError() {
     final _$actionInfo = _$_FornecedorStoreActionController.startAction(
         name: '_FornecedorStore.clearCurrentFornecedorError');
     try {

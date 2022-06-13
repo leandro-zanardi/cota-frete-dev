@@ -185,7 +185,7 @@ abstract class _CotacaoStore with Store {
         } else {
           Place? place = pontosColetaEntrega[x].place;
 
-          points.add(PointModel(place!.lat!, place.lng!, place.city));
+          points.add(PointModel(place!.lat!, place.lng!, place.city, place.state));
           isValidToCotarErrorMessage = null;
         }
       }

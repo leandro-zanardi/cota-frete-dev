@@ -114,9 +114,9 @@ class HomeView extends StatelessWidget {
                                     child: Row(
                                       children: [
                                         const Text("Distância Total: "),
-                                        Text(cotacaoStore.distanciaTotalRota!
+                                        Text(cotacaoStore.distanciaTotalRota != null ? cotacaoStore.distanciaTotalRota!
                                                 .toStringAsFixed(2) +
-                                            ' Km')
+                                            ' Km' : '')
                                       ],
                                     )),
                                 if (cotacaoStore.cotacao != null)
