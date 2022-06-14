@@ -1,28 +1,36 @@
 const functions = require('firebase-functions')
+const firebaseAdmin = require('firebase-admin');
 
 exports.cotar = functions.database
   .ref('/cotacao/{uid}/cotacaoTime')
   .onWrite(async (event, context) => {
 
-    //{"uid":{"points":{"A":{"lat":0, "lng":0}, "B":{"lat":0, "lng":0} } } }
-
     const uid = context.params.uid
 
     console.log("call");
 
-    //console.log(uid);
 
-    const pontos = await event.after.ref.parent.child("points").get()
-    if (pontos && pontos.val()) {
+    const pontosRef = await event.after.ref.parent.child("points").get()
+    if (pontosRef.exists()) {
       
-      console.log(pontos.val());
+      let pontos = pontosRef.val();
+      console.log("pontos");
+      console.log(pontos);
 
       let capitais = await getCapitais();
       console.log(capitais);
 
-      const root = event.after.ref.parent.child("valores")
+      let fornecedores = await getFornecedores();
+      console.log(fornecedores);
 
       var cotacoes = []
+
+      // adicionar flag de capital nos pontos
+      
+      // verificar os fornecedores que tem origem no ponto -1
+      // verificar se as origens tem destino nos demais pontos
+
+
       for(let x=1; x<5; x++){
         let fornecedor = {
           "fid": x,
@@ -32,6 +40,7 @@ exports.cotar = functions.database
         cotacoes.push(fornecedor)
       }
 
+      const root = event.after.ref.parent.child("valores")
       return root.set(cotacoes)
 
     } else {
@@ -39,28 +48,36 @@ exports.cotar = functions.database
       return 0;
     }
 
-
-
-
-
-
   });
 
   async function getCapitais() {
-    let capitais = [];
-    let ref = functions.database.ref("capitais/-N2wnm-IoolNSJmi-DFb/brasil");
-    ref.get().then((capitaisRef) => {
-      capitais = capitaisRef.val();
-      return capitais;
-    }).catch((e) => {
-      console.log(e);
+    try {
+      console.log("capitais")
+      let capitaisRef = await firebaseAdmin.database().ref("capitais/-N2wnm-IoolNSJmi-DFb/brasil").get()
+      if (capitaisRef.exists()) {
+        return capitaisRef.val();
+      } else {
+        return [];
+      }
+    } catch(e) {
+      console.log (e);
       return [];
-    });
-    
+    }
   }
 
   async function getFornecedores() {
-    let fornecedores = [];
+    try {
+      console.log("fornecedores")
+      let fornecedorRef = await firebaseAdmin.database().ref("fornecedor").get()
+      if (fornecedorRef.exists()) {
+        return fornecedorRef.val();
+      } else {
+        return [];
+      }
+    } catch(e) {
+      console.log (e);
+      return [];
+    }
   }
 
   async function calcFreteFornecedor(cidadeOrigem, estadoOrigem, cidadeDestino, estadoDestino, fornecedor) {
