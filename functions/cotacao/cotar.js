@@ -26,19 +26,25 @@ exports.cotar = functions.database
       var cotacoes = []
 
       // adicionar flag de capital nos pontos
+      adicionarCapitaisParaPontos(pontos, capitais);
+      console.log("pontos com capital")
+      console.log(pontos)
       
       // verificar os fornecedores que tem origem no ponto -1
-      // verificar se as origens tem destino nos demais pontos
+      let fornecedoresHabilitados = verificarFornecedores(pontos[0], fornecedores)
+      console.log("fornecedores habilitados")
+      console.log(fornecedoresHabilitados);
+      // TODO verificar se as origens tem destino nos demais pontos
 
 
-      for(let x=1; x<5; x++){
-        let fornecedor = {
-          "fid": x,
-          "nome": "fornecedor " + x,
-          "preco": Number((Math.random() * 100).toFixed(2))
+      fornecedoresHabilitados.forEach(fornecedorHabilitado => {
+        let fornecedorCalculado = {
+          "fid": fornecedor.nome,
+          "nome": fornecedor.nome,
+          "preco": calcularFrete(fornecedorHabilitado, pontos)
         }
-        cotacoes.push(fornecedor)
-      }
+        cotacoes.push(fornecedorCalculado);
+      });
 
       const root = event.after.ref.parent.child("valores")
       return root.set(cotacoes)
@@ -49,6 +55,66 @@ exports.cotar = functions.database
     }
 
   });
+
+  function adicionarCapitaisParaPontos(pontos, capitais) {
+    pontos.forEach(ponto => {
+      if (capitais.filter((capital) => 
+        capital.estado === ponto.state && capital.capital === ponto.city).length) {
+          ponto.capital = true;
+      } else {
+        ponto.capital = false;
+      }
+    });
+  }
+
+  function verificarFornecedores(pontoOrigem, fornecedores) {
+    let fornecedoresHabilitados = [];
+    let fornecedorKeys = Object.keys(fornecedores);
+    for(let x=0; x<fornecedorKeys.length; x++) {
+      let fornecedorOrigens = fornecedores[fornecedorKeys[x]].origens;
+      for (let y=0; y<fornecedorOrigens.length; y++){
+        let origem = fornecedorOrigens[y];
+        if (origem.estado === pontoOrigem.state && origem.capital === pontoOrigem.capital){
+          let fornecedorHabilitado = {
+            "nome": fornecedorKeys[x],
+            "origem": origem
+          }
+          fornecedoresHabilitados.push(fornecedorHabilitado);
+        }
+      }
+    }
+    return fornecedoresHabilitados;
+  }
+
+  function calcularFrete(fornecedorHabilitado, pontos) {
+    let valorTotal = 0;
+    for(let x=0; x<pontos.length; x++) {
+      if (x+1 < pontos.length) {
+        let distanciaKm = calcularDistancia(pontos[x], pontos[x+1]);
+        let destino = obterDestino(fornecedorHabilitado.origem.destinos, pontos[x+1].state, pontos[x+1].capital);
+        valorTotal = valorTotal + ( destino.preco_km * distanciaKm );
+      }
+    }
+    return valorTotal;
+  }
+
+  function calcularDistancia(pontoA, pontoB) {
+    return calculateDistanceLatLng(pontoA.lat, pontoA.lng, pontoB.lat, pontoB.lng);
+  }
+
+  function calculateDistanceLatLng(lat1, lon1, lat2, lon2) {
+    var p = 0.017453292519943295;
+    var a = 0.5 -
+        Math.cos((lat2 - lat1) * p) / 2 +
+        Math.cos(lat1 * p) * Math.cos(lat2 * p) * (1 - Math.cos((lon2 - lon1) * p)) / 2;
+    return 12742 * Math.asin(Math.sqrt(a));
+  }
+
+  function obterDestino(destinos, estado, ehCapital) {
+    // TODO criar o looping de destino depois de validar os destinos
+    // assim como foi validado a origem
+    return destinos[0];
+  }
 
   async function getCapitais() {
     try {
@@ -80,6 +146,3 @@ exports.cotar = functions.database
     }
   }
 
-  async function calcFreteFornecedor(cidadeOrigem, estadoOrigem, cidadeDestino, estadoDestino, fornecedor) {
-
-  }
