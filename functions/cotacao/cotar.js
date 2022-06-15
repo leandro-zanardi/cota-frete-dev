@@ -39,8 +39,8 @@ exports.cotar = functions.database
 
       fornecedoresHabilitados.forEach(fornecedorHabilitado => {
         let fornecedorCalculado = {
-          "fid": fornecedor.nome,
-          "nome": fornecedor.nome,
+          "fid": fornecedorHabilitado.nome,
+          "nome": fornecedorHabilitado.nome,
           "preco": calcularFrete(fornecedorHabilitado, pontos)
         }
         cotacoes.push(fornecedorCalculado);
