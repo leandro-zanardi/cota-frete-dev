@@ -23,8 +23,6 @@ exports.cotar = functions.database
       let fornecedores = await getFornecedores();
       console.log(fornecedores);
 
-      var cotacoes = []
-
       // adicionar flag de capital nos pontos
       adicionarCapitaisParaPontos(pontos, capitais);
       console.log("pontos com capital")
@@ -36,7 +34,7 @@ exports.cotar = functions.database
       console.log(fornecedoresHabilitados);
       // TODO verificar se as origens tem destino nos demais pontos
 
-
+      var cotacoes = [];
       fornecedoresHabilitados.forEach(fornecedorHabilitado => {
         let fornecedorCalculado = {
           "fid": fornecedorHabilitado.nome,

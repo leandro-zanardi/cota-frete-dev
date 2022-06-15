@@ -1,5 +1,5 @@
 class ValorModel {
-  int fid;
+  String fid;
   String nome;
   double preco;
 
