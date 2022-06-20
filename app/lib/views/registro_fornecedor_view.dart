@@ -27,7 +27,8 @@ class RegistroFornecedorView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: OrigemWidget(
-                capitais: fornecedorStore.capitais.toList() as List<CapitalModel>,
+                capitais:
+                    fornecedorStore.capitais.toList() as List<CapitalModel>,
                 origem: fornecedor.origens[x],
                 destinos: buildDestinos(fornecedorStore.capitais.toList(),
                     fornecedor.origens[x], fornecedor.origens[x].destinos),

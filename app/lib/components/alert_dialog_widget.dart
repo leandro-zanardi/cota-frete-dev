@@ -7,11 +7,11 @@ class AlertDialogWidget extends StatelessWidget {
 
   final String? erro;
 
-  final void clearFunction;
+  final void Function() clearFunction;
 
   @override
   Widget build(BuildContext context) {
-    Visibility(
+    return Visibility(
         visible: erro != null,
         child: Stack(children: [
           Container(
@@ -25,12 +25,13 @@ class AlertDialogWidget extends StatelessWidget {
             elevation: 24,
             actions: <Widget>[
               TextButton(
-                onPressed: () => clearFunction,
+                onPressed: () {
+                  clearFunction();
+                },
                 child: const Text('OK'),
               ),
             ],
           )
         ]));
-    throw UnimplementedError();
   }
 }
